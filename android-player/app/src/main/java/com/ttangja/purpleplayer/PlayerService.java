@@ -52,9 +52,13 @@ public class PlayerService extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
         I = this;
-        h = new Handler(Looper.getMainLooper());
-        wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        loadCalib();
+        try {
+            h = new Handler(Looper.getMainLooper());
+            wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            loadCalib();
+            // 권한이 꺼졌다 다시 켜진 경우: 하던 위치부터 이어서
+            h.postDelayed(this::resumeIfWanted, 1500);
+        } catch (Exception ignored) {}
         if (onState != null) onState.run();
     }
 
@@ -63,14 +67,43 @@ public class PlayerService extends AccessibilityService {
 
     @Override
     public void onDestroy() {
-        stop();
-        hideDots();
+        // 시스템이 끈 경우에는 '재생 중' 표시를 남겨 두어 다시 켜지면 이어간다
+        try {
+            if (playing) Guard.prefs(this).edit().putLong("dropAt", System.currentTimeMillis()).apply();
+            halt();
+            hideDots();
+        } catch (Exception ignored) {}
         I = null;
         if (onState != null) onState.run();
         super.onDestroy();
     }
 
     boolean isPlaying() { return playing; }
+
+    /** 저장해 둔 매크로를 시작 시각 기준 위치부터 다시 재생 */
+    void resumeIfWanted() {
+        try {
+            if (playing) return;
+            SharedPreferences p = Guard.prefs(this);
+            if (!p.getBoolean("playing", false)) return;
+            Macro m = MainActivity.macro;
+            if (m == null) m = Store.loadMacro(this);
+            if (m == null) { record("저장된 매크로 파일을 다시 읽지 못했어요"); return; }
+            MainActivity.macro = m;
+            p.edit().putInt("resumeCount", p.getInt("resumeCount", 0) + 1).putLong("resumeAt", System.currentTimeMillis()).apply();
+            begin(m, p.getLong("startWall", System.currentTimeMillis()));
+            Guard.arm(this);
+        } catch (Exception e) {
+            record("이어하기 실패: " + e.getClass().getSimpleName());
+        }
+    }
+
+    private void record(String reason) {
+        Guard.prefs(this).edit().putBoolean("playing", false)
+                .putString("stopReason", reason).putLong("stopAt", System.currentTimeMillis()).apply();
+        try { Guard.disarm(this); } catch (Exception ignored) {}
+        if (onState != null) onState.run();
+    }
 
     void loadCalib() {
         SharedPreferences p = getSharedPreferences("pp", MODE_PRIVATE);
@@ -83,39 +116,83 @@ public class PlayerService extends AccessibilityService {
     // ───────── 재생 ─────────
     /** startDelayMs 뒤에 처음부터 재생 */
     void start(Macro m, long startDelayMs) {
-        stop();
+        halt();
         if (m == null || m.acts.isEmpty()) return;
+        long startWall = System.currentTimeMillis() + Math.max(0, startDelayMs);
+        Guard.prefs(this).edit().putBoolean("playing", true).putLong("startWall", startWall)
+                .putInt("resumeCount", 0).putInt("recoverCount", 0).apply();
+        Guard.arm(this);
+        begin(m, startWall);
+    }
+
+    /** 실제 시계 기준: startWall에 0초가 시작된 것으로 보고 지금 위치부터 재생 */
+    private void begin(Macro m, long startWall) {
+        halt();
         loadCalib();
         macro = m;
+        long cycle = Math.max(1000, m.totalMs + m.intervalMs);
+        long nowU = SystemClock.uptimeMillis();
+        long el = System.currentTimeMillis() - startWall;
+        if (el < 0) {
+            loop = 0;
+            idx = 0;
+            loopStart = nowU - el;
+        } else {
+            long k = el / cycle;
+            if (m.repeat != -1 && k >= m.repeat) { record("파일 끝까지 재생했어요"); return; }
+            loop = (int) k;
+            long pos = el - k * cycle;
+            loopStart = nowU - pos;
+            idx = 0;
+            while (idx < m.acts.size() && m.acts.get(idx).t < pos - 200) idx++;
+        }
         playing = true;
-        idx = 0;
-        loop = 0;
-        loopStart = SystemClock.uptimeMillis() + Math.max(0, startDelayMs);
         showBar();
-        h.postAtTime(stepR, loopStart + macro.acts.get(0).t);
+        scheduleNext();
         h.post(tickR);
         if (onState != null) onState.run();
     }
 
+    /** 정지 버튼 · 앱의 정지 */
     void stop() {
+        halt();
+        record("정지 버튼으로 멈췄어요");
+    }
+
+    private void halt() {
         if (h != null) { h.removeCallbacks(stepR); h.removeCallbacks(tickR); }
         playing = false;
         hideBar();
         if (onState != null) onState.run();
     }
 
+    private void scheduleNext() {
+        if (idx < macro.acts.size()) h.postAtTime(stepR, loopStart + macro.acts.get(idx).t);
+        else h.postAtTime(stepR, loopStart + macro.totalMs);
+    }
+
     private void step() {
         if (!playing) return;
+        try {
+            stepInner();
+        } catch (Throwable t) {
+            // 오류가 나도 서비스가 죽지 않게: 이 동작만 건너뛰고 계속
+            idx++;
+            try { scheduleNext(); } catch (Throwable ignored) {}
+        }
+    }
+
+    private void stepInner() {
         long now = SystemClock.uptimeMillis();
         List<Macro.Act> acts = macro.acts;
         if (idx >= acts.size()) {
             long end = loopStart + macro.totalMs;
             if (now < end - 5) { h.postAtTime(stepR, end); return; }
             loop++;
-            if (macro.repeat != -1 && loop >= macro.repeat) { stop(); return; }
-            loopStart = now + macro.intervalMs;
+            if (macro.repeat != -1 && loop >= macro.repeat) { halt(); record("파일 끝까지 재생했어요"); return; }
+            loopStart = loopStart + macro.totalMs + macro.intervalMs;
             idx = 0;
-            h.postAtTime(stepR, loopStart + acts.get(0).t);
+            scheduleNext();
             return;
         }
         Macro.Act a = acts.get(idx);
@@ -139,11 +216,10 @@ public class PlayerService extends AccessibilityService {
                 j++;
             }
             if (cl.isEmpty()) { cl.add(a); j = idx + 1; }
-            dispatch(cl, cStart);
             idx = j;
+            dispatch(cl, cStart);
         }
-        if (idx < acts.size()) h.postAtTime(stepR, loopStart + acts.get(idx).t);
-        else h.postAtTime(stepR, loopStart + macro.totalMs);
+        scheduleNext();
     }
 
     private void dispatch(List<Macro.Act> cl, long cStart) {
@@ -265,6 +341,10 @@ public class PlayerService extends AccessibilityService {
     }
 
     private void tick() {
+        try { tickInner(); } catch (Throwable ignored) {}
+    }
+
+    private void tickInner() {
         if (!playing || barText == null) return;
         long now = SystemClock.uptimeMillis();
         String s;

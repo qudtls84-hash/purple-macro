@@ -38,10 +38,10 @@ public class MainActivity extends Activity {
 
     private static String json;          // 불러온 파일 내용
     private static List<String[]> recs;  // [key, title]
-    private static Macro macro;
+    static Macro macro;
     private static String fileName = "";
 
-    private TextView accState, info, fileInfo;
+    private TextView accState, info, fileInfo, guardState, logView;
     private Spinner recSpin;
     private EditText startAt, offX, offY, scale;
     private Button startB, stopB, accB;
@@ -107,7 +107,13 @@ public class MainActivity extends Activity {
         c3.addView(row);
         c3.addView(text("시작하면 이 앱은 뒤로 가고 게임 화면이 나와요. 게임 맨 위 가운데의 작은 막대로 진행 시간을 보고 정지할 수 있어요.", 12, C_MUTED, false));
         startB.setOnClickListener(v -> onStart_());
-        stopB.setOnClickListener(v -> { if (PlayerService.I != null) PlayerService.I.stop(); refresh(); });
+        stopB.setOnClickListener(v -> {
+            if (PlayerService.I != null) PlayerService.I.stop();
+            Guard.prefs(this).edit().putBoolean("playing", false)
+                    .putString("stopReason", "정지 버튼으로 멈췄어요").putLong("stopAt", System.currentTimeMillis()).apply();
+            Guard.disarm(this);
+            refresh();
+        });
 
         // 4. 좌표 보정
         LinearLayout c4 = card(root, "4. 좌표 확인 · 보정");
@@ -133,8 +139,38 @@ public class MainActivity extends Activity {
         });
         c4.addView(dotsB);
 
+        // 5. 자동 복구
+        LinearLayout c5 = card(root, "5. 권한 자동 복구 · 이어하기");
+        guardState = text("", 14, C_FG, false);
+        c5.addView(guardState);
+        c5.addView(text("권한이 꺼지면 앱이 스스로 다시 켜고, 시작 시각 기준으로 하던 위치부터 이어서 재생해요. 처음 한 번 PC에서 아래 명령을 실행해야 해요.", 13, C_MUTED, false));
+        TextView cmd = text(Guard.ADB_CMD, 12, C_FG, false);
+        cmd.setTypeface(Typeface.MONOSPACE);
+        cmd.setTextIsSelectable(true);
+        GradientDrawable cbg = new GradientDrawable();
+        cbg.setColor(0xFFEEF3F2);
+        cbg.setCornerRadius(dp(8));
+        cmd.setBackground(cbg);
+        cmd.setPadding(dp(10), dp(8), dp(10), dp(8));
+        c5.addView(cmd);
+        Button copyB = button("명령 복사", false);
+        copyB.setOnClickListener(v -> {
+            try {
+                android.content.ClipboardManager cm = (android.content.ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                cm.setPrimaryClip(android.content.ClipData.newPlainText("adb", Guard.ADB_CMD));
+                toast("복사했어요.");
+            } catch (Exception e) { toast("복사하지 못했어요."); }
+        });
+        c5.addView(copyB);
+        logView = text("", 13, C_MUTED, false);
+        c5.addView(logView);
+
         setContentView(sv);
         PlayerService.onState = () -> runOnUiThread(this::refresh);
+        if (macro == null) {
+            macro = Store.loadMacro(this);
+            fileName = prefs.getString("fileName", "");
+        }
         if (macro != null) showMacro();
         refresh();
     }
@@ -157,8 +193,24 @@ public class MainActivity extends Activity {
         accState.setTextColor(on ? C_ACC : 0xFFB3261E);
         accB.setVisibility(on ? View.GONE : View.VISIBLE);
         boolean playing = on && PlayerService.I.isPlaying();
+        boolean want = Guard.wantPlaying(this);
         startB.setEnabled(macro != null && on && !playing);
-        stopB.setEnabled(playing);
+        stopB.setEnabled(playing || want);
+        boolean cw = Guard.canWrite(this);
+        guardState.setText(cw ? "✓ 자동 복구 사용 가능" : "아직 꺼져 있어요 (PC 명령 1회 필요). 이어하기는 권한을 직접 다시 켜면 동작해요.");
+        guardState.setTextColor(cw ? C_ACC : 0xFFB3261E);
+        SharedPreferences p = prefs;
+        StringBuilder lg = new StringBuilder();
+        java.text.SimpleDateFormat f = new java.text.SimpleDateFormat("M/d HH:mm", java.util.Locale.KOREA);
+        if (want) lg.append(playing ? "지금 재생 중" : "재생 대기 중 (권한이 켜지면 이어서 재생)");
+        long sa = p.getLong("stopAt", 0);
+        if (!want && sa > 0) lg.append("마지막 정지: ").append(f.format(new java.util.Date(sa))).append(" · ").append(p.getString("stopReason", ""));
+        long da = p.getLong("dropAt", 0);
+        if (da > 0) lg.append("\n권한이 마지막으로 꺼진 때: ").append(f.format(new java.util.Date(da)));
+        int rc = p.getInt("recoverCount", 0), ec = p.getInt("resumeCount", 0);
+        if (rc > 0) lg.append("\n권한 자동 복구 ").append(rc).append("번 (마지막 ").append(f.format(new java.util.Date(p.getLong("recoverAt", 0)))).append(")");
+        if (ec > 0) lg.append("\n이어하기 ").append(ec).append("번 (마지막 ").append(f.format(new java.util.Date(p.getLong("resumeAt", 0)))).append(")");
+        logView.setText(lg.toString());
         startB.setAlpha(startB.isEnabled() ? 1f : 0.45f);
         stopB.setAlpha(stopB.isEnabled() ? 1f : 0.45f);
     }
@@ -189,6 +241,7 @@ public class MainActivity extends Activity {
     private void loadRec(int i) {
         try {
             macro = Macro.parse(json, recs.get(i)[0]);
+            Store.save(this, json, recs.get(i)[0], fileName);
             showMacro();
             Matcher m = Pattern.compile("(\\d{1,2}:\\d{2})\\s*시작").matcher(macro.title);
             if (m.find()) startAt.setText(m.group(1));
@@ -254,6 +307,9 @@ public class MainActivity extends Activity {
         } else {
             toast("10초 뒤에 시작해요. 게임 화면으로 돌아가 주세요.");
         }
+        if (android.os.Build.VERSION.SDK_INT >= 33
+                && checkSelfPermission("android.permission.POST_NOTIFICATIONS") != android.content.pm.PackageManager.PERMISSION_GRANTED)
+            requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"}, 9);
         PlayerService.I.start(macro, delay);
         refresh();
         moveTaskToBack(true);
