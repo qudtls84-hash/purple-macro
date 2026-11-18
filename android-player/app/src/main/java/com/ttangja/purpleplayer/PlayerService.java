@@ -169,7 +169,7 @@ public class PlayerService extends AccessibilityService {
     private Rect gameRect() {
         int w, hh;
         if (Build.VERSION.SDK_INT >= 30) {
-            Rect b = wm.getCurrentWindowMetrics().getBounds();
+            Rect b = wm.getMaximumWindowMetrics().getBounds();
             w = b.width(); hh = b.height();
         } else {
             Point pt = new Point();
