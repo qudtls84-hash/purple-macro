@@ -1532,6 +1532,11 @@ header.top h1#ttl .ver{background:color-mix(in srgb,var(--accent) 12%,var(--surf
     </div>
   </section>
   <section class="scard">
+    <div class="scard-title"><span>📁 하루 일정 만들기</span></div>
+    <div id="setList" style="display:grid;gap:10px"></div>
+  </section>
+  <section class="scard" id="evBox"></section>
+  <section class="scard">
     <div class="scard-title"><span>🐢 렉·클릭 기다림</span><span class="start-badge" id="mkAuto" style="display:none">자동 · 지금 시각</span></div>
     <div class="cfg-list cmp">
       <div class="cfg-row hi" title="실제 하루 시간표 계산 기준" style="display:none">
@@ -1550,10 +1555,6 @@ header.top h1#ttl .ver{background:color-mix(in srgb,var(--accent) 12%,var(--surf
         <label class="mini" title="퀘스트 보상·혈맹 기부·상점 구매 클릭에 더함"><b>🐢 클릭 기다림</b><select id="slowSel"><option value="0">없음</option><option value="0.5">+0.5초</option><option value="1" selected>+1초 (기본)</option><option value="1.5">+1.5초</option><option value="2">+2초</option><option value="3">+3초</option></select></label>
       </div>
     </div>
-  </section>
-  <section class="scard">
-    <div class="scard-title"><span>📁 하루 일정 만들기</span></div>
-    <div id="setList" style="display:grid;gap:10px"></div>
   </section>
  </div>
  <!-- [중앙 컬럼 1fr] 2. 24시간 타임라인 & 할 일 카드 작업장 -->
@@ -1736,7 +1737,7 @@ header.top h1#ttl .ver{background:color-mix(in srgb,var(--accent) 12%,var(--surf
   
   </div></div>
   <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/20 · v275)</span></summary><ul>
-   <li><b>11/20</b> 🩹 v275 탐험 중간 점검 추가 (📌 항상 하는 일 → 🧭 탐험 아래 · 기본 2시간마다) — 인형·성물·변신 중 죽은 것만 다시 보내고 진행 중 탐험은 남은 시간 그대로 (버프 차감 창은 취소) · 변신·성물 보상 보관함 꺼내기 동작 삭제 (직접 꺼내기) · 📘 매뉴얼·리세 안내에 "슬롯이 몇 개 열려 있든 사용 가능 (기본 2~3개도)" 추가 · 🦸변신/💠성물 따로 체크 삭제 (🧭 탐험 하나로 인형·성물·변신 모두 · 중복 실행 없앰) · 🌍 월드 던전 카드: 접힌 상태에서도 던전·사냥터(개미굴 A·B·C 등) 바로 고르기 · 시간 옆 "🧰 재정비 없음" 표시 삭제 (가운데 1번 재정비만 표시) · 재정비 체크 글자 줄임 (1시간마다 재정비 → 1H 정비 · 과말 20M 정비) · 월드 던전 카드는 시간 칸을 좁혀 던전·사냥터 선택이 다 보이게 (좁은 화면은 2줄) · 에스카 C·D·E 고르면 "🚶 수동으로 사냥터까지 이동" 표시 · 20번 이동 → "도보 20보 이동 후 사냥"으로 이름 변경 · 에스카로스는 도보 20보가 기본 · 🪶 가볍게: 그림 WebP 압축 · 동작 하나하나 화면은 열 때만 그림 · 녹화 데이터 짧게 저장 · 업데이트 내역 최근 10개만 (매크로 결과는 그대로) · 💬 상단 메뉴에 "상담 및 후원" 추가 (오픈채팅 QR · 후원 방법 6단계) · 🛡 켄트·오렌 전용 표시 (레거시·기란·하이네는 문의) · 🏷️ 파일 이름 맨 앞에 시작 시각 (예: 10시15분 시작 · …) · 🧭 탐험할 곳 인형·성물·변신 따로 끄기 (녹화에 변신이 들어 있어 체크와 상관없이 돌던 문제 수정) · 리세 캐릭 이름 기본값을 본캐·부캐1~5로 (처음 여는 컴퓨터) · 🎉 기간제 이벤트 목록 20개 (📌 항상 하는 일) · 🎉 이벤트 18종 동작 추가 (lineagem-macro 동작 · 운영자 허락) · 날짜(시작~종료)를 넣어야만 켜지고 시련·파티 던전 뒤에 차례로 진행 · 이벤트마다 방식 선택 · 🐢 렉·클릭 기다림 칸을 하루 일정 만들기 위로</li>
+   <li><b>11/20</b> 🩹 v275 탐험 중간 점검 추가 (📌 항상 하는 일 → 🧭 탐험 아래 · 기본 2시간마다) — 인형·성물·변신 중 죽은 것만 다시 보내고 진행 중 탐험은 남은 시간 그대로 (버프 차감 창은 취소) · 변신·성물 보상 보관함 꺼내기 동작 삭제 (직접 꺼내기) · 📘 매뉴얼·리세 안내에 "슬롯이 몇 개 열려 있든 사용 가능 (기본 2~3개도)" 추가 · 🦸변신/💠성물 따로 체크 삭제 (🧭 탐험 하나로 인형·성물·변신 모두 · 중복 실행 없앰) · 🌍 월드 던전 카드: 접힌 상태에서도 던전·사냥터(개미굴 A·B·C 등) 바로 고르기 · 시간 옆 "🧰 재정비 없음" 표시 삭제 (가운데 1번 재정비만 표시) · 재정비 체크 글자 줄임 (1시간마다 재정비 → 1H 정비 · 과말 20M 정비) · 월드 던전 카드는 시간 칸을 좁혀 던전·사냥터 선택이 다 보이게 (좁은 화면은 2줄) · 에스카 C·D·E 고르면 "🚶 수동으로 사냥터까지 이동" 표시 · 20번 이동 → "도보 20보 이동 후 사냥"으로 이름 변경 · 에스카로스는 도보 20보가 기본 · 🪶 가볍게: 그림 WebP 압축 · 동작 하나하나 화면은 열 때만 그림 · 녹화 데이터 짧게 저장 · 업데이트 내역 최근 10개만 (매크로 결과는 그대로) · 💬 상단 메뉴에 "상담 및 후원" 추가 (오픈채팅 QR · 후원 방법 6단계) · 🛡 켄트·오렌 전용 표시 (레거시·기란·하이네는 문의) · 🏷️ 파일 이름 맨 앞에 시작 시각 (예: 10시15분 시작 · …) · 🧭 탐험할 곳 인형·성물·변신 따로 끄기 (녹화에 변신이 들어 있어 체크와 상관없이 돌던 문제 수정) · 리세 캐릭 이름 기본값을 본캐·부캐1~5로 (처음 여는 컴퓨터) · 🎉 기간제 이벤트 목록 20개 (📌 항상 하는 일) · 🎉 이벤트 18종 동작 추가 (lineagem-macro 동작 · 운영자 허락) · 날짜(시작~종료)를 넣어야만 켜지고 시련·파티 던전 뒤에 차례로 진행 · 이벤트마다 방식 선택 · 🎉 기간제 이벤트 칸을 왼쪽 🐢 렉·클릭 기다림 바로 위로</li>
    <li><b>11/19</b> 📅 v274 스케줄 22:00 고정 해제 → 본토가 3시간 넘으면 사이사이에 스케줄 1시간씩 섞기 (하루 스케줄 기본 4시간 · 본토 2/3/4h · 한 번 1/1.5/2h · "시각 고정"을 고르면 예전처럼) · 월드보스는 정시 그대로 · 본토에 다시 들어갈 때마다 재정비 · 🏴 기란감옥 연속 최대 2시간 (넘으면 사이에 본토 1시간 · 세부 설정에서 1~3h/제한 없음)</li>
    <li><b>11/19</b> 🌱 v273 재접속 → 저랩용: 에바왕국 던전 5h(1시간마다 재정비) → 게 밭 2h → 숙제·시련(턴 언데드·미믹) → 과말 북섬 1h → 스케줄 3h → 게 밭 나머지 · 24시간 넘으면 마지막 게 밭을 줄임 · 할 일 추가에 🏰 에바왕국 던전(던전 묶음)·필드 사냥에 게 밭 추가 (게 밭은 지도 좌표 받기 전까지 기억 장소로) · 🕐 24시간 타임라인을 원형 시계 + 순서표로 (▬ 막대로도 전환) · 좁은 칸은 바깥 말풍선 · 막대에 'field' 대신 사냥터 이름 · 말로 만들기 칸 삭제 · 🦀 게 밭: 에바왕국 입구 → 바닥 클릭으로 걸어서(녹화 · 예비 키보드) → AUTO · 👥 리세/서커스 기본: 7슬롯 · 땡자 고정 · 2→6번 칸 (투싸 제외) · 7·8·10~12슬롯도 돌릴 캐릭 수 선택 (맨 아래 캐릭 빼기) · 🧝 하딘텔: 이동하기 3초 뒤 AUTO · 그힐은 AUTO 10초 뒤부터 (마을에서 그힐만 쓰던 문제) · 🔧 리세 24시간 맞춤: 시작 시각이 저절로 '지금'으로 바뀌어 29시간이 되던 문제 고침 · ⏰ 리세 24시간 맞춤에 '리세 시작: 지금 바로' (켜자마자 리세 · 매일 그 시각) · 🗂 리세/서커스 옵션을 캐릭 선택 / 👑 1번 캐릭(본캐용) / 👥 2~13번 캐릭(리세용)으로 나눔 · 🔧 '지금 시각으로 다시 만들기'가 섞기·기란 2·2·1·리세 24h를 빠뜨리던 문제 · 🌀 하딘텔: 월드보스 뒤면 20초 기다렸다가 이동 · 🔀 월드 던전 탭 = 종류별로 섞어서 2시간씩 (본토 전부도 가능 · 오만의 탑·요일 던전 제외) · 월드 던전 탭 = 숙제 + 월드 던전만 (기란·스케줄·본토·월드보스 없음 · 개미굴·에스카·해적섬 하루 7시간 · 잊섬 주 12시간=하루 1시간 40분 한도) · 시계·순서표에 월드 던전 이름(개미굴·에스카…) 표시 · 📅 요일 던전: 테베 월·티칼 화·아틀 수 20:30~22:30 + 모두 주말(토·일) · 라스타·악몽 주말 · 카드 목록을 오른쪽→왼쪽으로 끌어서 테베①·티칼②·아틀③·라스타⑤·악몽⑥ (🔒 스샷으로 좌표 확인 전까지 잠금) · 🏷️ 리세/서커스 캐릭 이름 (시계·순서표·캐릭 묶음·카톡 시간표·파일 이름)</li>
    <li><b>11/19</b> 🖼 v272 동작 하나하나 편집 배경 화면 추가 (11/19 스샷 18장 · 캐릭 정보·다른 캐릭 이름 가림 · 가볍게 압축): 월드던전·월드맵·혈맹 정보 새로 · 개미굴/잊섬/해적섬/에스카로스 NPC 목록 · 잊섬 대기 마을·이동 확인 · 기억 장소 · 혈맹 주간 보상(위/아래) · 퀘스트 워프(왼쪽 목록·이동 확인) · 🖼 화면 자동매칭이 새 화면을 골라 씀</li>
@@ -3917,13 +3918,12 @@ function mailRow(){
   <details class="pin-grp" data-pg="save"${PINOPEN.save?' open':''}><summary class="pin-ghd"><span>🧻 주문서 절약</span><span class="pin-cnt" id="saveScCnt"></span></summary>
     <div class="pin-row" title="이미 마을·던전 입구에 도착한 직후 한 번 더 누르던 귀환(10번)과 웰던 재정비 직전 혈맹귀환(4번)을 대기시간으로 바꿔 주문서를 아껴 줍니다"><label class="pin-chk"><input type="checkbox" id="saveScOn"${NB.saveScroll?' checked':''}> 중복 귀환·혈맹 귀환 주문서 절약</label></div>
   </details>
-  <details class="pin-grp" data-pg="ev"${PINOPEN.ev?' open':''}><summary class="pin-ghd"><span>🎉 기간제 이벤트</span><span class="pin-cnt">${EVENTS.filter(x=>evLive(x.k)).length?'진행 중 '+EVENTS.filter(x=>evLive(x.k)).length+'개':'지금은 없음'}</span></summary>
-    <div class="sub" style="line-height:1.5">이벤트가 열리면 <b>기간(시작일~종료일)</b>을 넣어야만 켜져요 (종료일 06:00 점검 전까지). 시련·파티 던전 뒤에 차례로 진행해요.</div>
-    <div class="ev-list">${EVENTS.map(x=>{const d=evDates(x.k),on=evLive(x.k);return `<div class="ev-row${x.ready?'':' ev-wip'}"><span class="ev-n">${x.i} ${esc(x.n)}<small>${esc(x.t)}</small></span>${x.ready&&x.opts.length>1?`<select class="jevo" data-k="${x.k}" title="진행 방식">${x.opts.map(o=>`<option value="${o[0]}"${d.o===o[0]?' selected':''}>${esc(o[1])}</option>`).join('')}</select>`:''}${x.ready?`<span class="ev-dt"><input type="date" class="jevd" data-k="${x.k}" data-f="s" value="${d.s}" title="시작일 (비우면 바로)"> ~ <input type="date" class="jevd" data-k="${x.k}" data-f="e" value="${d.e}" title="종료일 (이날 06:00 점검 전까지)"></span><span class="ev-st ${on?'on':'off'}">${on?'진행 중':'기간 아님'}</span>`:'<span class="ev-st lock">🔒 동작 없음</span>'}</div>`}).join('')}</div>
-  </details>
   </div></section>`;
 }
+function evPanelHTML(){const n=EVENTS.filter(x=>evLive(x.k)).length;return `<div class="scard-title"><span>🎉 기간제 이벤트</span><span class="pin-cnt">${n?'진행 중 '+n+'개':'지금은 없음'}</span></div><div class="sub" style="line-height:1.5">이벤트가 열리면 <b>기간(시작일~종료일)</b>을 넣어야만 켜져요 (종료일 06:00 점검 전까지). 시련·파티 던전 뒤에 차례로 진행해요.</div>
+    <div class="ev-list">${EVENTS.map(x=>{const d=evDates(x.k),on=evLive(x.k);return `<div class="ev-row${x.ready?'':' ev-wip'}"><span class="ev-n">${x.i} ${esc(x.n)}<small>${esc(x.t)}</small></span>${x.ready&&x.opts.length>1?`<select class="jevo" data-k="${x.k}" title="진행 방식">${x.opts.map(o=>`<option value="${o[0]}"${d.o===o[0]?' selected':''}>${esc(o[1])}</option>`).join('')}</select>`:''}${x.ready?`<span class="ev-dt"><input type="date" class="jevd" data-k="${x.k}" data-f="s" value="${d.s}" title="시작일 (비우면 바로)"> ~ <input type="date" class="jevd" data-k="${x.k}" data-f="e" value="${d.e}" title="종료일 (이날 06:00 점검 전까지)"></span><span class="ev-st ${on?'on':'off'}">${on?'진행 중':'기간 아님'}</span>`:'<span class="ev-st lock">🔒 동작 없음</span>'}</div>`}).join('')}</div>`}   // v275: 왼쪽 칸 맨 위
 function renderMaker(){
+  {const eb=document.getElementById('evBox');if(eb)eb.innerHTML=evPanelHTML()}
   const totTools=NB.items.length?`<div class="tot-tools"><label title="하루 일정 시작 시각 (바꾸면 시간표가 즉시 다시 계산돼요)">⏰ 시작 <input type="time" id="totStart" value="${hm(startMin())}"></label><label title="체크하면 남는 시간을 기다려서 매크로가 딱 24시간이 돼요"><input type="checkbox" id="totFit24"${NB.fit24?' checked':''}> 끝에 기다려서 딱 24시간 채우기</label><button id="totFitBon" title="앞선 일정을 계산해 마지막 본토 사냥 시간을 24시간에 딱 맞게 채웁니다">⚡ 남는 시간 본토로 채우기</button></div>`:'';
   const pb=$('#pinBox');if(pb)pb.innerHTML=S.canLib?mailRow():'';
   $('#mkrows').innerHTML=`<div class="totrow"><div class="total" id="mkTotal"></div>${totTools}</div>`+jfBar()+(NB.items.length?(()=>{const G=rrGroups();return NB.items.map((it,i)=>{let h=jobRow(it,i);if(JF&&it.job!==JF)h=h.replace('<div class="job','<div class="jfh job');const g=G&&G.find(x=>x.a===i);const gi=G?G.findIndex(x=>i>=x.a&&i<=x.b):-1;if(gi>=0&&!(NB.rrOpen&&NB.rrOpen[gi]))h=h.replace('<div class="job','<div class="rrf job');return (g&&G.indexOf(g)===0?`<div class="rrbar"><span>👥 캐릭별로 묶어 보기 · ${Math.max(0,G.filter(x=>!x.wait).length-2)}캐릭 + 시작/마무리</span><span><button data-rrall="1">▾ 모두 펼치기</button><button data-rrall="0">▸ 모두 접기</button></span></div>`:'')+(g?rrHdrHTML(g,G.indexOf(g)):'')+h}).join('')})():`<div class="empty"><div>아직 비어 있어요. 아래에서 할 일을 골라 쌓아 보세요.</div>${S.canLib?'<button class="pri" data-add="dungeon">🏴 기란감옥 사냥 5시간으로 시작하기</button>':''}</div>`);
