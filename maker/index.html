@@ -1254,6 +1254,27 @@ body.man #manHdrBadge,body.rrm #manHdrBadge{display:none}
 
 :is(#hyview,#rebview) .rr-guide-box>*{min-width:0;max-width:100%}:is(#hyview,#rebview) .rr-tbl-wrap{max-width:100%}#hyview .fact-src,#rebview .fact-src{font-size:12.5px;color:var(--muted)}#hyview .fact-src a,#rebview .fact-src a,#hyview .rr-tbl a,#rebview .rr-tbl a{color:var(--accent);font-weight:700;text-decoration:none}#hyview .fact-src a:hover,#rebview .rr-tbl a:hover{text-decoration:underline}#hyview .fact-tbl td:first-child,#rebview .fact-tbl td:first-child{white-space:nowrap}#rebview .fact-tbl td:nth-child(2){min-width:150px}#hyview .fact-tbl,#rebview .fact-tbl{margin-top:6px}
 #hyview,#rebview{display:none;max-width:1440px;margin:0 auto}
+#hudview{display:none;max-width:1500px;margin:0 auto;padding-block:4px 24px}body.hud #hudview{display:block!important}
+body.hud #editview,body.hud #mkview,body.hud #manview,body.hud #rrview,body.hud #hyview,body.hud #rebview,body.hud #supview{display:none!important}
+.hud-drop{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 16px;border:2px dashed color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:14px;background:color-mix(in srgb,var(--accent) 5%,var(--surface));margin:10px 0}
+.hud-drop.over{background:color-mix(in srgb,var(--accent) 15%,var(--surface))}
+.hud-drop label.pri{cursor:pointer}.hud-drop input[type=file]{display:none}
+.hud-sum{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
+.hud-sum .hs{display:inline-flex;gap:6px;align-items:center;padding:6px 11px;border-radius:999px;background:var(--surface);border:1.5px solid var(--line);font-weight:800;font-size:13.5px}
+.hud-sum .hs.hot{border-color:#dc2626;color:#dc2626;background:color-mix(in srgb,#dc2626 8%,var(--surface))}
+.hud-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.hud-c{border:1.5px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);display:grid;gap:7px;min-width:0}
+.hud-c .hh{display:flex;gap:6px;align-items:center;justify-content:space-between}.hud-c .hh b{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hud-c .hn{font-size:19px;font-weight:900;display:flex;gap:8px;align-items:center}.hud-c .hn small{font-size:12.5px;font-weight:700;color:var(--muted)}
+.hud-c .hp{height:8px;border-radius:99px;background:var(--line);overflow:hidden}.hud-c .hp i{display:block;height:100%;background:var(--accent)}
+.hud-c .hx{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.hud-c .hst{position:relative;height:12px;border-radius:4px;overflow:hidden;background:var(--line)}.hud-c .hst span{position:absolute;top:0;bottom:0}.hud-c .hst em{position:absolute;top:-2px;bottom:-2px;width:2px;background:#dc2626}
+.hud-c .hf{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--muted);flex-wrap:wrap}.hud-c .hf input{font-size:12px;padding:1px 4px}.hud-c .hf button{font-size:11.5px;padding:2px 8px}
+.hud-c.done{opacity:.6}
+.hud-c .hev{display:grid;gap:3px;font-size:12.5px;padding:7px 8px;border-radius:10px;background:color-mix(in srgb,var(--accent) 6%,transparent);border:1px solid var(--line)}
+.hud-c .hev div{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px;align-items:baseline}.hud-c .hev i{font-style:normal;font-weight:800;color:var(--muted);font-size:11.5px}.hud-c .hev span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.hud-c .hev em{font-style:normal;color:var(--muted);font-size:11.5px;white-space:nowrap}
+.hud-c .hev .now i,.hud-c .hev .now span{color:var(--accent)}
+.hud-empty{padding:30px;text-align:center;color:var(--muted)}
 header.top .gnb-nav .gnb-btn.gnb-must{color:#dc2626!important;font-weight:900!important}header.top .gnb-nav .gnb-btn.gnb-must.active{border-bottom-color:#dc2626!important}:root[data-theme="dark"] header.top .gnb-nav .gnb-btn.gnb-must{color:#f87171!important}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header.top .gnb-nav .gnb-btn.gnb-must{color:#f87171!important}}
 header.top .gnb-nav .gnb-btn[data-v="sup"]{background:#fee500!important;color:#191600!important;border:1.5px solid #e6c800!important;border-radius:999px!important;font-weight:800!important;padding:6px 12px!important;box-shadow:0 1px 4px rgba(230,200,0,.45)!important}header.top .gnb-nav .gnb-btn[data-v="sup"]:hover{background:#ffeb3b!important}header.top .gnb-nav .gnb-btn[data-v="sup"].active{background:#ffd600!important;box-shadow:0 0 0 2px #191600 inset!important}
 .srvchip{display:inline-flex;align-items:center;margin-left:8px;font-size:12px;font-weight:800;padding:2px 9px;border-radius:999px;background:#fff4d6;color:#6b4a00;border:1px solid #f0cf73;vertical-align:middle;white-space:nowrap}:root[data-theme="dark"] .srvchip{background:#3a2f12;color:#f3d27a;border-color:#6b5520}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .srvchip{background:#3a2f12;color:#f3d27a;border-color:#6b5520}}
@@ -1510,7 +1531,7 @@ header.top h1#ttl .ver{background:color-mix(in srgb,var(--accent) 12%,var(--surf
 </style>
 
 <header class="top">
-  <div class="brand" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px"><h1 id="ttl">땡자군주가 만든 퍼플매크로 제작기 <span class="ver" title="이 버전이 아니면 최신 파일을 다시 받아 주세요">최신 11/20 · v275</span><span class="srvchip" title="켄트 · 오렌 서버 전용이에요. 레거시 · 기란 · 하이네 서버는 상담 및 후원에서 문의 주세요">🛡 켄트·오렌 전용</span></h1><span class="cheer2">오렌2 직장인 혈맹 여러분 화이팅입니다!</span><nav class="gnb-nav" aria-label="메인 메뉴"><button type="button" class="gnb-btn active" data-v="make" title="하루 일정 만들기 · 동작 편집"><span class="gnb-ico">🛠️</span> 제작기</button><button type="button" class="gnb-btn" data-v="sup" title="상담 · 기능 개발 요청 · 후원 안내 (카카오톡 오픈채팅)"><span class="gnb-ico">💬</span> 상담 및 후원</button><button type="button" class="gnb-btn gnb-must" data-v="man" title="처음 쓰는 분 안내 · 게임 세팅 체크리스트 · 매뉴얼 (꼭 읽어 주세요)"><span class="gnb-ico">📘</span> 필독사항!!</button><button type="button" class="gnb-btn" data-v="rrm" title="리세마라/서커스 준비 · 진행 순서"><span class="gnb-ico">🔁</span> 리세·서커스</button><button type="button" class="gnb-btn" data-v="hy" title="알비노 · 악세 강화 · 시간 던전 · 컬렉션 팁 (참고용)"><span class="gnb-ico">⚡</span> 꿀팁</button><button type="button" class="gnb-btn" data-v="reb" title="클래스 체인지 · 13대 클래스 출시일 · 역대 리부트"><span class="gnb-ico">⚔️</span> 클래스 체인지</button></nav><span hidden><button type="button" id="manPageBtn" class="man-hdr-btn" title="게임 세팅 4단계 상단바 · 세팅 체크리스트 · 기본 세팅 매뉴얼(설명서) 페이지 열기"><span>📘 게임 세팅 · 매뉴얼</span><span class="man-hdr-badge" id="manHdrBadge">세팅 5/5 · 4단계 안내 ↗</span></button><button type="button" id="rrPageBtn" class="man-hdr-btn rr-hdr-btn" title="리세마라/서커스 준비 · 진행 순서 · 그림 안내 페이지 열기"><span>🔁 리세마라/서커스 안내문</span></button></span><div class="sub" id="meta" hidden></div><div class="stats" id="stats" hidden></div></div>
+  <div class="brand" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px"><h1 id="ttl">땡자군주가 만든 퍼플매크로 제작기 <span class="ver" title="이 버전이 아니면 최신 파일을 다시 받아 주세요">최신 11/20 · v275</span><span class="srvchip" title="켄트 · 오렌 서버 전용이에요. 레거시 · 기란 · 하이네 서버는 상담 및 후원에서 문의 주세요">🛡 켄트·오렌 전용</span></h1><span class="cheer2">오렌2 직장인 혈맹 여러분 화이팅입니다!</span><nav class="gnb-nav" aria-label="메인 메뉴"><button type="button" class="gnb-btn active" data-v="make" title="하루 일정 만들기 · 동작 편집"><span class="gnb-ico">🛠️</span> 제작기</button><button type="button" class="gnb-btn" data-v="sup" title="상담 · 기능 개발 요청 · 후원 안내 (카카오톡 오픈채팅)"><span class="gnb-ico">💬</span> 상담 및 후원</button><button type="button" class="gnb-btn gnb-must" data-v="man" title="처음 쓰는 분 안내 · 게임 세팅 체크리스트 · 매뉴얼 (꼭 읽어 주세요)"><span class="gnb-ico">📘</span> 필독사항!!</button><button type="button" class="gnb-btn" data-v="rrm" title="리세마라/서커스 준비 · 진행 순서"><span class="gnb-ico">🔁</span> 리세·서커스</button><button type="button" class="gnb-btn" data-v="hy" title="알비노 · 악세 강화 · 시간 던전 · 컬렉션 팁 (참고용)"><span class="gnb-ico">⚡</span> 꿀팁</button><button type="button" class="gnb-btn" data-v="reb" title="클래스 체인지 · 13대 클래스 출시일 · 역대 리부트"><span class="gnb-ico">⚔️</span> 클래스 체인지</button><button type="button" class="gnb-btn" data-v="hud" title="받은 매크로 파일(최대 10개)을 넣으면 캐릭마다 지금 어디서 무엇을 하는지 보여 줘요"><span class="gnb-ico">🖥</span> HUD</button></nav><span hidden><button type="button" id="manPageBtn" class="man-hdr-btn" title="게임 세팅 4단계 상단바 · 세팅 체크리스트 · 기본 세팅 매뉴얼(설명서) 페이지 열기"><span>📘 게임 세팅 · 매뉴얼</span><span class="man-hdr-badge" id="manHdrBadge">세팅 5/5 · 4단계 안내 ↗</span></button><button type="button" id="rrPageBtn" class="man-hdr-btn rr-hdr-btn" title="리세마라/서커스 준비 · 진행 순서 · 그림 안내 페이지 열기"><span>🔁 리세마라/서커스 안내문</span></button></span><div class="sub" id="meta" hidden></div><div class="stats" id="stats" hidden></div></div>
   <div class="right"><div class="cheer" hidden>💪 오렌2 직장인 혈맹 여러분 화이팅입니다!</div><button class="dl top" id="cfgDlTop" style="display:none">⌨️ 키보드세팅 다운로드 <small>(필수 · .cfg 바로 받기)</small></button><div class="ctrls">
   <div class="seg" id="tabs"><button data-tab="make" aria-pressed="true">🆕 일정 만들기</button><button data-tab="edit" aria-pressed="false">🔧<span class="hlbl2"> 동작 하나하나</span> 편집</button></div>
   <div class="acts"><button class="pri" id="exp" title="매크로 파일(.json) 받기">💾 파일 받기</button><span class="expst" id="expSt" hidden></span><button id="keyMapTopBtn" title="인게임 키보드 단축키(.cfg) 배치도 보기">⌨️<span class="hlbl"> 단축키</span></button><button id="themeBtn" title="다크 모드 / 라이트 모드 전환" aria-label="화면 테마 전환">🌙</button><button id="gear" title="파일 불러오기 등" aria-label="더 많은 기능">⚙</button></div>
@@ -1927,6 +1948,7 @@ header.top h1#ttl .ver{background:color-mix(in srgb,var(--accent) 12%,var(--surf
   
   </div></div>
   <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/20 · v275)</span></summary><ul>
+   <li><b>11/20</b> 🖥 v275 HUD 모드 추가 (클래스 체인지 옆) — 받은 매크로 파일(.json)을 최대 10개 넣으면 아이디·시작 시각을 파일에서 읽어 캐릭마다 지금 하는 일·남은 시간·다음 할 일·24시간 막대를 보여 줌 · ◀ 직전 / ● 지금 / ▶ 다음 동작(우편·탐험·출석·기부 등)까지 표시해 실제 게임과 맞는지 확인 가능 · 장소별 인원 (기란감옥·오만·과말 3캐릭↑, 본토 4캐릭↑ 빨간 표시) · 1분마다 새로 계산 · 매크로 동작 변화 없음</li>
    <li><b>11/20</b> 🩹 v275 탐험 중간 점검 추가 (📌 항상 하는 일 → 🧭 탐험 아래 · 기본 2시간마다) — 인형·성물·변신 중 죽은 것만 다시 보내고 진행 중 탐험은 남은 시간 그대로 (버프 차감 창은 취소) · 변신·성물 보상 보관함 꺼내기 동작 삭제 (직접 꺼내기) · 📘 매뉴얼·리세 안내에 "슬롯이 몇 개 열려 있든 사용 가능 (기본 2~3개도)" 추가 · 🦸변신/💠성물 따로 체크 삭제 (🧭 탐험 하나로 인형·성물·변신 모두 · 중복 실행 없앰) · 🌍 월드 던전 카드: 접힌 상태에서도 던전·사냥터(개미굴 A·B·C 등) 바로 고르기 · 시간 옆 "🧰 재정비 없음" 표시 삭제 (가운데 1번 재정비만 표시) · 재정비 체크 글자 줄임 (1시간마다 재정비 → 1H 정비 · 과말 20M 정비) · 월드 던전 카드는 시간 칸을 좁혀 던전·사냥터 선택이 다 보이게 (좁은 화면은 2줄) · 에스카 C·D·E 고르면 "🚶 수동으로 사냥터까지 이동" 표시 · 20번 이동 → "도보 20보 이동 후 사냥"으로 이름 변경 · 에스카로스는 도보 20보가 기본 · 🪶 가볍게: 그림 WebP 압축 · 동작 하나하나 화면은 열 때만 그림 · 녹화 데이터 짧게 저장 · 업데이트 내역 최근 10개만 (매크로 결과는 그대로) · 💬 상단 메뉴에 "상담 및 후원" 추가 (오픈채팅 QR · 후원 방법 6단계) · 🛡 켄트·오렌 전용 표시 (레거시·기란·하이네는 문의) · 🏷️ 파일 이름 맨 앞에 시작 시각 (예: 10시15분 시작 · …) · 🧭 탐험할 곳 인형·성물·변신 따로 끄기 (녹화에 변신이 들어 있어 체크와 상관없이 돌던 문제 수정) · 리세 캐릭 이름 기본값을 본캐·부캐1~5로 (처음 여는 컴퓨터) · 🎉 기간제 이벤트 목록 20개 (📌 항상 하는 일) · 🎉 이벤트 18종 동작 추가 (lineagem-macro 동작 · 운영자 허락) · 날짜(시작~종료)를 넣어야만 켜지고 시련·파티 던전 뒤에 차례로 진행 · 이벤트마다 방식 선택 · 🎉 기간제 이벤트 칸을 왼쪽 🐢 렉·클릭 기다림 바로 위로 · 에스카로스 도보 20보 기본값이 예전 저장값(C) 때문에 안 먹던 것 수정 · 🕐 리세/서커스 시계: 바깥 고리 = 본캐 · 안쪽 고리 = 리세 캐릭 (B안) · 시계 말풍선이 05:00 초기화 글자와 겹치지 않게 자리 옮김 · 바깥 고리는 1번(본캐) 할 일만 · 리세 도는 구간은 큰 고리를 글자 없이 연한 줄무늬로 이어서 칠함 (빈칸 없음) · 📘 매뉴얼 맨 위에 "🔰 처음 쓰는 분 쉬운 안내" (3단계 · 종류 고르기 · 자주 하는 실수 · 리세 · 시계 보는 법 · 자동 끼워 넣기 · 할 일 직접 추가·자유 조합 · 줄임말 · 편집) · ＋ 할 일 추가 칸에 끌어다 놓기 · 자유 조합 설명 · 상단 메뉴 "매뉴얼" → 붉은 글씨 "필독사항!!" · 🧒 초보자 가이드 (평일 · 평일+오만 · 월드 던전 · 저랩용 · 리세: 만드는 법 · 고르는 것과 이유 · 🔒 고정된 것과 이유 · 하루 예시 · 리세 슬롯 개수별 설정) · 👥 묶음 받기: 캐릭마다 기란·오만·과말·스케줄을 덜 붐비는 시간대에 엇갈려 배치 (9캐릭 기준 기란 같은 시간 최대 8→3캐릭 · 하루 총량·월보 시각 그대로)</li>
    <li><b>11/19</b> 📅 v274 스케줄 22:00 고정 해제 → 본토가 3시간 넘으면 사이사이에 스케줄 1시간씩 섞기 (하루 스케줄 기본 4시간 · 본토 2/3/4h · 한 번 1/1.5/2h · "시각 고정"을 고르면 예전처럼) · 월드보스는 정시 그대로 · 본토에 다시 들어갈 때마다 재정비 · 🏴 기란감옥 연속 최대 2시간 (넘으면 사이에 본토 1시간 · 세부 설정에서 1~3h/제한 없음)</li>
    <li><b>11/19</b> 🌱 v273 재접속 → 저랩용: 에바왕국 던전 5h(1시간마다 재정비) → 게 밭 2h → 숙제·시련(턴 언데드·미믹) → 과말 북섬 1h → 스케줄 3h → 게 밭 나머지 · 24시간 넘으면 마지막 게 밭을 줄임 · 할 일 추가에 🏰 에바왕국 던전(던전 묶음)·필드 사냥에 게 밭 추가 (게 밭은 지도 좌표 받기 전까지 기억 장소로) · 🕐 24시간 타임라인을 원형 시계 + 순서표로 (▬ 막대로도 전환) · 좁은 칸은 바깥 말풍선 · 막대에 'field' 대신 사냥터 이름 · 말로 만들기 칸 삭제 · 🦀 게 밭: 에바왕국 입구 → 바닥 클릭으로 걸어서(녹화 · 예비 키보드) → AUTO · 👥 리세/서커스 기본: 7슬롯 · 땡자 고정 · 2→6번 칸 (투싸 제외) · 7·8·10~12슬롯도 돌릴 캐릭 수 선택 (맨 아래 캐릭 빼기) · 🧝 하딘텔: 이동하기 3초 뒤 AUTO · 그힐은 AUTO 10초 뒤부터 (마을에서 그힐만 쓰던 문제) · 🔧 리세 24시간 맞춤: 시작 시각이 저절로 '지금'으로 바뀌어 29시간이 되던 문제 고침 · ⏰ 리세 24시간 맞춤에 '리세 시작: 지금 바로' (켜자마자 리세 · 매일 그 시각) · 🗂 리세/서커스 옵션을 캐릭 선택 / 👑 1번 캐릭(본캐용) / 👥 2~13번 캐릭(리세용)으로 나눔 · 🔧 '지금 시각으로 다시 만들기'가 섞기·기란 2·2·1·리세 24h를 빠뜨리던 문제 · 🌀 하딘텔: 월드보스 뒤면 20초 기다렸다가 이동 · 🔀 월드 던전 탭 = 종류별로 섞어서 2시간씩 (본토 전부도 가능 · 오만의 탑·요일 던전 제외) · 월드 던전 탭 = 숙제 + 월드 던전만 (기란·스케줄·본토·월드보스 없음 · 개미굴·에스카·해적섬 하루 7시간 · 잊섬 주 12시간=하루 1시간 40분 한도) · 시계·순서표에 월드 던전 이름(개미굴·에스카…) 표시 · 📅 요일 던전: 테베 월·티칼 화·아틀 수 20:30~22:30 + 모두 주말(토·일) · 라스타·악몽 주말 · 카드 목록을 오른쪽→왼쪽으로 끌어서 테베①·티칼②·아틀③·라스타⑤·악몽⑥ (🔒 스샷으로 좌표 확인 전까지 잠금) · 🏷️ 리세/서커스 캐릭 이름 (시계·순서표·캐릭 묶음·카톡 시간표·파일 이름)</li>
@@ -2160,6 +2182,16 @@ header.top h1#ttl .ver{background:color-mix(in srgb,var(--accent) 12%,var(--surf
    </div>
   </div>
  </div>
+</div>
+<div id="hudview">
+ <div class="man-topbar reb-topbar">
+   <div class="man-top-ttl"><b>🖥 HUD 모드 · 캐릭별 지금 현황</b><span class="sub">받은 매크로 파일(.json)을 넣으면 10캐릭까지 지금 어디서 무엇을 하는지, 직전·다음 동작(우편·탐험·출석 등)까지 보여 줘요 · 1분마다 새로 계산</span></div>
+   <div class="man-top-acts"><button type="button" id="hudBackBtn" class="pri">← 🛠️ 제작기로 돌아가기</button></div>
+ </div>
+ <div class="hud-drop" id="hudDrop"><label class="pri" style="padding:8px 14px;border-radius:10px;font-weight:900">📂 매크로 파일 넣기<input type="file" id="hudFile" accept=".json,application/json" multiple></label><span class="sub">여기로 끌어다 놓아도 돼요 · 묶음 받기 파일 9개를 한 번에 넣어도 OK · 최대 10개</span><button type="button" id="hudClear">🗑 모두 지우기</button></div>
+ <div class="sub" style="margin:0 2px 6px">⚠ 실제 게임 화면이 아니라 <b>파일의 시작 시각에 켰다고 가정한 예상 위치</b>예요. 아이디·시작 시각은 파일에서 자동으로 읽어요 (늦게 켰다면 카드의 <b>시작</b>만 고치면 돼요).</div>
+ <div class="hud-sum" id="hudSum"></div>
+ <div class="hud-grid" id="hudGrid"></div>
 </div>
 <div id="rebview">
  <div class="man-topbar reb-topbar">
@@ -5390,6 +5422,61 @@ function staggerBest(base,occ,tries){let best=null,bs=1e18;const T=tries||12;for
     // 본토 즐겨찾기 씨앗도 몇 번 골라 봄
     for(let q=0;q<6;q++){const sd=1+Math.floor(Math.random()*1e9);NB.items.forEach(x=>{if(x.job==='bon')x.seed=sd});const g=bmixOcc(null,NB.items),sc=bmixScore(occ,g);if(sc<bs){bs=sc;best=JSON.stringify(NB.items)}}}
   if(!best)return false;NB.items=JSON.parse(best);bmixOcc(occ,NB.items);return true}
+
+// v275: 🖥 HUD 모드 — 받은 파일(최대 10개)로 캐릭별 지금 할 일 · 다음 할 일 · 장소별 인원
+let HUD=[];try{HUD=JSON.parse(localStorage.getItem('pmk-hud-v1')||'[]')}catch(e){HUD=[]}
+const hudSave=()=>{try{localStorage.setItem('pmk-hud-v1',JSON.stringify(HUD))}catch(e){}};
+const HUD_PLACE={dungeon:'🏴 기란감옥',bon:'🌾 본토',sch:'📅 스케줄',gm:'⚔️ 과말섬',tower1:'🗼 오만',wboss:'🐉 월드보스',trial:'📝 숙제',home:'📝 숙제',albino:'🍄 하딘텔',eva:'🏰 에바',field:'🏞️ 필드'};
+const HUD_C=new Map();
+function hudCompute(st){const keep=Object.assign({},NB),keepK=Object.keys(NB);let out=null;
+  try{NB.items=(st.items||[]).map(it=>Object.assign({hours:JOBS[it.job]&&JOBS[it.job].def!=null?JOBS[it.job].def:1,dest:defDest()},it)).filter(it=>JOBS[it.job]);
+    NB.dailyHunt=!!st.dailyHunt;NB.dailyOff=Object.assign({},st.dailyOff||{});NB.dailyT=st.dailyT||'';NB.clanT=st.clanT||'';NB.lateT=st.lateT||'';
+    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','revive','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});
+    if(st.mail)NB.mail=Object.assign({},keep.mail,st.mail);if(st.start){NB.start=st.start;NB.auto=false}EXP_CACHE=null;
+    const {st:T,total}=itemTimes(),S0=startMin(),RG=rrGroups(),segs=[];
+    NB.items.forEach((it,i)=>{if(it.disabled||T[i]==null)return;let nx=total;for(let k=i+1;k<NB.items.length;k++)if(!NB.items[k].disabled&&T[k]!=null){nx=T[k];break}
+      const g=RG?RG.find(g=>i>=g.a&&i<=g.b):null,s={k:it.job,a:T[i]/60000,b:nx/60000,i};
+      segs.push({k:it.job,a:s.a,b:s.b,i,nm:tlNm(s),ico:tlIco(s),pl:it.job==='wdg'?'🌍 '+tlNm(s):(HUD_PLACE[it.job]||tlIco(s)+' '+tlNm(s)),who:g&&!g.wait?(rrNm(g.n)||g.n+'번'):''})});
+    // v275: 동작 하나하나의 시각 → 직전·다음 이벤트 (우편·탐험·출석 같은 사냥 중 일도 따로)
+    const ev=[];let t=0;expandAll().forEach(a=>{t+=a.gap;const s0=t;t+=span(a);const sg=a.it!=null?segs.find(x=>x.i===a.it):null;
+      const lb=a._tag||(sg?sg.ico+' '+sg.nm+(sg.who?' ('+sg.who+')':''):'');if(!lb)return;const L=ev[ev.length-1];
+      if(L&&L.lb===lb&&s0-L.b<180000)L.b=t;else ev.push({lb,a:s0,b:t})});
+    out={S0,total:total/60000,segs,ev:ev.map(e=>({lb:e.lb,a:e.a/60000,b:e.b/60000})),rep:String(st.repeat==null?'-1':st.repeat)}}catch(e){out=null}
+  Object.keys(NB).forEach(k=>{if(!keepK.includes(k))delete NB[k]});Object.assign(NB,keep);EXP_CACHE=null;return out}
+const hudC=h=>{if(!HUD_C.has(h.id))HUD_C.set(h.id,hudCompute(h.st));return HUD_C.get(h.id)};
+function hudAdd(files){const fs=[...files].filter(f=>/\.json$/i.test(f.name));if(!fs.length){toast('json 파일을 넣어 주세요');return}
+  let left=10-HUD.length;if(left<=0){toast('최대 10개까지예요 · 먼저 지워 주세요');return}
+  fs.slice(0,left).forEach(f=>{const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result),R0=resolveState(o);if(!R0){toast('⚠ '+f.name+': 이 제작기에서 만든 파일이 아니에요');return}
+    const title=String(R0.title||f.name).replace(/\s*\[[^\]]*\]\s*$/,''),seg=title.split('·').map(x=>x.trim()).filter(Boolean),lbl=seg.length>=3?seg[seg.length-1]:'캐릭'+(HUD.length+1);
+    const now=new Date(),sm=(()=>{const p=String(R0.st.start||'').split(':');if(p.length===2)return (+p[0])*60+(+p[1]);const m=title.match(/(\d{1,2})시(\d{1,2})분 시작/);return m?(+m[1])*60+(+m[2]):null})();
+    let at=null;if(sm!=null){const d=new Date(now);d.setHours(Math.floor(sm/60),sm%60,0,0);if(d>now)d.setDate(d.getDate()-1);at=d.getTime()}
+    HUD.push({id:Date.now()+Math.random(),name:lbl.slice(0,30),title,st:R0.st,at:at||Date.now()});hudSave();hudRender()}catch(e){toast('⚠ '+f.name+': 읽을 수 없어요')}};r.readAsText(f)});
+  if(fs.length>left)toast('10개까지만 넣었어요')}
+function hudRender(){const grid=$('#hudGrid'),sum=$('#hudSum');if(!grid)return;
+  if(!HUD.length){grid.innerHTML='<div class="hud-empty">📂 위에서 매크로 파일을 넣어 주세요 (제작기에서 받은 .json · 묶음 받기 파일도 OK)</div>';sum.innerHTML='';return}
+  const now=Date.now(),cnt={};const cards=HUD.map((h,ix)=>{const c=hudC(h);if(!c)return `<div class="hud-c"><div class="hh"><b>${esc(h.name)}</b><button data-hrm="${ix}">✕</button></div><div class="sub">일정을 읽지 못했어요</div></div>`;
+    let el=(now-h.at)/60000;const loop=c.rep==='-1'||c.rep==='0';if(loop)el=((el%c.total)+c.total)%c.total;
+    const done=!loop&&el>=c.total,sg=done?null:c.segs.find(s=>s.a<=el&&el<s.b),nx=done?null:c.segs.find(s=>s.a>el);
+    if(sg){cnt[sg.pl]=(cnt[sg.pl]||0)+1}
+    const pct=sg?Math.round((el-sg.a)/Math.max(1,sg.b-sg.a)*100):100,atm=(()=>{const d=new Date(h.at);return d.getHours()*60+d.getMinutes()})(),clk=m=>hm(Math.round(atm+m)%1440);
+    const strip=c.segs.map(s=>`<span style="left:${(s.a/c.total*100).toFixed(2)}%;width:${((s.b-s.a)/c.total*100).toFixed(2)}%;background:${TLC[s.k]||'#ddd'}" title="${esc(s.nm+' '+clk(s.a)+'~'+clk(s.b))}"></span>`).join('');
+    const atv=(()=>{const d=new Date(h.at);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')})();
+    return `<div class="hud-c${done?' done':''}"><div class="hh"><b title="${esc(h.title)}">👤 ${esc(h.name)}</b><button data-hrm="${ix}" title="빼기">✕</button></div>
+      <div class="hn">${done?'⏹ 끝났어요':sg?`${sg.ico} ${esc(sg.nm)}${sg.who?` <small>(${esc(sg.who)})</small>`:''}`:'⏳ 대기'}</div>
+      ${sg?`<div class="hp"><i style="width:${pct}%"></i></div><div class="hx"><span>${clk(sg.a)} ~ ${clk(sg.b)}</span><b>${dur(Math.round(sg.b-el))} 남음</b></div>`:''}
+      ${nx?`<div class="hx"><span>다음 할 일: ${nx.ico} ${esc(nx.nm)}${nx.who?' ('+esc(nx.who)+')':''}</span><span>${clk(nx.a)}</span></div>`:''}
+      ${done?'':(()=>{const E=c.ev||[];let k=-1;for(let j=0;j<E.length;j++){if(E[j].a<=el)k=j;else break}const cur=k>=0&&E[k].b>=el?E[k]:null,pv=cur?E[k-1]:(k>=0?E[k]:null),nv=E[k+1];const ago=m=>m<1?'방금':dur(Math.round(m))+(m>=0?' 전':'');
+        return `<div class="hev">${pv?`<div><i>◀ 직전</i><span>${esc(pv.lb)}</span><em>${clk(pv.a)} · ${ago(el-pv.b)}</em></div>`:''}${cur?`<div class="now"><i>● 지금</i><span>${esc(cur.lb)}</span><em>${clk(cur.a)}~</em></div>`:''}${nv?`<div><i>▶ 다음</i><span>${esc(nv.lb)}</span><em>${clk(nv.a)} · ${dur(Math.max(1,Math.round(nv.a-el)))} 후</em></div>`:''}</div>`})()}
+      <div class="hst">${strip}<em style="left:${Math.min(100,el/c.total*100).toFixed(2)}%"></em></div>
+      <div class="hf">⏰ 시작 <input type="time" class="hudat" data-hi="${ix}" value="${atv}"> <span>${loop?'24시간 반복':'1번 실행 · '+dur(Math.round(c.total))}</span></div></div>`});
+  grid.innerHTML=cards.join('');
+  const hot=k=>/기란감옥|오만|과말/.test(k)?3:/본토/.test(k)?4:99;sum.innerHTML='<b style="font-size:13.5px">지금 '+hm(new Date().getHours()*60+new Date().getMinutes())+'</b>'+Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<span class="hs${v>=hot(k)?' hot':''}">${esc(k)} ${v}캐릭</span>`).join('')}
+{const dz=$('#hudDrop');if(dz){['dragover','dragenter'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();e.stopPropagation();dz.classList.add('over')}));['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{dz.classList.remove('over')}));dz.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();if(e.dataTransfer&&e.dataTransfer.files)hudAdd(e.dataTransfer.files)})}
+ const fi=$('#hudFile');if(fi)fi.addEventListener('change',e=>{hudAdd(e.target.files);e.target.value=''});
+ const hc=$('#hudClear');if(hc)hc.addEventListener('click',()=>{HUD=[];HUD_C.clear();hudSave();hudRender()});
+ const hg=$('#hudGrid');if(hg){hg.addEventListener('click',e=>{const b=e.target.closest('[data-hrm]');if(!b)return;HUD_C.delete((HUD[+b.dataset.hrm]||{}).id);HUD.splice(+b.dataset.hrm,1);hudSave();hudRender()});
+  hg.addEventListener('change',e=>{const x=e.target.closest('.hudat');if(!x||!x.value)return;const h=HUD[+x.dataset.hi];if(!h)return;const [hh,mm]=x.value.split(':').map(Number),d=new Date();d.setHours(hh,mm,0,0);if(d.getTime()>Date.now())d.setDate(d.getDate()-1);h.at=d.getTime();hudSave();hudRender()})}}
+setInterval(()=>{try{if(S.tab==='hud')hudRender()}catch(e){}},60000);
 let BATCH=[];function batchMake(){if(!NB.items.length){toast('일정을 먼저 만들어 주세요');return}const n=Math.min(12,Math.max(2,+($('#batchN')||{}).value||9)),stag=+($('#batchStag')||{}).value||0;SETSEL.bn=n;SETSEL.bstag=stag;saveSel();
   const base=JSON.stringify(NB.items),hist=NB.hist.slice(),ttl=NB.title,ta=NB.titleAuto,st0=startMin(),origStart=NB.start,origAuto=NB.auto;BATCH=[];toast('👥 캐릭 '+n+'개 일정을 만드는 중…');let i=0;const OCC={};
   const one=()=>{if(i>=n){NB.items=JSON.parse(base);NB.hist=hist;NB.title=ttl;NB.titleAuto=ta;NB.start=origStart;NB.auto=origAuto;NB._shufBase=null;renderMaker();showBatch();return}
@@ -5603,20 +5690,21 @@ $('#codeLoad').addEventListener('click',()=>{
 $('#mkRep').addEventListener('change',e=>{NB.repeat=e.target.value});
 function setTab(t){
   S.tab=t;
-  document.querySelectorAll('.gnb-btn').forEach(b=>b.classList.toggle('active',b.dataset.v===t||(t==='edit'&&b.dataset.v==='make')));document.body.classList.toggle('hy',t==='hy');document.body.classList.toggle('reb',t==='reb');document.body.classList.toggle('sup',t==='sup');
+  document.querySelectorAll('.gnb-btn').forEach(b=>b.classList.toggle('active',b.dataset.v===t||(t==='edit'&&b.dataset.v==='make')));document.body.classList.toggle('hy',t==='hy');document.body.classList.toggle('reb',t==='reb');document.body.classList.toggle('sup',t==='sup');document.body.classList.toggle('hud',t==='hud');
   document.body.classList.toggle('mk',t==='make');
   document.body.classList.toggle('man',t==='man');document.body.classList.toggle('rrm',t==='rrm');{const rb=document.getElementById('rrPageBtn');if(rb)rb.classList.toggle('on',t==='rrm')}
   document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===t));
   const mp=$('#manPageBtn');if(mp)mp.classList.toggle('on',t==='man');
   if(t==='make')renderMaker();
   else if(t==='man'){renderCk();updSteps();window.scrollTo({top:0,behavior:'smooth'})}
+  else if(t==='hud'){hudRender();window.scrollTo({top:0,behavior:'smooth'})}
   else if(t==='rrm'||t==='hy'||t==='reb'||t==='sup'){window.scrollTo({top:0,behavior:'smooth'})}
   else renderAll();
 }
 $('#tabs').addEventListener('click',ev=>{const b=ev.target.closest('button');if(b)setTab(b.dataset.tab)});
 // v216: 상단 메뉴 · 꿀팁/연표 검색
 document.addEventListener('click',ev=>{const kb=ev.target.closest&&ev.target.closest('.kg-tabs button');if(kb){document.querySelectorAll('.kg-tabs button').forEach(x=>x.classList.toggle('on',x===kb));document.querySelectorAll('.kg-p').forEach(p=>p.classList.toggle('on',p.dataset.kg===kb.dataset.kg));return}   // v275: 초보자 가이드 탭
-  const g=ev.target.closest('.gnb-btn');if(g&&g.dataset.v){setTab(g.dataset.v);return}if(ev.target.id==='hyBackBtn'||ev.target.id==='rebBackBtn'||ev.target.id==='supBackBtn')setTab('make');if(ev.target.id==='supCopy'){const u=(document.getElementById('supUrl')||{}).textContent||'';const ok=()=>toast('📋 오픈채팅 주소를 복사했어요');try{navigator.clipboard.writeText(u).then(ok,()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('supUrl'));const sl=getSelection();sl.removeAllRanges();sl.addRange(r);toast('주소를 선택해 두었어요 · Ctrl+C로 복사하세요')})}catch(e){}}});
+  const g=ev.target.closest('.gnb-btn');if(g&&g.dataset.v){setTab(g.dataset.v);return}if(ev.target.id==='hyBackBtn'||ev.target.id==='rebBackBtn'||ev.target.id==='supBackBtn'||ev.target.id==='hudBackBtn')setTab('make');if(ev.target.id==='supCopy'){const u=(document.getElementById('supUrl')||{}).textContent||'';const ok=()=>toast('📋 오픈채팅 주소를 복사했어요');try{navigator.clipboard.writeText(u).then(ok,()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('supUrl'));const sl=getSelection();sl.removeAllRanges();sl.addRange(r);toast('주소를 선택해 두었어요 · Ctrl+C로 복사하세요')})}catch(e){}}});
 [['hySearchInput','hySearchClear','hySearchCount','#hyview .rr-card'],['rebSearchInput','rebSearchClear','rebSearchCount','#rebview .reb-card,#rebview .rr-card']].forEach(([inp,clr,cnt,sel])=>{const I=document.getElementById(inp);if(!I)return;const C=document.getElementById(clr),N=document.getElementById(cnt);
   const run=()=>{const q=I.value.trim().toLowerCase(),L=document.querySelectorAll(sel);let n=0;L.forEach(c=>{const ok=!q||(c.textContent||'').toLowerCase().includes(q);c.style.display=ok?'':'none';if(ok)n++});if(N)N.textContent=q?n+'/'+L.length+'건':''};
   I.addEventListener('input',run);if(C)C.addEventListener('click',()=>{I.value='';run();I.focus()})});
