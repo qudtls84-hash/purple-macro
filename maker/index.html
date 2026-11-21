@@ -1961,6 +1961,7 @@ button[data-rratm].on,button[data-rrpre].on,button[data-rr24now].on{background:v
   
   </div></div>
   <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/21 · v275)</span></summary><ul>
+   <li><b>11/21</b> 🖥 v275 HUD: 본토 사냥이 지금 <b>몇 번(즐겨찾기 1~6번 · 이름 붙였으면 이름)</b>에 있는지 · 다음 번호와 이동 시각 · 동작 목록에도 '본토 3번 이동' · 다음 할 일 본토는 첫 번호 · ➕ 할 일 추가에서 📅 스케줄을 '사냥' 묶음으로 옮김</li>
    <li><b>11/21</b> 🌍 v275 월드 던전 입장 뒤 <b>화면 정리(열린 창 닫기)</b>를 한 번 하고 N(NPC 즉시 이동)을 누르게 — 에스카로스 입장 뒤 메뉴 화면이 열려 있어 NPC 목록이 안 열리던 문제 (월드 던전 10곳 모두 · 약 5초 늘어남)</li>
    <li><b>11/21</b> 🦀 v275 게 밭 가는 길 기본을 <b>⌨ 키보드(A·W·D 녹화)</b>로 바꿈 — 바닥 클릭 길이 맞지 않던 문제 · 🖱 클릭은 카드에서 고를 수 있게 남겨 둠</li>
    <li><b>11/21</b> 🔒 v275 리세 24시간 맞춤: 리세(2~13번) 시작 칸을 <b>05:00 고정 칸</b>으로 — 지우기·끄기 안 됨 · 1번 앞 일정(하딘텔·스케줄 등)을 바꾸면 이 칸만 늘고 줄어 리세는 늘 05:00 · 남는 시간을 [스케줄로 채우기]/[본토로 채우기] · 1번 앞 일정이 05:00을 넘으면 리세를 밀지 않고 '⚡ 1번 앞 일정 줄이기' · 24시간이 넘으면 '⚡ 1번 마무리 줄여 맞춤' (리세는 그대로) + 안 되면 '켜는 시각을 몇 시 이후로 / 캐릭당 스케줄 줄이기' 안내</li>
@@ -3190,7 +3191,7 @@ function expandAll(){
       }else if(it.spot==='seq'){                                       // 🔁 선택한 번호들 순서대로 회전
         order=favs.map((_,k)=>pool[(k+(+it.offset||0))%pool.length]);
       }else order=favs.map(()=>Math.min(6,Math.max(1,+it.spot||1)));
-      favs.forEach((a,k)=>{const sp=order[k],xy=BONXY[sp-1];a.ev.forEach(x=>{x.px=xy[0];x.py=xy[1];x.mod=sp!==1})});
+      favs.forEach((a,k)=>{const sp=order[k],xy=BONXY[sp-1];a._bsp=sp;a.ev.forEach(x=>{x.px=xy[0];x.py=xy[1];x.mod=sp!==1})});
       NB.bonOrder=NB.bonOrder||{};NB.bonOrder[idx]=order;}
     else if(it.job==='tele'){const dIdx=Math.min(TELE.length-1,Math.max(0,+it.dest||0)),auto=it.auto!==undefined?!!it.auto:/텔레포터/.test((TELE[dIdx]||[])[0]||'');const l=teleActs({dest:dIdx,auto});l[0].gap=2000;put(l);if(h>0)pend+=Math.round(h*3600000)}
     else if(it.job==='mail'){put(mailBlock(2000))}
@@ -5408,7 +5409,7 @@ function daySum(segs,S0){const at=m=>hm(Math.round(S0+m)%1440),f=k=>segs.find(x=
   if(f('wboss'))o.push(['🐉 월드보스',at(f('wboss').a)]);if(f('trial'))o.push(['⚔️ 시련·파티',at(f('trial').a)]);if(f('tower1'))o.push(['🗼 오만',at(f('tower1').a)]);if(f('sch'))o.push(['📅 스케줄',at(f('sch').a)]);
   return '<div class="daysum">'+o.map(x=>`<span>${x[0]}<b>${x[1]}</b></span>`).join('')+'</div>'}
 // 4) 종류별 보기
-const ADD_GROUPS=[['사냥',['bon','dungeon','gm','tower1','albino','field','bmark','qwarp']],['던전 · 보스',['trial','wboss','wdg','eva','dragon','dark','spec']],['보상 · 정비',['home','explore','restock','sch','claim','clanwk']],['이동 · 셀프',['tele','rest','waitAt']],['리세 · 서커스',['store','swap','fetch']]];   // v238: + 할 일 추가 묶음
+const ADD_GROUPS=[['사냥',['bon','sch','dungeon','gm','tower1','albino','field','bmark','qwarp']],['던전 · 보스',['trial','wboss','wdg','eva','dragon','dark','spec']],['보상 · 정비',['home','explore','restock','claim','clanwk']],['이동 · 셀프',['tele','rest','waitAt']],['리세 · 서커스',['store','swap','fetch']]];   // v238: + 할 일 추가 묶음
 function addFilter(){const q=(($('#addSearch')||{}).value||'').trim().toLowerCase();document.querySelectorAll('#addbar .addgrp').forEach(g=>{let n=0;g.querySelectorAll('.addcard').forEach(c=>{const on=!q||c.textContent.toLowerCase().includes(q)||(c.title||'').toLowerCase().includes(q);c.hidden=!on;if(on)n++});g.hidden=!n})}
 document.addEventListener('input',e=>{if(e.target&&e.target.id==='addSearch')addFilter()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){const ap=document.getElementById('addPop');if(ap&&ap.open)ap.open=false}});document.addEventListener('click',e=>{const ap=document.getElementById('addPop');if(ap&&ap.open&&!e.target.closest('#addPop'))ap.open=false});
 function jfBar(){const L=NB.items.filter(x=>!x.disabled);if(L.length<3)return '';const g={};L.forEach(x=>{(g[x.job]=g[x.job]||{n:0,m:0});g[x.job].n++;if(JOBS[x.job].unit)g[x.job].m+=Math.round((+x.hours||0)*60)});
@@ -5478,7 +5479,7 @@ let HUD=[];try{HUD=JSON.parse(localStorage.getItem('pmk-hud-v1')||'[]')}catch(e)
 const hudSave=()=>{try{localStorage.setItem('pmk-hud-v1',JSON.stringify(HUD))}catch(e){}};
 const HUD_PLACE={dungeon:'🏴 기란감옥',bon:'🌾 본토',sch:'📅 스케줄',gm:'⚔️ 과말섬',tower1:'🗼 오만',wboss:'🐉 월드보스',trial:'📝 숙제',home:'📝 숙제',albino:'🍄 하딘텔',eva:'🏰 에바',field:'🏞️ 필드'};
 const HUD_C=new Map();
-function hudCompute(st){const keep=Object.assign({},NB),keepK=Object.keys(NB);let out=null;
+function hudCompute(st){const keep=Object.assign({},NB),keepK=Object.keys(NB),keepBN=BON_NAMES;let out=null;if(st.bonNames&&typeof st.bonNames==='object')BON_NAMES=Object.assign({},keepBN,st.bonNames);
   try{NB.items=(st.items||[]).map(it=>Object.assign({hours:JOBS[it.job]&&JOBS[it.job].def!=null?JOBS[it.job].def:1,dest:defDest()},it)).filter(it=>JOBS[it.job]);
     NB.dailyHunt=!!st.dailyHunt;NB.dailyOff=Object.assign({},st.dailyOff||{});NB.dailyT=st.dailyT||'';NB.clanT=st.clanT||'';NB.lateT=st.lateT||'';
     ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','revive','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});
@@ -5488,11 +5489,11 @@ function hudCompute(st){const keep=Object.assign({},NB),keepK=Object.keys(NB);le
       const g=RG?RG.find(g=>i>=g.a&&i<=g.b):null,s={k:it.job,a:T[i]/60000,b:nx/60000,i};
       segs.push({k:it.job,a:s.a,b:s.b,i,bd:(()=>{try{return jobBadges(it).filter(Boolean).join(' · ')}catch(e){return ''}})(),sess:it.job==='wboss'?(+it.sess||12):0,nm:tlNm(s),ico:tlIco(s),pl:it.job==='wdg'?'🌍 '+tlNm(s):(HUD_PLACE[it.job]||tlIco(s)+' '+tlNm(s)),who:g&&!g.wait?(rrNm(g.n)||g.n+'번'):''})});
     // v275: 동작 하나하나의 시각 → 직전·다음 이벤트 (우편·탐험·출석 같은 사냥 중 일도 따로)
-    const ev=[];let t=0;expandAll().forEach(a=>{t+=a.gap;const s0=t;t+=span(a);const sg=a.it!=null?segs.find(x=>x.i===a.it):null;
-      const lb=a._tag||(sg?sg.ico+' '+sg.nm+(sg.who?' ('+sg.who+')':''):'');if(!lb)return;const L=ev[ev.length-1];
+    const ev=[],bsp=[];let t=0;expandAll().forEach(a=>{t+=a.gap;const s0=t;t+=span(a);if(a._bsp)bsp.push([s0/60000,a._bsp]);const sg=a.it!=null?segs.find(x=>x.i===a.it):null;
+      const lb=a._tag||(sg?sg.ico+' '+sg.nm+(a._bsp?' '+bonLbl(a._bsp)+' 이동':'')+(sg.who?' ('+sg.who+')':''):'');if(!lb)return;const L=ev[ev.length-1];
       if(L&&L.lb===lb&&s0-L.b<180000)L.b=t;else ev.push({lb,a:s0,b:t})});
-    out={S0,total:total/60000,segs,ev:ev.map(e=>({lb:e.lb,a:e.a/60000,b:e.b/60000})),rep:String(st.repeat==null?'-1':st.repeat)}}catch(e){out=null}
-  Object.keys(NB).forEach(k=>{if(!keepK.includes(k))delete NB[k]});Object.assign(NB,keep);EXP_CACHE=null;return out}
+    out={S0,total:total/60000,segs,bsp:bsp.map(x=>[x[0],x[1],bonLbl(x[1])]),ev:ev.map(e=>({lb:e.lb,a:e.a/60000,b:e.b/60000})),rep:String(st.repeat==null?'-1':st.repeat)}}catch(e){out=null}
+  Object.keys(NB).forEach(k=>{if(!keepK.includes(k))delete NB[k]});Object.assign(NB,keep);BON_NAMES=keepBN;EXP_CACHE=null;return out}
 const hudC=h=>{if(!HUD_C.has(h.id))HUD_C.set(h.id,hudCompute(h.st));return HUD_C.get(h.id)};
 function hudAdd(files){const fs=[...files].filter(f=>/\.json$/i.test(f.name)||!/\.[a-z0-9]{2,5}$/i.test(f.name)||/json|text/.test(f.type||''));if(!fs.length){toast('매크로 파일(.json)을 골라 주세요');return}
   let left=10-HUD.length;if(left<=0){toast('최대 10개까지예요 · 먼저 지워 주세요');return}
@@ -5523,10 +5524,10 @@ function hudRender(){const grid=$('#hudGrid'),sum=$('#hudSum');if(!grid)return;
     {const d5=((300-nowM)%1440+1440)%1440;ch.push(`<span class="${d5<=30?'w':''}">🌅 05시까지 ${dur(Math.max(1,d5))}</span>`)}
     if(!loop)ch.push(`<span>⏹ ${done?'끝남':clk(c.total)+' 끝 ('+aft(c.total-el)+')'}</span>`);
     return `<div class="hud-c${done?' done':''}">${head}
-      <div class="hn">${done?'⏹ 끝났어요':sg?`${sg.ico} ${esc(sg.nm)}${sg.who?` <small>(${esc(sg.who)})</small>`:''}`:'⏳ 대기'}</div>${sg&&sg.bd?`<div class="hbd">📍 ${esc(sg.bd)}</div>`:''}
+      <div class="hn">${done?'⏹ 끝났어요':sg?`${sg.ico} ${esc(sg.nm)}${sg.who?` <small>(${esc(sg.who)})</small>`:''}`:'⏳ 대기'}</div>${(()=>{if(!sg)return '';const B=(c.bsp||[]).filter(x=>x[0]>=sg.a-0.01&&x[0]<sg.b);let bt='';if(sg.k==='bon'&&B.length){let cur=null,nx=null;B.forEach(x=>{if(x[0]<=el)cur=x;else if(!nx)nx=x});bt=(cur?'📍 '+cur[2]:'📍 '+B[0][2]+' 가는 중')+(nx?' → 다음 '+nx[2]+' '+clk(nx[0]):'')}const t=[bt,sg.bd&&sg.k!=='bon'?'📍 '+sg.bd:''].filter(Boolean).join(' · ');return t?`<div class="hbd">${esc(t)}</div>`:''})()}
       ${sg?`<div class="hp"><i style="width:${pct}%"></i></div><div class="hx"><span>${clk(sg.a)} ~ ${clk(sg.b)}</span><b>${dur(Math.round(sg.b-el))} 남음</b></div>`:''}
       ${done?'':`<div class="hsec">동작 (직전 · 지금 · 다음)</div><div class="hev">${evH}</div>`}
-      ${nxs.length?`<div class="hsec">다음 할 일</div><div class="hnx">${nxs.map(s=>`<div><b>${clk(s.a)}</b><span title="${esc(s.nm+(s.bd?' · '+s.bd:''))}">${s.ico} ${esc(s.nm)}${s.who?' ('+esc(s.who)+')':''}${s.bd?' · '+esc(s.bd):''} · ${dur(Math.round(s.b-s.a))}</span></div>`).join('')}</div>`:''}
+      ${nxs.length?`<div class="hsec">다음 할 일</div><div class="hnx">${nxs.map(s=>{const fb=s.k==='bon'?(c.bsp||[]).find(x=>x[0]>=s.a-0.01&&x[0]<s.b):null;return {...s,bd:fb?fb[2]+'부터':s.bd}}).map(s=>`<div><b>${clk(s.a)}</b><span title="${esc(s.nm+(s.bd?' · '+s.bd:''))}">${s.ico} ${esc(s.nm)}${s.who?' ('+esc(s.who)+')':''}${s.bd?' · '+esc(s.bd):''} · ${dur(Math.round(s.b-s.a))}</span></div>`).join('')}</div>`:''}
       <div class="hch">${ch.join('')}</div>
       <div class="hst">${strip}<em style="left:${Math.min(100,el/c.total*100).toFixed(2)}%"></em></div><div class="hsl"><span>${clk(0)}</span><span>${loop?'🔁 24시간 반복 · ':''}${Math.min(100,Math.round(el/c.total*100))}% 진행</span><span>${clk(c.total)}</span></div></div>`});
   for(let q=HUD.length;q<10;q++)cards.push(`<div class="hud-c empty" data-hopen="1"><b>＋</b>빈 칸 ${q+1}<br><small>눌러서 📂 파일 열기</small></div>`);
