@@ -1851,7 +1851,7 @@ button[data-rratm].on,button[data-rrpre].on,button[data-rr24now].on{background:v
    <div><h4>👣 만드는 법</h4><ol><li><b>저랩용</b> 고르기 → <b>몇 시에 켜요?</b></li><li>게임 <b>스케줄 리스트</b>에 <b>버림받은 자들의 땅 · 몽환의 섬</b>을 등록해 두기</li><li><b>만들기</b> → <b>💾 파일 받기</b> → 바로 켜기</li></ol></div>
    <div><h4>🎛 진행 순서와 이유</h4><ul>
     <li><b>🏰 에바왕국 던전 5시간</b> (1시간마다 웰던 마을에서 물약 · 판매 정비): 저레벨이 경험치를 모으기 좋은 던전이라 가장 먼저 해요</li>
-    <li><b>🦀 게 밭 2시간</b>: 에바왕국 입구로 순간이동한 뒤 <b>바닥을 21번 눌러 걸어가요</b>(녹화한 길)</li>
+    <li><b>🦀 게 밭 2시간</b>: 에바왕국 입구로 순간이동한 뒤 <b>키보드(A·W·D)로 걸어가요</b>(녹화한 길)</li>
     <li><b>📝 숙제 + 시련</b>(턴 언데드 · 미믹): 하루 한 번 보상</li>
     <li><b>⚔️ 과말섬 북섬 1시간</b> → <b>📅 스케줄 3시간</b></li>
     <li><b>🦀 게 밭 나머지</b>: 남는 시간을 게 밭으로 채워 딱 24시간</li></ul></div>
@@ -1961,6 +1961,7 @@ button[data-rratm].on,button[data-rrpre].on,button[data-rr24now].on{background:v
   
   </div></div>
   <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/21 · v275)</span></summary><ul>
+   <li><b>11/21</b> 🦀 v275 게 밭 가는 길 기본을 <b>⌨ 키보드(A·W·D 녹화)</b>로 바꿈 — 바닥 클릭 길이 맞지 않던 문제 · 🖱 클릭은 카드에서 고를 수 있게 남겨 둠</li>
    <li><b>11/21</b> 🔒 v275 리세 24시간 맞춤: 리세(2~13번) 시작 칸을 <b>05:00 고정 칸</b>으로 — 지우기·끄기 안 됨 · 1번 앞 일정(하딘텔·스케줄 등)을 바꾸면 이 칸만 늘고 줄어 리세는 늘 05:00 · 남는 시간을 [스케줄로 채우기]/[본토로 채우기] · 1번 앞 일정이 05:00을 넘으면 리세를 밀지 않고 '⚡ 1번 앞 일정 줄이기' · 24시간이 넘으면 '⚡ 1번 마무리 줄여 맞춤' (리세는 그대로) + 안 되면 '켜는 시각을 몇 시 이후로 / 캐릭당 스케줄 줄이기' 안내</li>
    <li><b>11/21</b> ⏰ v275 리세/서커스 (1번만 실행) <b>리세 시작</b> 고르기: [지금 바로] [05:00] [시각 정하기] · 05:00·시각이면 켠 시각부터 그때까지 1번이 할 <b>앞 여백</b>을 🎮 셀프 플레이 / 📅 스케줄 / 🗺️ 본토 사냥 중에서 (스케줄·본토는 리세 15분 전까지 10분 단위로 채우고 남는 몇 분은 기다림) · 오늘 05:00 리세 시간 중에 만들면 '다음 날 05:00까지 기다려요' 알림 · 캐릭 선택 안내문을 L매니저 방식으로 바꿈</li>
    <li><b>11/21</b> 🔁 v275 리세/서커스 캐릭 고르기를 <b>L매니저 방식으로 통일</b> (lineagem-macro.com v112 생성 파일 1~13캐릭 비교): 1~6번 칸 바로 · 7~8번 천천히 두 칸 끌고 1초 멈췄다 누름 · 9~13번 짧게 5번 끌어 목록 끝 → 끝 화면 기준 칸 · 입장하기 버튼도 L매니저 좌표 · 즐겨찾기(1번 고정)·밀림 둘 다 같은 칸 좌표 사용 (오늘 아침 7번 칸 임시 수정도 이걸로 바뀜)</li>
@@ -3349,7 +3350,7 @@ const CRAB_WALK=[[0,65,1966081],[262,65,1075707905],[279,65,1075707905],[313,65,
 function crabWalkAct(gap){const a=mkKey(65,0x1E,gap);a.kind='walk';a.ev=CRAB_WALK.map(k=>({rel:k[0],e:{position:{x:'0',y:'0'},type:String(k[1]),detail:String(k[2]),data:'0'},px:0,py:0,mod:false}));return a}
 const CRAB_CLICK=[[0.2969,0.475,585],[0.2776,0.3648,738],[0.3089,0.2824,879],[0.3422,0.2991,934],[0.3625,0.3037,917],[0.3802,0.2389,1042],[0.4474,0.213,1091],[0.4698,0.2037,799],[0.4875,0.2,856],[0.601,0.2176,1068],[0.7344,0.2796,634],[0.7875,0.4259,637],[0.7698,0.3259,934],[0.7823,0.337,665],[0.7474,0.2667,711],[0.7068,0.2333,875],[0.7172,0.2333,773],[0.7417,0.363,658],[0.7172,0.4019,863],[0.6505,0.3269,570],[0.6479,0.363,787],[0.7802,0.7565,1361]];   // v274: [x, y, 앞 클릭부터 ms] 에바왕국 입구 → 게 밭 바닥 클릭 21번 + 마지막 AUTO (11/19 녹화)
 function crabActs(it){const E=FIELDS.find(x=>x[3]==='eva'),tp=[rrClick(0.8990,0.2811,2500),rrClick(0.0889,0.1425,4500),rrClick(E[1],E[2],5000),rrClick(0.8321,0.9145,4500)];
-  if(it&&it.walk==='key')return tp.concat([crabWalkAct(20000),rrClick(0.7766,0.7574,1500)]);   // 예비: 키보드(A·W·D) 녹화
+  if(!it||it.walk!=='click')return tp.concat([crabWalkAct(20000),rrClick(0.7766,0.7574,1500)]);   // v275: 기본 = 키보드(A·W·D) 녹화 (11/21 클릭 길이 안 맞아서 바꿈) · 예비: 바닥 클릭
   return tp.concat(CRAB_CLICK.map((c,k)=>rrClick(c[0],c[1],k?Math.max(500,c[2]):20000)))}
 function fieldActs(it){const f=FIELDS[Math.min(FIELDS.length-1,Math.max(0,+it.loc||0))];
   if(f[3]==='crab')return crabActs(it);   // v274: 게 밭 — 에바왕국 입구로 텔레포트 → 걸어서(11/19 녹화 WASD 19초) → AUTO
@@ -3725,7 +3726,7 @@ const fairyIn=(it.job==='rest'||it.job==='waitAt'||(it.job==='albino'&&hdSlot(it
   const spdg=it.job==='spec'?`<div class="spots"><span class="sub">특수 던전</span>${SPEC_DGS.map((d,k)=>`<button data-a="spdg" data-s="${k}" aria-pressed="${(+it.dg||0)===k}">${d.n}</button>`).join('')}<span class="sub">⚠ 이용 시간을 다 쓰면 입장이 안 돼요 · 알비노·거인 무덤은 사망 패널티 있음</span></div>`:'';
   const wdgD=it.job==='wdg'?(()=>{const d=WORLD_DGS[+it.dg||0]||WORLD_DGS[0];return `<div class="spots"><span class="sub">월드 던전</span>${WORLD_DGS.map((x,k)=>x.wip||wdWkBlk(x)?`<button disabled title="${x.wip?'스크린샷으로 좌표 확인 전이라 아직 못 써요':'평일 저녁 화면 확인 전이라 주말(토·일)에만 골라요'}" style="opacity:.45">🔒 ${x.n}</button>`:`<button data-a="wdgd" data-s="${k}" aria-pressed="${(+it.dg||0)===k}">${x.n}</button>`).join('')}${WORLD_DGS.some(x=>x.lm)?'<span class="sub">⭐ 요일 던전은 게임 월드 던전 카드에서 보물섬 낚시터만 빼고 모두 즐겨찾기(★) 해 두세요'+(WORLD_DGS.some(wdWkBlk)?' · 🔒 테베·티칼·아틀은 평일 저녁 화면 확인 전이라 주말(토·일)에만 골라요':'')+'</span>':''}</div><div class="spots"><span class="sub">사냥터</span>${d.zones.map((z,k)=>`<button data-a="wdgz" data-s="${k}" aria-pressed="${wzI(it)===k}">${z[0]}</button>`).join('')}${wzManual(d,wzI(it))?`<em class="wzm">${WZM_TXT}</em>`:''}<span class="sub">입장 아데나 · 주간 이용 시간 필요</span></div><div class="spots"><span class="sub">카드 자리</span><button data-a="wdgp" data-s="0" aria-pressed="${!(+it.pos>=1)}">자동 (${d.pos||WORLD_DGS.indexOf(d)+1}번)</button>${[1,2,3,4,5,6].map(k=>`<button data-a="wdgp" data-s="${k}" aria-pressed="${+it.pos===k}">${'①②③④⑤⑥'[k-1]}</button>`).join('')}<span class="sub">게임의 월드 던전 화면에서 왼쪽부터 몇 번째 카드인지</span></div>${d.days?`<div class="sub" style="color:#b45309">⏰ ${d.days}에만 열려요 · 이 시간에 들어가도록 시작 시각을 맞춰 주세요</div>`:''}`})():'';
   const lmD=it.job==='bmark'?`<div class="spots"><span class="sub">기억 장소</span>${[1,2,3,4,5].map(k=>`<button data-a="bms" data-s="${k}" aria-pressed="${(+it.slot||1)===k}">${k}번</button>`).join('')}<span class="sub">축복받은 순간이동 주문서 기억 장소 · 5개 이하로 유지</span></div>`
-   :it.job==='field'?`<div class="spots"><span class="sub">사냥터</span>${FIELDS.map((f,k)=>f[3]==='eva'?'':`<button data-a="fld" data-s="${k}" aria-pressed="${(+it.loc||0)===k}">${f[0]}</button>`).join('')}${FIELDS[+it.loc||0]&&FIELDS[+it.loc||0][3]==='crab'?`<span class="sub">· 에바왕국 입구 → 걸어서 게 밭 → AUTO · 걷기</span><button data-a="cwk" data-s="click" aria-pressed="${it.walk!=='key'}">🖱 클릭</button><button data-a="cwk" data-s="key" aria-pressed="${it.walk==='key'}">⌨ 키보드</button>`:''}</div>`
+   :it.job==='field'?`<div class="spots"><span class="sub">사냥터</span>${FIELDS.map((f,k)=>f[3]==='eva'?'':`<button data-a="fld" data-s="${k}" aria-pressed="${(+it.loc||0)===k}">${f[0]}</button>`).join('')}${FIELDS[+it.loc||0]&&FIELDS[+it.loc||0][3]==='crab'?`<span class="sub">· 에바왕국 입구 → 걸어서 게 밭 → AUTO · 걷기</span><button data-a="cwk" data-s="key" aria-pressed="${it.walk!=='click'}">⌨ 키보드 (기본)</button><button data-a="cwk" data-s="click" aria-pressed="${it.walk==='click'}">🖱 클릭</button>`:''}</div>`
    :it.job==='qwarp'?`<div class="spots"><label class="sub rsopt"><input type="checkbox" class="jqtp" data-i="${i}"${it.tp?' checked':''}> 🌀 도착 후 순간이동 1번 (9번 슬롯)</label><span class="sub">메인 퀘스트를 깨지 않고 둔 캐릭 전용</span></div>`
    :it.job==='clanwk'?`<div class="sub">혈맹 기부 화면의 주간 보상 6칸을 차례로 받아요 (기부는 하지 않아요)</div>`:'';
   const slp=['sch','spec','wdg','bmark','field','eva','qwarp'].includes(it.job)?`<div class="spots"><label class="sub rsopt" title="사냥(스케줄)을 시작한 뒤 절전모드로 들어가 있다가 끝나기 전에 해제해요. 절전 중에는 우편·퀘스트·탐험 등을 끼우지 않아요"><input type="checkbox" class="jsleep" data-i="${i}"${it.sleep?' checked':''}> 💤 절전모드로 사냥</label></div>`:'';
@@ -4267,7 +4268,7 @@ $('#mkview').addEventListener('click',ev=>{
   else if(a==='wdgp'){NB.items[i].pos=+b.dataset.s}
   else if(a==='bms'){NB.items[i].slot=+b.dataset.s}
   else if(a==='fld'){NB.items[i].loc=+b.dataset.s}
-  else if(a==='cwk'){if(b.dataset.s==='key')NB.items[i].walk='key';else delete NB.items[i].walk}
+  else if(a==='cwk'){if(b.dataset.s==='click')NB.items[i].walk='click';else delete NB.items[i].walk}
   else if(a==='spot'){const v=b.dataset.s;NB.items[i].spot=(v==='mix'||v==='seq')?v:+v;if(v==='mix'&&!NB.items[i].seed)NB.items[i].seed=1+Math.floor(Math.random()*1e9);if((v==='mix'||v==='seq')&&!Array.isArray(NB.items[i].spots))NB.items[i].spots=[1,2,3,4,5,6]}
   else if(a==='pool'){const n=+b.dataset.n,cur=(Array.isArray(NB.items[i].spots)&&NB.items[i].spots.length?NB.items[i].spots:[1,2,3,4,5,6]).slice();
     const idx=cur.indexOf(n);if(idx>=0){if(cur.length<=1){toast('최소 1개 번호는 켜 두어야 해요');return}cur.splice(idx,1)}else cur.push(n);
