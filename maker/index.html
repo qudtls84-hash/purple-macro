@@ -2003,6 +2003,7 @@ button[data-rratm].on,button[data-rrpre].on,button[data-rr24now].on{background:v
   
   </div></div>
   <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/21 · v275)</span></summary><ul>
+   <li><b>11/21</b> 💊 v275 <b>버프 상인</b> 추가: ➕ 할 일 추가(보상·정비)에 '💊 버프 상인' 카드 · 📌 항상 하는 일에 '버프 상인 3시간마다' (사냥 카드 시작 전에 · 버프가 끝났으면 다음 사냥 앞에서 또 · 리세/서커스는 빠짐) · 기란 마을 → NPC 목록 → 수상한 상인 → 확인 (10만 아데나 · 마력 증폭 60만은 체크 안 함)</li>
    <li><b>11/21</b> 🏘️ v275 기란 마을 NPC 즉시 이동 좌표 다시 맞춤 (11/21 스샷): 할로윈 이벤트 상인이 빠져 첫 화면 NPC가 한 줄씩 올라감 → 잡화상인 A~D · 마법 주문서 · 낚시 상인 · 통합 창고지기 A 고침 (예전 값이면 한 칸 아래 NPC가 눌렸어요) · 통합 창고지기 B · 아이템 매입 상인 A·B · 혈맹상인은 목록을 끝까지 내린 뒤 천천히 4줄 올려서 정확하게 · 맨 아래 묶음은 그대로</li>
    <li><b>11/21</b> 💪 v275 초보자 가이드에 <b>저스펙 무한 사냥</b> 탭 추가 — 버티는 시간만 알면 사냥 + 🧰 재정비를 번갈아 넣어 하루 종일 사냥하는 법 · 버티는 시간 재는 법 · 만드는 법 · 사냥터 난이도 참고표 (말하는 섬 ~ 월드 던전)</li>
    <li><b>11/21</b> 🖥 v275 HUD: 본토 사냥이 지금 <b>몇 번(즐겨찾기 1~6번 · 이름 붙였으면 이름)</b>에 있는지 · 다음 번호와 이동 시각 · 동작 목록에도 '본토 3번 이동' · 다음 할 일 본토는 첫 번호 · ➕ 할 일 추가에서 📅 스케줄을 '사냥' 묶음으로 옮김</li>
@@ -3127,6 +3128,7 @@ const JOBS={
  store:{ico:'📦',name:'장비 창고에 맡기기 (웰던 마을 → 3SET 벗기 → 창고 커스텀 보관 → 모두 맡기기)',short:'장비 창고에 맡기기',unit:null,lib:true},
  swap:{ico:'🔁',name:'다음 캐릭으로 바꾸기 (메뉴 → 캐릭터 선택 → 맨 아래 슬롯 → 입장하기)',short:'다음 캐릭으로 바꾸기',unit:null,lib:true},
  fetch:{ico:'🎒',name:'창고에서 장비 찾아 입기 (웰던 마을 → 창고 커스텀 찾기 → 모두 찾기 → 1SET 착용)',short:'창고에서 장비 찾아 입기',unit:null,lib:true},
+ buff:{ico:'💊',name:'버프 상인 강화 버프 사기 (기란 마을 → NPC 목록 → 수상한 상인 → 확인 · 3시간 · 10만 아데나)',short:'버프 상인 (3시간)',unit:null,lib:true},
  rest:{ico:'🎮',name:'셀프 플레이 (수동조작/대기 · 매크로는 아무것도 안 하고 기다림)',short:'셀프 플레이 (수동조작/대기)',unit:'시간',def:1,step:.5,lib:false,min10:true}
 };
 let NBuid=1e6;
@@ -3140,6 +3142,8 @@ function mkDrag(x1,y1,x2,y2,gap){
   ev.push(evObj('514',x2,y2,n*16+16));
   return {uid:NBuid++,kind:'drag',gap,i0:-1,ev};
 }
+function buffActs(gap){const B=S.base,out=[];for(let k=0;k<6;k++)out.push(cloneAct(B[k]));if(out[0])out[0].gap=gap==null?2000:gap;   // v275: 💊 기란 마을 → NPC 즉시 이동 → 버프(수상한) 상인 → 구매 창 바로 열림 → 확인 (마력 증폭 체크 안 함) → 화면 정리
+  out.push(Object.assign(mkClick(.134,TELE[0][2],900),{_giran:1}),mkClick(0.5781,0.8222,2500));return out.concat(resetBlock(2500)).map(a=>Object.assign(a,{_tag:'💊 버프 상인 (3시간)'}))}
 function teleActs(it){
   const B=S.base,d=TELE[it.dest],out=[];
   for(let k=0;k<6;k++)out.push(cloneAct(B[k]));            // 기란마을로 이동 → NPC 즉시 이동 열기
@@ -3151,7 +3155,7 @@ function teleActs(it){
 }
 function expandAll(){
   if(EXP_CACHE)return EXP_CACHE;
-  const acts=[];let pend=0;const restQ=[];   // 기다리기: 클릭 없이 다음 동작 앞 대기로만 들어감
+  const acts=[];let pend=0,buffLast=null;const restQ=[];const BUFF_HUNT=['bon','dungeon','gm','tower1','wdg','field','bmark','eva','albino','dragon','dark','spec','qwarp'],buffNo=NB.items.some(x=>!x.disabled&&x.job==='swap');   // 기다리기: 클릭 없이 다음 동작 앞 대기로만 들어감
   const BUF=(+NB.buf||0)*1000;                                       // ⑤ 로딩 여유: 이동·로딩 뒤처럼 3.5초~1분 기다리는 곳에만 더함
   const put=l=>{l.forEach((a,k)=>{if(BUF&&!a._slow&&a.gap>=3500&&a.gap<60000)a.gap+=BUF;giranify(a);slowify(a);boost(a);if(k===0&&pend){a._g0=a.gap;a.gap+=pend;pend=0;if(restQ.length)a._rests=restQ.splice(0)}acts.push(a)})};
   const lib=(id,rep,sc,g0)=>{                                            // sc: 마지막 반복의 첫 대기(사냥 시간)를 이 비율로 줄임
@@ -3168,6 +3172,7 @@ function expandAll(){
     let d=target-now;if(d<-12*3600000)d+=DAY;if(d>12*3600000&&d-DAY>-12*3600000)d-=DAY;return d};
   let savedS4=0,potS4=0;
   NB.items.forEach((it,idx)=>{if(it.disabled)return;const st0=acts.length;
+    if(NB.buffOn&&!buffNo&&BUFF_HUNT.includes(it.job)){let e=pend;acts.forEach(a=>{e+=a.gap+span(a)});if(buffLast==null||e-buffLast>=3*3600000-60000){put(buffActs(2000));buffLast=e}}   // v275: 💊 3시간마다 버프 — 버프가 끝났으면 다음 사냥 카드 시작 전에 버프 상인
     const h=Math.max(0,+it.hours||0),n=Math.max(1,Math.round(h));
     if(it.job==='dungeon'){
       lib('prep',1);
@@ -3239,6 +3244,7 @@ function expandAll(){
       NB.bonOrder=NB.bonOrder||{};NB.bonOrder[idx]=order;}
     else if(it.job==='tele'){const dIdx=Math.min(TELE.length-1,Math.max(0,+it.dest||0)),auto=it.auto!==undefined?!!it.auto:/텔레포터/.test((TELE[dIdx]||[])[0]||'');const l=teleActs({dest:dIdx,auto});l[0].gap=2000;put(l);if(h>0)pend+=Math.round(h*3600000)}
     else if(it.job==='mail'){put(mailBlock(2000))}
+    else if(it.job==='buff'){put(buffActs(2000));buffLast=(()=>{let e=pend;acts.forEach(a=>{e+=a.gap+span(a)});return e})()}
     else if(it.job==='clanwk'){put(resetBlock(2000).concat(clanWkActs()))}   // v262
     else if(it.job==='towerin'){const T=towerActs(),l=T.slice(0,5).map(cloneAct);l[0].gap=2000;put(l)}   // 메뉴 → 던전 → 월드 던전 → 오만 카드 → 입장
     else if(it.job==='tower1'){
@@ -3716,7 +3722,7 @@ const JICON={eva:'g_dungeon',albino:'bon',spec:'g_dungeon',wdg:'towerin',explore
 function jobImg(it){return ICONS[it.job==='tele'?'t'+it.dest:JICON[it.job]]||''}
 const PARTICO={fish:'g_fish',pass:'g_pass',att:'g_att',trial:'g_dungeon',party:'g_dungeon'};
 const ROWICO={trial:'g_dungeon',home:'g_att',dungeon:'g_dungeon',sch:'g_sch'};
-const SHORTN={eva:'에바왕국 던전',bmark:'기억 장소 사냥',field:'필드 사냥',qwarp:'퀘스트 워프 사냥',clanwk:'주간 혈맹 기부 보상',albino:'하딘텔 사냥',spec:'특수 던전',wdg:'월드 던전',waitAt:'시각까지 셀프 플레이',claim:'우편·퀘스트·혈맹 보상 받기',store:'장비 창고에 맡기기',swap:'다음 캐릭으로 바꾸기',fetch:'창고에서 장비 찾아 입기',trial:'시련·파티 던전',home:'출석 + 시련·파티 던전',dungeon:'기란감옥',wboss:'월드 보스',gm:'과말섬 흑기사',explore:'마법인형 탐험',sch:'스케줄',bon:'본토 사냥',tower1:'오만의 탑',restock:'재정비',tele:'기란 마을 NPC로 이동',rest:'셀프 플레이',dragon:'용의 던전',dark:'어둠 수련 던전'};
+const SHORTN={buff:'버프 상인',eva:'에바왕국 던전',bmark:'기억 장소 사냥',field:'필드 사냥',qwarp:'퀘스트 워프 사냥',clanwk:'주간 혈맹 기부 보상',albino:'하딘텔 사냥',spec:'특수 던전',wdg:'월드 던전',waitAt:'시각까지 셀프 플레이',claim:'우편·퀘스트·혈맹 보상 받기',store:'장비 창고에 맡기기',swap:'다음 캐릭으로 바꾸기',fetch:'창고에서 장비 찾아 입기',trial:'시련·파티 던전',home:'출석 + 시련·파티 던전',dungeon:'기란감옥',wboss:'월드 보스',gm:'과말섬 흑기사',explore:'마법인형 탐험',sch:'스케줄',bon:'본토 사냥',tower1:'오만의 탑',restock:'재정비',tele:'기란 마을 NPC로 이동',rest:'셀프 플레이',dragon:'용의 던전',dark:'어둠 수련 던전'};
 function canMerge(i){
   const a=NB.items[i],b=NB.items[i+1];
   if(!a||!b||a.disabled||b.disabled||a.job!==b.job)return false;
@@ -4188,7 +4194,7 @@ function updTotal(){
     const q=$('#questCnt');if(q)q.textContent=NB.items.length&&NB.quest?'총 '+NB.questCount+'번':'';
     {const d=$('#dailyAtS');if(d)d.textContent=NB.dailyHunt&&NB.dailyAt!=null?hm(Math.round(startMin()+NB.dailyAt/60000)%1440)+' 실행':(NB.dailyHunt&&NB.items.some(x=>x.job==='home'&&!x.disabled)?'출석 할 일 있음':'')}
     const x=$('#exCnt');if(x)x.textContent=NB.items.length?'탐험 '+NB.exCount+'번':'';const xm=$('#exMidCnt');if(xm)xm.textContent=NB.items.length&&+NB.exMid?'점검 '+(NB.exMidCount||0)+'번':'';
-    const rv=$('#reviveCnt');if(rv)rv.textContent=NB.items.length?(NB.revive!==false?(NB.reviveCount?`${NB.reviveCount}회 (${(NB.reviveTimes||[]).map(t=>hm(Math.round(startMin()+t/60000)%1440)).join('·')})`:'20분↑ 필요'):'꺼짐'):'';
+    {const bf=$('#buffCnt');if(bf){let n=0;try{n=expandAll().filter((a,i,A)=>a._tag==='💊 버프 상인 (3시간)'&&(i===0||A[i-1]._tag!=='💊 버프 상인 (3시간)')).length}catch(e){}bf.textContent=NB.items.length?(NB.buffOn?n+'번 · '+(n*10)+'만':'꺼짐'):''}}const rv=$('#reviveCnt');if(rv)rv.textContent=NB.items.length?(NB.revive!==false?(NB.reviveCount?`${NB.reviveCount}회 (${(NB.reviveTimes||[]).map(t=>hm(Math.round(startMin()+t/60000)%1440)).join('·')})`:'20분↑ 필요'):'꺼짐'):'';
     const sc=$('#saveScCnt');if(sc)sc.textContent=NB.items.length?(NB.saveScroll?'주문서 '+NB.saveScrollCnt+'장 절약!':(NB.saveScrollPot?'켜면 '+NB.saveScrollPot+'장 절약':'')):'';
     try{updTimeline()}catch(e){}
     try{updIssues()}catch(e){}
@@ -4210,7 +4216,7 @@ function mailRow(){
     <div class="pin-row"><label class="pin-chk"><input type="checkbox" id="autoEx"${NB.autoEx?' checked':''}> 🧭 탐험 수령·재출발 <small class="sub">(8시간마다)</small></label><span class="pin-cnt" id="exCnt"></span></div>
     <div class="pin-row" title="탐험할 곳 고르기 · 끈 곳은 8시간 탐험과 중간 점검 모두에서 빼요"><span class="sub" style="font-weight:800">　└ 할 곳:</span>${[['exD','🪆 인형'],['exR','💠 성물'],['exV','🦸 변신']].map(([k,n])=>`<label class="pin-chk"><input type="checkbox" class="jexk" data-k="${k}"${exOn(k)?' checked':''}> ${n}</label>`).join('')}</div>
     <div class="pin-row" title="탐험·변신·성물 중 죽은 것만 다시 보내요. 진행 중인 탐험은 남은 시간 그대로 (버프 차감 창은 취소)"><span class="sub" style="font-weight:800">　└ 🩹 중간 점검 <small>(죽은 것만)</small>:</span><select id="exMid">${[[0,'끔'],[1,'1시간마다'],[2,'2시간마다']].map(([v,n])=>`<option value="${v}"${(+NB.exMid||0)===v?' selected':''}>${n}</option>`).join('')}</select><span class="pin-cnt" id="exMidCnt"></span></div>
-        <div class="pin-row" title="사냥 1시간 끝(재정비 직전)에 하루 최대 2번(약 12시간 간격) 경험치 무료 복구를 자동으로 눌러 줍니다"><label class="pin-chk"><input type="checkbox" id="reviveOn"${NB.revive!==false?' checked':''}> 💖 경험치 무료 복구 <small class="sub">(일 2회)</small></label><span class="pin-cnt" id="reviveCnt"></span></div>
+        <div class="pin-row" title="사냥 1시간 끝(재정비 직전)에 하루 최대 2번(약 12시간 간격) 경험치 무료 복구를 자동으로 눌러 줍니다"><label class="pin-chk"><input type="checkbox" id="reviveOn"${NB.revive!==false?' checked':''}> 💖 경험치 무료 복구 <small class="sub">(일 2회)</small></label><span class="pin-cnt" id="reviveCnt"></span></div>     <div class="pin-row" title="버프 상인 강화 버프(10만 아데나 · 3시간)를 사냥 카드가 시작되기 전에 사요. 3시간이 지나 버프가 끝났으면 다음 사냥 카드 앞에서 또 사요 (사냥 도중엔 빠져나오지 않아요 · 리세/서커스는 빠져요)"><label class="pin-chk"><input type="checkbox" id="buffOn"${NB.buffOn?' checked':''}> 💊 버프 상인 <small class="sub">(3시간마다 · 10만)</small></label><span class="pin-cnt" id="buffCnt"></span></div>
     <div class="pin-row" title="'출석 + 시련·파티 던전' 할 일이 없을 때, 출석·상점·거래소·패스·낚시·제작·혈맹 기부를 사냥 중에 끼워 넣어요"><label class="pin-chk"><input type="checkbox" id="dailyOn"${NB.dailyHunt?' checked':''}> 📝 출석·일일보상·기부</label><span class="pin-cnt" id="dailyAtS"></span></div>
     ${NB.dailyHunt?`<details class="pin-more" data-pg="more"${PINOPEN.more?' open':''}><summary>⚙ 실행 시각 · 세부 8개 항목</summary><div class="pin-times"><label class="pin-tbox" title="비워 두면 첫 사냥 시작 직후"><span>☀️ 첫 출석</span>${T('dailyT',NB.dailyT,'비워 두면 첫 사냥 시작 직후')}</label><label class="pin-tbox" title="저녁 혈맹 공헌 보상 받는 시각"><span>🛡 혈맹 기부·공헌</span>${T('clanT',NB.clanT||'20:00','저녁 혈맹 공헌 보상 받는 시각')}</label><label class="pin-tbox" title="05:00 초기화 전에 보상을 한 번 더 받는 시각"><span>🌙 마감 전</span>${T('lateT',NB.lateT||'04:30','05:00 초기화 전에 보상을 한 번 더 받는 시각')}</label></div><div class="pin-dopts" title="사냥 중 출석·일일보상 8개 세부 항목을 개별적으로 켜거나 끕니다"><div class="pin-dopts-hd">세부 8개 항목 선택</div>${dOpts}</div></details>`:''}
   </details>
@@ -4244,7 +4250,7 @@ function renderMaker(){
   updTotal();
   $('#mkNote').hidden=S.canLib;
 }
-function snapObj(){return {items:NB.items,quest:NB.quest,questIv:NB.questIv,autoEx:NB.autoEx,exMid:NB.exMid,exD:NB.exD,exR:NB.exR,exV:NB.exV,exTr:NB.exTr,exRl:NB.exRl,clan2:NB.clan2,clanEve:NB.clanEve,passLate:NB.passLate,saveScroll:NB.saveScroll,revive:NB.revive!==false,fit24:NB.fit24,mail:NB.mail,start:NB.start,dailyHunt:NB.dailyHunt,dailyOff:NB.dailyOff,dailyT:NB.dailyT,clanT:NB.clanT,lateT:NB.lateT}}
+function snapObj(){return {items:NB.items,quest:NB.quest,questIv:NB.questIv,autoEx:NB.autoEx,exMid:NB.exMid,exD:NB.exD,exR:NB.exR,exV:NB.exV,exTr:NB.exTr,exRl:NB.exRl,clan2:NB.clan2,clanEve:NB.clanEve,passLate:NB.passLate,saveScroll:NB.saveScroll,revive:NB.revive!==false,buffOn:NB.buffOn,fit24:NB.fit24,mail:NB.mail,start:NB.start,dailyHunt:NB.dailyHunt,dailyOff:NB.dailyOff,dailyT:NB.dailyT,clanT:NB.clanT,lateT:NB.lateT}}
 function mkSnap(){NB._dlDone=false;NB.hist.push(JSON.stringify(snapObj()));if(NB.hist.length>30)NB.hist.shift();NB.fut=[]}
 function addJob(k,afterIdx){
   mkSnap();
@@ -4398,6 +4404,7 @@ $('#mkview').addEventListener('change',ev=>{
   if(e.classList&&e.classList.contains('jexk')){mkSnap();NB[e.dataset.k]=e.checked;updTotal();return}
   if(e.id==='exMid'){mkSnap();NB.exMid=+e.value||0;updTotal();return}
   if(e.id==='exTr'||e.id==='exRl'){mkSnap();NB[e.id]=e.checked;updTotal();return}
+  if(e.id==='buffOn'){mkSnap();NB.buffOn=e.checked;updTotal();toast(e.checked?'💊 버프 상인(3시간마다 · 10만 아데나)을 켰어요':'💊 버프 상인을 껐어요');return}
   if(e.id==='reviveOn'){mkSnap();NB.revive=e.checked;updTotal();toast(e.checked?'💖 경험치 무료 복구(하루 2회)를 켰어요':'💖 경험치 무료 복구를 껐어요');return}
   if(e.id==='saveScOn'){mkSnap();NB.saveScroll=e.checked;updTotal();toast(e.checked?'🧻 중복 귀환·혈맹 귀환 주문서 절약을 켰어요':'🧻 중복 귀환·혈맹 귀환 주문서 절약을 껐어요');return}
   if(e.id==='mailIv'){mkSnap();M.every=+e.value}else if(e.id==='mailSt'){mkSnap();M.start=e.checked}
@@ -4626,11 +4633,11 @@ const SETKEY='pmk-sets-v1';
 function readSets(){try{return JSON.parse(localStorage.getItem(SETKEY)||'{}')||{}}catch(e){return {}}}
 function writeSets(o){try{localStorage.setItem(SETKEY,JSON.stringify(o));return true}catch(e){return false}}
 const PRESETS={'⭐ 추천: 혈맹 기본 하루':{items:[{job:'home'},{job:'explore'},{job:'dungeon',hours:5},{job:'gm',hours:1},{job:'bon',hours:15,spot:'mix',seed:7}],quest:true,autoEx:true,fit24:true,repeat:'-1',titleAuto:true}};
-function curState(){return JSON.parse(JSON.stringify({slow:NB.slow,giran:NB.giran,start:NB.auto===false?NB.start:undefined,items:NB.items,mail:NB.mail,quest:NB.quest,autoEx:NB.autoEx,questIv:NB.questIv||undefined,exTr:NB.exTr||undefined,exMid:+NB.exMid||0,exD:NB.exD===false?false:undefined,exR:NB.exR===false?false:undefined,exV:NB.exV===false?false:undefined,exRl:NB.exRl||undefined,clan2:NB.clan2||undefined,clanEve:NB.clanEve===false?false:undefined,passLate:NB.passLate===false?false:undefined,saveScroll:NB.saveScroll,revive:NB.revive!==false,bonNames:BON_NAMES,charNames:CHAR_NAMES,buf:NB.buf,fit24:NB.fit24,title:NB.title,titleAuto:NB.titleAuto,repeat:NB.repeat,dgLeft:NB.dgLeft,dgMax:NB.dgMax,twLeft:NB.twLeft,twMax:NB.twMax,dailyHunt:!!NB.dailyHunt,dailyOff:NB.dailyOff||{},dailyT:NB.dailyT||'',clanT:NB.clanT||'',lateT:NB.lateT||''}))}
+function curState(){return JSON.parse(JSON.stringify({slow:NB.slow,giran:NB.giran,start:NB.auto===false?NB.start:undefined,items:NB.items,mail:NB.mail,quest:NB.quest,autoEx:NB.autoEx,questIv:NB.questIv||undefined,exTr:NB.exTr||undefined,exMid:+NB.exMid||0,exD:NB.exD===false?false:undefined,exR:NB.exR===false?false:undefined,exV:NB.exV===false?false:undefined,exRl:NB.exRl||undefined,clan2:NB.clan2||undefined,clanEve:NB.clanEve===false?false:undefined,passLate:NB.passLate===false?false:undefined,saveScroll:NB.saveScroll,revive:NB.revive!==false,buffOn:NB.buffOn||undefined,bonNames:BON_NAMES,charNames:CHAR_NAMES,buf:NB.buf,fit24:NB.fit24,title:NB.title,titleAuto:NB.titleAuto,repeat:NB.repeat,dgLeft:NB.dgLeft,dgMax:NB.dgMax,twLeft:NB.twLeft,twMax:NB.twMax,dailyHunt:!!NB.dailyHunt,dailyOff:NB.dailyOff||{},dailyT:NB.dailyT||'',clanT:NB.clanT||'',lateT:NB.lateT||''}))}
 function applyState(s){mkSnap();
   NB.items=(s.items||[]).map(it=>Object.assign({hours:JOBS[it.job]&&JOBS[it.job].def!=null?JOBS[it.job].def:1,dest:defDest()},it)).filter(it=>JOBS[it.job]);
   NB.dailyHunt=!!s.dailyHunt;NB.dailyOff=Object.assign({},s.dailyOff||{});NB.dailyT=s.dailyT||'';NB.clanT=s.clanT||'';NB.lateT=s.lateT||'';
-  ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','revive','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(s[k]!==undefined)NB[k]=s[k]});
+  ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','revive','buffOn','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(s[k]!==undefined)NB[k]=s[k]});
   if(s.bonNames&&typeof s.bonNames==='object'){BON_NAMES=Object.assign({},BON_NAMES,s.bonNames);saveBonNames()}
   if(s.charNames&&typeof s.charNames==='object'){CHAR_NAMES=Object.assign({},CHAR_NAMES,s.charNames);saveCharNames()}
   if(s.mail){NB.mail=Object.assign({},NB.mail,s.mail);if(+NB.mail.x===.836&&+NB.mail.y===.896){NB.mail.x=.861;NB.mail.y=.905}}   // 예전 기본 위치 → 녹화한 새 위치
@@ -5453,7 +5460,7 @@ function daySum(segs,S0){const at=m=>hm(Math.round(S0+m)%1440),f=k=>segs.find(x=
   if(f('wboss'))o.push(['🐉 월드보스',at(f('wboss').a)]);if(f('trial'))o.push(['⚔️ 시련·파티',at(f('trial').a)]);if(f('tower1'))o.push(['🗼 오만',at(f('tower1').a)]);if(f('sch'))o.push(['📅 스케줄',at(f('sch').a)]);
   return '<div class="daysum">'+o.map(x=>`<span>${x[0]}<b>${x[1]}</b></span>`).join('')+'</div>'}
 // 4) 종류별 보기
-const ADD_GROUPS=[['사냥',['bon','sch','dungeon','gm','tower1','albino','field','bmark','qwarp']],['던전 · 보스',['trial','wboss','wdg','eva','dragon','dark','spec']],['보상 · 정비',['home','explore','restock','claim','clanwk']],['이동 · 셀프',['tele','rest','waitAt']],['리세 · 서커스',['store','swap','fetch']]];   // v238: + 할 일 추가 묶음
+const ADD_GROUPS=[['사냥',['bon','sch','dungeon','gm','tower1','albino','field','bmark','qwarp']],['던전 · 보스',['trial','wboss','wdg','eva','dragon','dark','spec']],['보상 · 정비',['home','explore','restock','claim','clanwk','buff']],['이동 · 셀프',['tele','rest','waitAt']],['리세 · 서커스',['store','swap','fetch']]];   // v238: + 할 일 추가 묶음
 function addFilter(){const q=(($('#addSearch')||{}).value||'').trim().toLowerCase();document.querySelectorAll('#addbar .addgrp').forEach(g=>{let n=0;g.querySelectorAll('.addcard').forEach(c=>{const on=!q||c.textContent.toLowerCase().includes(q)||(c.title||'').toLowerCase().includes(q);c.hidden=!on;if(on)n++});g.hidden=!n})}
 document.addEventListener('input',e=>{if(e.target&&e.target.id==='addSearch')addFilter()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){const ap=document.getElementById('addPop');if(ap&&ap.open)ap.open=false}});document.addEventListener('click',e=>{const ap=document.getElementById('addPop');if(ap&&ap.open&&!e.target.closest('#addPop'))ap.open=false});
 function jfBar(){const L=NB.items.filter(x=>!x.disabled);if(L.length<3)return '';const g={};L.forEach(x=>{(g[x.job]=g[x.job]||{n:0,m:0});g[x.job].n++;if(JOBS[x.job].unit)g[x.job].m+=Math.round((+x.hours||0)*60)});
@@ -5526,7 +5533,7 @@ const HUD_C=new Map();
 function hudCompute(st){const keep=Object.assign({},NB),keepK=Object.keys(NB),keepBN=BON_NAMES;let out=null;if(st.bonNames&&typeof st.bonNames==='object')BON_NAMES=Object.assign({},keepBN,st.bonNames);
   try{NB.items=(st.items||[]).map(it=>Object.assign({hours:JOBS[it.job]&&JOBS[it.job].def!=null?JOBS[it.job].def:1,dest:defDest()},it)).filter(it=>JOBS[it.job]);
     NB.dailyHunt=!!st.dailyHunt;NB.dailyOff=Object.assign({},st.dailyOff||{});NB.dailyT=st.dailyT||'';NB.clanT=st.clanT||'';NB.lateT=st.lateT||'';
-    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','revive','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});
+    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','revive','buffOn','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});
     if(st.mail)NB.mail=Object.assign({},keep.mail,st.mail);if(st.start){NB.start=st.start;NB.auto=false}EXP_CACHE=null;
     const {st:T,total}=itemTimes(),S0=startMin(),RG=rrGroups(),segs=[];
     NB.items.forEach((it,i)=>{if(it.disabled||T[i]==null)return;let nx=total;for(let k=i+1;k<NB.items.length;k++)if(!NB.items[k].disabled&&T[k]!=null){nx=T[k];break}
