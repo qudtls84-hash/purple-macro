@@ -8246,7 +8246,7 @@ const HUD_C=new Map();
 function hudCompute(st){const keep=Object.assign({},NB),keepK=Object.keys(NB),keepBN=BON_NAMES;let out=null;NB.charSlot=0;if(st.bonNames&&typeof st.bonNames==='object')BON_NAMES=Object.assign({},keepBN,st.bonNames);
   try{NB.items=(st.items||[]).map(it=>Object.assign({hours:JOBS[it.job]&&JOBS[it.job].def!=null?JOBS[it.job].def:1,dest:defDest()},it)).filter(it=>JOBS[it.job]);
     NB.dailyHunt=!!st.dailyHunt;NB.dailyOff=Object.assign({},st.dailyOff||{});NB.dailyT=st.dailyT||'';NB.clanT=st.clanT||'';NB.lateT=st.lateT||'';
-    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','sleepAll','tpRing','tpRingBm','mouseMode','revive','buffOn','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});
+    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','sleepAll','tpRing','tpRingBm','mouseMode','revive','buffOn','statueBuff','statueOnF','statueUntil','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});
     if(st.mail)NB.mail=Object.assign({},keep.mail,st.mail);if(st.start){NB.start=st.start;NB.auto=false}EXP_CACHE=null;
     const {st:T,total}=itemTimes(),S0=startMin(),RG=rrGroups(),segs=[];
     NB.items.forEach((it,i)=>{if(it.disabled||T[i]==null)return;let nx=total;for(let k=i+1;k<NB.items.length;k++)if(!NB.items[k].disabled&&T[k]!=null){nx=T[k];break}
