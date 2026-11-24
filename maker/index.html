@@ -3062,7 +3062,7 @@ header.top .gnb-nav .gnb-btn.gnb-cmp:hover{background:rgba(5,150,105,.22)!import
   
   </div></div>
   <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/25 · v337)</span></summary><ul>
-   <li><b>11/25</b> 💎 v337 <b>희귀 득템 거짓 알림 수정</b>: 절전 화면 아이템 줄 위·아래에 길게 이어진 파란 가로줄(화면 장식선)을 희귀 아이템 테두리로 착각해 희귀가 없는데도 알림이 오던 문제 → 아이템 칸보다 훨씬 길게 끊김 없이 이어진 줄은 무시 (11/25 실제 화면으로 확인 · 희귀·영웅·전설 감지는 그대로)</li>
+   <li><b>11/25</b> 💎 v337 <b>희귀 득템 거짓 알림 수정</b>: 절전 화면 아이템 줄 위·아래에 길게 이어진 파란 가로줄(화면 장식선)을 희귀 아이템 테두리로 착각해 희귀가 없는데도 알림이 오던 문제 · 빨간 보물상자·주황 상자 아이콘의 빛번짐을 영웅 테두리 세로줄로 착각하던 문제 → 아이템 칸보다 훨씬 길게 이어진 줄은 무시 · 세로 테두리는 칸 맨 위부터 맨 아래까지 닿는 줄만 인정 (11/25 실제 절전 화면 0개 확인 · 희귀 갑옷·도끼 · 영웅 2 · 전설 1 감지는 그대로)</li>
    <li><b>11/25</b> 🪟 v336 <b>HUD 미니바(PiP) 정보 늘림</b>: 칸마다 ① 캐릭 번호 + 상태(🟢 정상 · 💤 절전 · ⚠️ 이상 · ⚔️ PK · 💀 사망 · 🔕 무시) ② 이름(괄호 안 이름) ③ 지금 할 일(본토3 · 기란 · 스케줄 · 폭젠 …) ④ 다음 할 일까지 남은 시간(→기란 23분) — 이상이 있으면 ④에 무게82% · PK! · HP · AUTO꺼짐 · 멈춤! 표시 · 맨 윗줄 오른쪽 05시까지 남은 시간 · 오늘 득템 합계 · 칸 순서를 연결 순서 대신 캐릭 번호순(1→9)으로</li>
    <li><b>11/24</b> 📊 v335 <b>텔레그램 일일 성적표 캐릭 목록 정리</b>: 창 제목·"퍼플 창 N"·예전에 쓰던 이름이 캐릭처럼 따로 쌓여 9캐릭인데 수십 줄이 뜨던 문제 → 연결된 HUD 카드 이름 하나로 모아서 집계 · HUD 카드 번호순 · 지금 없는 이름은 득템·사고 기록이 있을 때만 표시</li>
    <li><b>11/24</b> 🧹 v334 <b>HUD 🧩 1방 9분할 삭제</b>: 모니터 1번 공유를 똑같이 9칸으로 자르는 방식이라 퍼플 9창 위치가 칸과 딱 맞지 않으면 쓸 수 없어서 버튼·검색·안내에서 뺌 — 실시간 화면은 HUD 카드마다 <b>📹 화면</b>으로 연결해 주세요</li>
@@ -8464,8 +8464,8 @@ function hmAnalyzeSleepDrops(rgba,W,H){
       }
     }
     // v330: 세로 테두리로도 확인 — 창이 작으면(640×360) 위·아래 테두리가 1px로 어둡게 뭉개져 희귀(파랑)를 놓치던 문제 (오른쪽 세로줄만 또렷한 경우)
-    {const cnt=new Array(W).fill(0),y1=Math.min(H,38);for(let x=0;x<W;x++){let c=0,tp=false,bt=false;for(let y=3;y<y1;y++){const k=(y*W+x)*4;if(hmClassifyBorderPx(rgba[k],rgba[k+1],rgba[k+2])===gr){c++;if(y<=6)tp=true;if(y>=y1-5)bt=true}}cnt[x]=(tp&&bt)?c:0}   // 칸 테두리는 위 끝부터 아래 끝까지 이어짐 (아이콘 그림 속 세로선 제외)
-     const need=Math.round((Math.min(H,38)-3)*0.68),edges=[];
+    {const cnt=new Array(W).fill(0),y1=Math.min(H,38);for(let x=0;x<W;x++){let c=0,tp=false,bt=false;for(let y=3;y<y1;y++){const k=(y*W+x)*4;if(hmClassifyBorderPx(rgba[k],rgba[k+1],rgba[k+2])===gr){c++;if(y<=4)tp=true;if(y>=y1-3)bt=true}}cnt[x]=(tp&&bt)?c:0}   // v337: 칸 테두리 맨 위(3~4)·맨 아래(35~37)까지 닿아야 함 (빨간·주황 아이콘 빛번짐 오인 방지)   // 칸 테두리는 위 끝부터 아래 끝까지 이어짐 (아이콘 그림 속 세로선 제외)
+     const need=Math.round((Math.min(H,38)-3)*0.8),edges=[];
      for(let x=0;x<W;x++){if(cnt[x]<need)continue;const l=x>=3?cnt[x-3]:0,r=x+3<W?cnt[x+3]:0;if(Math.min(l,r)>8)continue;   // 넓게 칠해진 아이콘 안쪽은 제외 · 가는 세로줄만
        if(edges.length&&x-edges[edges.length-1]<=2)edges[edges.length-1]=x;else edges.push(x)}
      let vc=0;for(let i=0;i<edges.length;i++){vc++;if(i+1<edges.length&&edges[i+1]-edges[i]<=40)i++}   // 한 칸의 왼쪽·오른쪽 줄은 1개로
