@@ -3115,7 +3115,7 @@ header.top .gnb-nav .gnb-btn.gnb-cmp:hover{background:rgba(5,150,105,.22)!import
   
   </div></div>
   <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/25 · v341)</span></summary><ul>
-   <li><b>11/25</b> 🔄 클래스 체인지 시뮬레이터 새 단장: 실제 구매 화면처럼 ①클래스 선택 ②장비 ③상점 장비 ④스킬 ⑤숙련도 교체 + 최종 구매 확인 창. 공식 비용표(사신형·뇌신형) 적용, 부위별 최대 개수 · 5번째 스킬 비용 증가 자동 계산, 희귀 스킬 항목 삭제</li><li><b>11/25</b> 🕐 v340 <b>시계 이름표 배치 다듬기</b>: 이름표를 양쪽 일자 열 대신 시계 둘레를 따라 놓아 시계 위·아래 빈 공간까지 고르게 사용 · 이름 길이에 맞춘 칸 · 글자는 화면과 같은 글꼴(억지로 늘이거나 줄이지 않음) · 시계 크기 다시 키움</li>
+   <li><b>11/25</b> 🔄 클래스 체인지 시뮬레이터 새 단장: 실제 구매 화면처럼 ①클래스 선택 ②장비 ③상점 장비 ④스킬 ⑤숙련도 교체 + 최종 구매 확인 창. 공식 비용표(최신 투사형 2026.09 기본 · 뇌신형 · 사신형) 적용, 유일 무기 375개, 부위별 최대 개수 · 5번째 스킬 비용 증가 자동 계산, 희귀 스킬 항목 삭제</li><li><b>11/25</b> 🕐 v340 <b>시계 이름표 배치 다듬기</b>: 이름표를 양쪽 일자 열 대신 시계 둘레를 따라 놓아 시계 위·아래 빈 공간까지 고르게 사용 · 이름 길이에 맞춘 칸 · 글자는 화면과 같은 글꼴(억지로 늘이거나 줄이지 않음) · 시계 크기 다시 키움</li>
    <li><b>11/25</b> 📐 v339 <b>시계 이름표 칸 맞춤</b>: 글꼴에 따라 이름표 글자가 칸 밖으로 삐져나오던 문제 → 가장 긴 이름에 맞춰 칸 폭을 정하고 글자를 칸 안에 딱 맞춰 그림 · 칸이 넓어지면 시계를 조금 줄여서 양쪽 열이 화면 안에 정렬되게 · 실제 사냥·정비·이동 요약은 원래 자리(시계 오른쪽 위)로</li>
    <li><b>11/25</b> 🕐 v338 <b>24시간 시계 화면 정리</b>: 시계를 크게 · 시계 바깥 이름표를 왼쪽(12~24시)·오른쪽(0~12시) 열로 줄 맞춰 세워 글자 겹침 없앰 · 이름표는 시각 + 아이콘 + 짧은 이름(본토(엘모어격전지·화룡의둥지) → 본토 엘모어·화룡) · 시계 칸 안은 아이콘만 · 순서표 이름도 짧게 (리세/서커스 시계는 그대로)</li>
    <li><b>11/25</b> 💎 v337 <b>희귀 득템 거짓 알림 수정</b>: 절전 화면 아이템 줄 위·아래에 길게 이어진 파란 가로줄(화면 장식선)을 희귀 아이템 테두리로 착각해 희귀가 없는데도 알림이 오던 문제 · 빨간 보물상자·주황 상자 아이콘의 빛번짐을 영웅 테두리 세로줄로 착각하던 문제 → 아이템 칸보다 훨씬 길게 이어진 줄은 무시 · 세로 테두리는 칸 맨 위부터 맨 아래까지 닿는 줄만 인정 (11/25 실제 절전 화면 0개 확인 · 희귀 갑옷·도끼 · 영웅 2 · 전설 1 감지는 그대로)</li>
@@ -12116,6 +12116,11 @@ addEventListener('load',function(){orig=null;apply()});
     var MASTW={'기사':['한손검','양손검'],'요정':['단검','활','한손검'],'마법사':['단검','지팡이'],'총사':['라이플','핸드캐넌'],'투사':['한손검','양손검','체인소드'],'신성검사':['한손검'],'다크엘프':['이도류','크로우','건틀렛'],'암흑기사':['한손검','양손검'],'광전사':['도끼','창'],'사신':['사이드','한손검'],'뇌신':['창','한손검'],'군주':['단검','한손검','양손검'],'마검사':['단검','룬소드']};
     var SHOP6=[['rum','룸티스 귀걸이',2],['snap','스냅퍼 반지',2],['sh','빛나는 티셔츠',1],['hsh','영웅의 빛나는 티셔츠',1],['ep','빛나는 견갑',1],['hep','영웅의 빛나는 견갑',1]];
     var P={
+      ts:{nm:'투사 상품형 (2026.09 · 최신 · 900 아데나)',base:900,bc:'아데나',add:'할파스의 전투 스톤 주머니',addS:'스톤 주머니',
+        gear:{r:1,h:7,l:20,m:375,o:375},shop:4,rune:1,sk:{n:2,h:7,l:20,cu:60,u:75,m:113,x:0},skMax:{n:4,h:6,l:5,cu:1,u:1,m:2,x:8},mast:[1,3,6,12,24,24,24,24],shop6:SHOP6.concat([['cat','카탈리스트',1]]),
+        uniq:{'군주':'어쏘리티','기사':'그랜드 마스터: 카운터','요정':'엘븐 윙 슈즈','마법사':'매직 마스터(에이션트)','다크엘프':'어쌔신','총사':'데우스 엑스 마키나','투사':'아우라키아','암흑기사':'도펠겡어 킹','신성검사':'세인트 카운터(슈프림)','광전사':'버닝 하트','사신':'그림 리퍼','뇌신':'플래시(미스틱)','마검사':'트리니티(에이스)'},
+        cuniq:{'요정':'피닉스','총사':'앱솔루트 제로','투사':'할파스','암흑기사':'디멘션 블레이드','신성검사':'세라핌','광전사':'헤라클레스','뇌신':'기가 드라이브'},
+        url:'https://lineagem.plaync.com/board/notice/view?articleId=50557631'},
       sa:{nm:'사신 상품형 (3,000 다이아)',base:3000,bc:'다이아',add:'그림리퍼의 전투 스톤 주머니(각인)',addS:'스톤 주머니',
         gear:{r:1,h:9,l:27,m:500},shop:5,rune:1,sk:{h:9,l:27,u:100,m:150,x:0},skMax:{h:5,l:5,u:1,m:2,x:8},mast:[1,8,16,32,64],shop6:SHOP6,
         uniq:{'군주':'임페리얼 그래비티','기사':'카운터 배리어(마스터)','요정':'엘븐 윙 슈즈','마법사':'매스 이뮨 투 함','다크엘프':'쉐도우 대시(데스티니)','총사':'데우스 엑스 마키나','투사':'드래곤 마스터리(페이탈)','암흑기사':'도펠겡어 킹','신성검사':'세인트 카운터(슈프림)','사신':'그림 리퍼','뇌신':'플래시(미스틱)'},cuniq:{}},
@@ -12125,25 +12130,25 @@ addEventListener('load',function(){orig=null;apply()});
         url:'https://lineagem.plaync.com/board/notice/view?articleId=685206413d9dbb02fef16c93'}
     };
     var GEAR=[['wp','무기',3,'w'],['ar','갑옷',4,'a'],['hm','투구',2,'a'],['gl','장갑',2,'a'],['bt','신발',2,'a'],['cl','망토',2,'a'],['sd','방패&가더',2,'a'],['lg','각반',2,'a'],['ts','티셔츠',2,'a'],['nk','목걸이',2,'c'],['bl','벨트',2,'c'],['er','귀걸이',2,'c'],['rg','반지',4,'c'],['br','팔찌',2,'c'],['rn','룬',2,'r']];
-    var GR={n:['일반','#9aa3ad'],r:['희귀','#4a8cff'],h:['영웅','#e5484d'],l:['전설','#b05cff'],m:['신화','#f0b429'],cu:['전설(혈맹 유니크)','#d070ff'],u:['전설(유니크)','#c77dff'],x:['전용(변신 등)','#f0b429']};
+    var GR={n:['일반','#9aa3ad'],r:['희귀','#4a8cff'],h:['영웅','#e5484d'],l:['전설','#b05cff'],m:['신화','#f0b429'],cu:['전설(혈맹 유니크)','#d070ff'],u:['전설(유니크)','#c77dff'],o:['유일','#3fd0c9'],x:['전용(변신 등)','#f0b429']};
     var SKO=['n','h','l','cu','u','m','x'];
     var COND=[['lv','Lv.75 이상'],['gl','\'글루딘 도착\' 퀘스트 완료'],['cl','혈맹 군주 상태 아님'],['dg','월드/마스터/파티 던전 밖에 있음'],['sc','확정하지 않은 스킬 카드 없음'],['iv','교체할 장비가 소지품 창에 있음 (창고·거래소 X)'],['ul','교체할 장비 착용 해제 · 잠금 해제']];
     var PREP=[['ex','📦 거래소 판매/정산 대기 물품 회수'],['qs','🎮 클체 후 퀵슬롯 & 매크로 슬롯 재세팅'],['bm','🔖 기억창 5칸 유지 & 7번 반지 🔒 확인'],['el','🧪 엘릭서 재분배 계획 (하프 엘릭서는 유지)']];
     function blank(){return {gear:{},shop:{},sk:{},mast:{on:0,fw:'',tw:'',opt:[]}}}
-    var st={pr:'sa',slot:1,from:'신성검사',to:'기사',sex:'m',tab:'ch',open:'',cond:{},chk:{},d:blank(),modal:0};
+    var st={pr:'ts',slot:1,from:'신성검사',to:'기사',sex:'m',tab:'ch',open:'',cond:{},chk:{},d:blank(),modal:0};
     try{var sv=JSON.parse(localStorage.getItem('pmk-ccsim-v2')||'null');if(sv)Object.assign(st,sv,{modal:0,open:''})}catch(e){}
-    if(!P[st.pr])st.pr='sa';
+    if(!P[st.pr]||!st.prV2){st.pr='ts';st.prV2=1}
     function save(){try{var o=Object.assign({},st);delete o.modal;localStorage.setItem('pmk-ccsim-v2',JSON.stringify(o))}catch(e){}}
     function drafts(){try{return JSON.parse(localStorage.getItem('pmk-ccsim-drafts')||'{}')||{}}catch(e){return {}}}
     function n(v){return Math.max(0,+v||0)}
     function fmt(v){return (+v||0).toLocaleString()}
     function g(k){return st.d.gear[k]||(st.d.gear[k]={})}
-    function gearCost(){var p=P[st.pr],t=0;GEAR.forEach(function(s){var o=g(s[0]);if(s[3]==='r')t+=n(o.c)*p.rune;else ['r','h','l','m'].forEach(function(k){if(k==='m'&&s[3]==='c')return;t+=n(o[k])*p.gear[k]})});return t}
+    function gearCost(){var p=P[st.pr],t=0;GEAR.forEach(function(s){var o=g(s[0]);if(s[3]==='r')t+=n(o.c)*p.rune;else ['r','h','l','m','o'].forEach(function(k){if(k==='m'&&s[3]==='c')return;if(k==='o'&&(s[3]!=='w'||p.gear.o==null))return;t+=n(o[k])*p.gear[k]})});return t}
     function shopCost(){var p=P[st.pr],t=0;p.shop6.forEach(function(s){t+=n(st.d.shop[s[0]])*p.shop});return t}
     function skCost(){var p=P[st.pr],t=0;SKO.forEach(function(k){if(p.sk[k]==null)return;var c=n(st.d.sk[k]);for(var i=1;i<=c;i++)t+=(k==='h'||k==='l')&&i>=5?p.sk[k]*2:p.sk[k]});return t}
     function mastCost(){var p=P[st.pr],t=0;if(!st.d.mast.on)return 0;p.mast.forEach(function(c,i){if(st.d.mast.opt[i])t+=c});return t}
     function chip(gk,txt){var c=GR[gk]?GR[gk][1]:'#8a96a8';return '<span class="ccx-it" style="--gc:'+c+'">'+M.esc(txt)+'</span>'}
-    function gearChips(side){var out=[];GEAR.forEach(function(s){var o=g(s[0]);if(s[3]==='r'){if(n(o.c))out.push(chip('r',s[1]+' ×'+n(o.c)))}else ['m','l','h','r'].forEach(function(k){if(n(o[k]))out.push(chip(k,GR[k][0]+' '+s[1]+' ×'+n(o[k])))})});return out}
+    function gearChips(side){var out=[];GEAR.forEach(function(s){var o=g(s[0]);if(s[3]==='r'){if(n(o.c))out.push(chip('r',s[1]+' ×'+n(o.c)))}else ['o','m','l','h','r'].forEach(function(k){if(n(o[k]))out.push(chip(k,GR[k][0]+' '+s[1]+' ×'+n(o[k])))})});return out}
     function shopChips(side){var p=P[st.pr],out=[];p.shop6.forEach(function(s){if(n(st.d.shop[s[0]]))out.push(chip('',(side?'다른 ':'')+s[1]+' ×'+n(st.d.shop[s[0]])))});return out}
     function skChips(side){var p=P[st.pr],out=[];SKO.forEach(function(k){if(p.sk[k]==null)return;var c=n(st.d.sk[k]);if(!c)return;var lbl=GR[k][0]+' 스킬';if(k==='u'){var nm=side?p.uniq[st.to]:p.uniq[st.from];lbl=nm?nm:lbl}if(k==='cu'){var nm2=side?p.cuniq[st.to]:p.cuniq[st.from];lbl=nm2?nm2:lbl}out.push(chip(k,lbl+(c>1||k==='h'||k==='l'||k==='n'||k==='m'||k==='x'?' ×'+c:'')))});return out}
     function mastChips(side){var p=P[st.pr],m=st.d.mast,out=[];if(!m.on)return out;out.push(chip('','숙련도 · '+((side?m.tw:m.fw)||'-')));p.mast.forEach(function(c,i){if(m.opt[i])out.push(chip('','숙련 옵션 '+(i+1)+'레벨'))});return out}
@@ -12157,11 +12162,11 @@ addEventListener('load',function(){orig=null;apply()});
     }
     function numIn(attr,val,max,dis){return '<input type="number" class="ccx-n" '+attr+' min="0" max="'+max+'" value="'+n(val)+'"'+(dis?' disabled':'')+'>'}
     function edGear(){var p=P[st.pr];return '<div class="ccx-hint">희귀 등급 이상 · 같은 부위 · 같은 등급끼리만 교체돼요. 각인/비각인 유지 · 속성/축복/마법 부여 옵션 제거 · 인챈트는 안전 강화 수치 기준으로 유지 또는 변경.</div><div class="ccx-gg">'
-      +GEAR.map(function(s){var o=g(s[0]),tot=s[3]==='r'?n(o.c):n(o.r)+n(o.h)+n(o.l)+n(o.m);
+      +GEAR.map(function(s){var o=g(s[0]),tot=s[3]==='r'?n(o.c):n(o.r)+n(o.h)+n(o.l)+n(o.m)+n(o.o);
         var ins=s[3]==='r'?'<label>개수 '+numIn('data-gs="'+s[0]+'" data-gk="c"',o.c,s[2])+'</label>'
-          :['r','h','l','m'].map(function(k){var dis=k==='m'&&s[3]==='c';return '<label style="--gc:'+GR[k][1]+'"><span>'+GR[k][0]+'</span>'+numIn('data-gs="'+s[0]+'" data-gk="'+k+'"',dis?0:o[k],s[2],dis)+'</label>'}).join('');
+          :['r','h','l','m'].concat(s[3]==='w'&&p.gear.o!=null?['o']:[]).map(function(k){var dis=k==='m'&&s[3]==='c';return '<label style="--gc:'+GR[k][1]+'"><span>'+GR[k][0]+'</span>'+numIn('data-gs="'+s[0]+'" data-gk="'+k+'"',dis?0:o[k],s[2],dis)+'</label>'}).join('');
         return '<div class="ccx-gc'+(tot?' has':'')+'"><div class="ccx-gt">'+s[1]+' <small>'+tot+'/'+s[2]+'</small></div><div class="ccx-gi">'+ins+'</div></div>'}).join('')
-      +'</div><div class="ccx-hint">1개당: 희귀 '+p.gear.r+' · 영웅 '+p.gear.h+' · 전설 '+p.gear.l+' · 신화 '+p.gear.m+' · 룬 '+p.rune+' (장신구 신화는 교체 대상 아님)</div>'}
+      +'</div><div class="ccx-hint">1개당: 희귀 '+p.gear.r+' · 영웅 '+p.gear.h+' · 전설 '+p.gear.l+' · 신화 '+p.gear.m+(p.gear.o!=null?' · 유일 무기 '+p.gear.o:'')+' · 룬 '+p.rune+' (장신구 신화는 교체 대상 아님) · 무기 연마 내역 유지</div>'}
     function edShop(){var p=P[st.pr];return '<div class="ccx-hint">같은 종류의 다른 옵션으로 교체 (예: 룸티스 붉은빛 → 보랏빛). 인챈트 · 축복 유지, 제련 옵션 제거. 수호/회복의 인장 · 빛나는 팔찌 · 휘장 · 성장/흑묘 티셔츠 · 청룡 견갑은 대상 아님.</div><div class="ccx-gg">'
       +p.shop6.map(function(s){var v=n(st.d.shop[s[0]]);return '<div class="ccx-gc'+(v?' has':'')+'"><div class="ccx-gt">'+s[1]+' <small>'+v+'/'+s[2]+'</small></div><div class="ccx-gi"><label>개수 '+numIn('data-sh="'+s[0]+'"',v,s[2])+'</label></div></div>'}).join('')
       +'</div><div class="ccx-hint">1개당 '+p.shop+'개</div>'}
@@ -12179,7 +12184,7 @@ addEventListener('load',function(){orig=null;apply()});
       +'<div class="ccx-gg">'+p.mast.map(function(c,i){return '<label class="ccx-gc'+(m.opt[i]?' has':'')+'" style="cursor:pointer"><div class="ccx-gt"><input type="checkbox" data-mo="'+i+'"'+(m.opt[i]?' checked':'')+(m.on?'':' disabled')+'> 숙련 옵션 '+(i+1)+'레벨</div><div class="ccx-s">'+c+'개</div></label>'}).join('')+'</div>'}
     function confirmCols(){var p=P[st.pr],m=st.d.mast;
       function li(nm,ok){return '<li class="'+(ok?'y':'')+'"><span>'+nm+'</span><b>'+(ok?'교체':'미교체')+'</b></li>'}
-      var c1=GEAR.map(function(s){var o=g(s[0]);var t=s[3]==='r'?n(o.c):n(o.r)+n(o.h)+n(o.l)+n(o.m);return li(s[1],t>0)}).join('');
+      var c1=GEAR.map(function(s){var o=g(s[0]);var t=s[3]==='r'?n(o.c):n(o.r)+n(o.h)+n(o.l)+n(o.m)+n(o.o);return li(s[1],t>0)}).join('');
       var c2=p.shop6.map(function(s){return li(s[1],n(st.d.shop[s[0]])>0)}).join('');
       var c3=SKO.filter(function(k){return p.sk[k]!=null}).map(function(k){return li(k==='x'?'전용 스킬':GR[k][0]+' 스킬',n(st.d.sk[k])>0)}).join('');
       var c4=li('숙련도',!!m.on)+p.mast.map(function(c,i){return li('숙련 옵션'+(i+1),!!(m.on&&m.opt[i]))}).join('');
@@ -12193,7 +12198,7 @@ addEventListener('load',function(){orig=null;apply()});
         +'<div class="ccx-pre"><label>상품 비용표 <select id="ccxPr">'+Object.keys(P).map(function(k){return '<option value="'+k+'"'+(k===st.pr?' selected':'')+'>'+P[k].nm+'</option>'}).join('')+'</select></label><small>추가 비용 재화: '+M.esc(p.add)+(p.url?' · <a href="'+p.url+'" target="_blank" rel="noopener">공식 공지</a>':'')+' · 상품마다 단가·교체 범위가 달라질 수 있어요</small></div>';
       if(st.tab==='wn'){
         h+='<div class="ccx-wn"><h4>클래스 변경 규칙</h4><ul>'
-          +['클래스 변경은 되돌릴 수 없고, 진행 중엔 게임 이용 불가','레벨 · 경험치 · 캐릭터명 · 퀘스트/업적 · 버프 · PvP북 · 혈맹 · 몬스터 도감 · 기억 · 마일리지는 유지','스탯 초기화 → 포인트로 재분배, 엘릭서도 변경 전 포인트만큼 재분배 (하프 엘릭서는 유지)','장비는 희귀 등급 이상만, 소지품 창에 있는 것만 교체 대상 (창고 · 거래소 등록 중 X)','교체된 원래 장비는 삭제되고 선택한 장비를 얻음','교체하지 않은 스킬 · 스킬 카드와 영웅 미만 기존 클래스 스킬은 소멸','숙련도 교체 1회 무료, 숙련 옵션은 레벨별 비용 · 미교체 옵션 소멸','같은 클래스로는 구매 불가 · 계정(월드)당 1회'].map(function(x){return '<li>'+x+'</li>'}).join('')
+          +['클래스 변경은 되돌릴 수 없고, 진행 중엔 게임 이용 불가','레벨 · 경험치 · 캐릭터명 · 퀘스트/업적 · 버프 · PvP북 · 혈맹 · 몬스터 도감 · 기억 · 마일리지는 유지','스탯 초기화 → 포인트로 재분배, 엘릭서도 변경 전 포인트만큼 재분배 (하프 엘릭서는 유지)','장비는 희귀 등급 이상만, 소지품 창에 있는 것만 교체 대상 (창고 · 거래소 등록 중 X)','교체된 원래 장비는 삭제되고 선택한 장비를 얻음','교체하지 않은 스킬 · 스킬 카드와 영웅 미만 기존 클래스 스킬은 소멸','숙련도 교체 1회 무료, 숙련 옵션은 레벨별 비용 · 미교체 옵션 소멸','같은 클래스로는 구매 불가 · 레거시/리부트 월드별 계정당 상품별 1회 (최신 투사 상품은 기란·하이네 제외, 켄트·오렌 가능)'].map(function(x){return '<li>'+x+'</li>'}).join('')
           +'</ul><h4>구매 조건</h4><div class="ccx-ck">'+COND.map(function(c){return '<label><input type="checkbox" class="ccxc" data-k="'+c[0]+'"'+(st.cond[c[0]]?' checked':'')+'> '+c[1]+'</label>'}).join('')+'</div>'
           +'<h4>매크로 쪽 준비</h4><div class="ccx-ck">'+PREP.map(function(c){return '<label><input type="checkbox" class="ccxk" data-k="'+c[0]+'"'+(st.chk[c[0]]?' checked':'')+'> '+c[1]+'</label>'}).join('')+'</div></div>';
       }else{
@@ -12217,7 +12222,7 @@ addEventListener('load',function(){orig=null;apply()});
       root.innerHTML=h+'</div>';
     }
     function clampGear(sk){var s=GEAR.find(function(x){return x[0]===sk});if(!s)return;var o=g(sk);if(s[3]==='r'){if(n(o.c)>s[2]){o.c=s[2];M.toast('⚠ '+s[1]+'는 최대 '+s[2]+'개까지 교체돼요')}return}
-      var t=n(o.r)+n(o.h)+n(o.l)+n(o.m);if(t>s[2]){var ex=t-s[2];['r','h','l','m'].reverse().forEach(function(k){var cut=Math.min(ex,n(o[k]));o[k]=n(o[k])-cut;ex-=cut});M.toast('⚠ '+s[1]+'는 최대 '+s[2]+'개까지 교체돼요')}}
+      var t=n(o.r)+n(o.h)+n(o.l)+n(o.m)+n(o.o);if(t>s[2]){var ex=t-s[2];['r','h','l','m','o'].reverse().forEach(function(k){var cut=Math.min(ex,n(o[k]));o[k]=n(o[k])-cut;ex-=cut});M.toast('⚠ '+s[1]+'는 최대 '+s[2]+'개까지 교체돼요')}}
     draw();
     root.addEventListener('change',function(e){
       var t=e.target,p=P[st.pr],d=t.dataset;
