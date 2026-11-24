@@ -4833,7 +4833,7 @@ function expandAll(){
     const d=LIBDEF.find(x=>x.id===id),base=baseRange(d.from,d.to).filter(a=>!(LCUT&&LCUT.some(r=>a.i0>=r[0]&&a.i0<r[1])));
     if(!base.length)return;
     for(let r=0;r<rep;r++){const l=patchQuest(base.map(cloneAct));if(d.defWait!=null)l[0].gap=d.defWait;
-      if(id==='prep'&&statueBuffOn()&&!buffNo){let e=pend;acts.forEach(a=>{e+=a.gap+span(a)});const k=l.findIndex(a=>a.i0===6);if(k>0&&(stLast==null||e-stLast>=3*3600000-60000)){const B=S.base;l.splice(k,0,Object.assign(mkClick(.134,TELE[0][2],l[k].gap),{_giran:1,_tag:'🗿 동상 버프 (기란감옥 가는 길)'}),...resetBlock(3000).map(a=>Object.assign(a,{_tag:'🗿 동상 버프 (기란감옥 가는 길)'})),Object.assign(cloneAct(B[5]),{gap:2000}));stLast=e}}   /* v342: 기란감옥 들어가는 길(기란 N 목록)에서 동상 먼저 누르고 다시 N → 감옥 (추가 텔레포트 없음) */
+      if(id==='prep'&&statueBuffOn()&&!buffNo){let e=pend;acts.forEach(a=>{e+=a.gap+span(a)});const k=l.findIndex(a=>a.i0===12);if(k>0&&(stLast==null||e-stLast>=3*3600000-60000)){const B=S.base;l.splice(k,0,Object.assign(mkClick(.134,TELE[0][2],l[k].gap),{_giran:1,_tag:'🗿 동상 버프 (기란감옥 가는 길)'}),...resetBlock(3000).map(a=>Object.assign(a,{_tag:'🗿 동상 버프 (기란감옥 가는 길)'})),Object.assign(cloneAct(B[5]),{gap:2000}));stLast=e}}   /* v342: 기란감옥 들어가는 길(기란 N 목록)에서 동상 먼저 누르고 다시 N → 감옥 (추가 텔레포트 없음) */
       if(g0!=null)l[0].gap=g0;if(sc!=null&&sc<1&&r===rep-1)l[0].gap=Math.round(l[0].gap*sc);put(l)}   // v301: 원본 내장 퀘스트(loop1·sch·midclean)도 모두받기×3 + ESC 닫기 자동 보강
   };
   const hourParts=h=>{const c=Math.max(1,Math.ceil(h-1e-9)),last=h-(c-1);return {c,last:Math.min(1,Math.max(1/6,last))}};   // 10분 단위: 마지막 사이클만 짧게
