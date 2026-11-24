@@ -8006,6 +8006,7 @@ function hmLogDrop(t,gained,zone){
   });
   if(HM.dropLog.length>120)HM.dropLog.length=120;
   hmSaveProStores();
+  try{window.__renderDropMuseum&&window.__renderDropMuseum()}catch(e){}
 }
 // v323 #16: ⏳ 9캐릭 다음 매크로 클릭 카운트다운 안전 레이더
 function hmNextActionInfo(h){
@@ -11993,6 +11994,7 @@ addEventListener('load',function(){orig=null;apply()});
     var h='<div class="pro-row" style="justify-content:space-between"><span class="sub">시세(다이아)를 적어 두면 효자·먹튀 캐릭과 사냥터 수익이 자동 집계됩니다</span><span class="pro-row"><button type="button" class="pri" id="dropTrophyPng">🖼️ 결산 카드 PNG</button><button type="button" id="dropAddManual">＋ 수동 기록</button><button type="button" id="dropClearAll">🗑 초기화</button></span></div>'+rankHtml+list;
     openPro('🏆 9캐릭 득템 박물관 & 효자·먹튀 캐릭 랭킹',h);
   }
+  window.__renderDropMuseum=function(){try{if(dlg&&!dlg.hidden&&/득템 박물관/.test(ttl.textContent||''))renderDropMuseum()}catch(e){}};   // v330: 박물관 창이 열려 있으면 새 득템이 들어올 때 바로 다시 그림
 
   /* ===== #15 ⚡ PC 실측 로딩 속도 캘리브레이션 ===== */
   var swStart=0;
