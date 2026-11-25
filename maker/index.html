@@ -518,6 +518,12 @@ aside.manual{border:1px solid var(--line);border-top:5px solid var(--accent);box
 .tot-tools label{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:8px;background:var(--surface);border:1px solid var(--line);cursor:pointer;white-space:nowrap}
 .tot-tools input[type=checkbox]{width:auto!important;margin:0!important}
 .tot-tools input[type=time]{width:auto;padding:2px 6px;font-weight:800;font-size:13px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.tot-tools .fitpick{position:relative}
+.tot-tools .fitpick>summary{list-style:none;padding:4px 10px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
+.tot-tools .fitpick>summary::-webkit-details-marker{display:none}
+.tot-tools .fitpick-menu{position:absolute;right:0;top:calc(100% + 4px);z-index:40;display:grid;gap:4px;min-width:200px;padding:8px;border-radius:10px;background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.tot-tools .fitpick-menu button{background:var(--surface);color:var(--fg);border:1px solid var(--line);text-align:left}
+.tot-tools .fitpick-menu button:hover{border-color:var(--accent);color:var(--accent)}
 .tot-tools button{padding:4px 10px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
 .tot-tools button:hover{filter:brightness(1.06)}
 /* 항상 하는 일·출석은 각각 한 줄 전체로 */
@@ -2565,7 +2571,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
 </style>
 
 <header class="top">
-  <div class="brand" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px"><h1 id="ttl">땡자군주가 만든 퍼플매크로 제작기 <span class="ver" id="verPatchBtn" role="button" tabindex="0" title="클릭하면 최근 패치 내역과 기능 사용법 팝업을 봅니다">최신 11/25 · v350 🆕</span><span class="srvchip" title="켄트 · 오렌 서버 전용이에요. 레거시 · 기란 · 하이네 서버는 상담 및 후원에서 문의 주세요">🛡 켄트·오렌 전용</span></h1><span class="cheer2">오렌2 직장인 혈맹 여러분 화이팅입니다!</span><nav class="gnb-nav" aria-label="메인 메뉴"><button type="button" class="gnb-btn active" data-v="make" title="하루 일정 만들기 · 동작 편집"><span class="gnb-ico">🛠️</span> 제작기</button><button type="button" class="gnb-btn" data-v="hud" title="받은 매크로 파일(최대 10개)을 넣으면 캐릭마다 지금 어디서 무엇을 하는지 보여 줘요"><span class="gnb-ico">🖥</span> HUD</button><span class="gnb-sep" aria-hidden="true"></span><button type="button" class="gnb-btn gnb-must" data-v="man" title="처음 쓰는 분 안내 · 게임 세팅 체크리스트 · 매뉴얼 (꼭 읽어 주세요)"><span class="gnb-ico">📘</span> 필독사항!!</button><button type="button" class="gnb-btn" data-v="rrm" title="리세마라/서커스 준비 · 진행 순서"><span class="gnb-ico">🔁</span> 리세·서커스</button><button type="button" class="gnb-btn" data-v="hy" title="제작기 기능을 목적별로 조합하는 법 · 그림으로 보는 원리 · 자주 하는 실수"><span class="gnb-ico">💡</span> 편집기 꿀팁!</button><button type="button" class="gnb-btn" data-v="reb" title="클래스 체인지 · 13대 클래스 출시일 · 역대 리부트"><span class="gnb-ico">⚔️</span> 클래스 체인지</button><span class="gnb-sep" aria-hidden="true"></span><button type="button" class="gnb-btn" data-v="sup" title="상담 · 기능 개발 요청 · 후원 안내 (카카오톡 오픈채팅)"><span class="gnb-ico">💬</span> 상담 및 후원</button><button type="button" class="gnb-btn gnb-patch" id="gnbPatchBtn" title="최근 패치 내역과 기능 사용법 팝업 보기">🆕 패치노트</button><button type="button" class="gnb-btn gnb-cmp" id="cmpBtn" title="크롬 화면 공유로 퍼플 게임 창을 실시간으로 보며 클릭·단축키 자리와 오작동을 대조해요 · 스샷/Ctrl+V/다른 JSON 파일도 지원">📺 실시간 대조</button></nav><span hidden><button type="button" id="manPageBtn" class="man-hdr-btn" title="게임 세팅 4단계 상단바 · 세팅 체크리스트 · 기본 세팅 매뉴얼(설명서) 페이지 열기"><span>📘 게임 세팅 · 매뉴얼</span><span class="man-hdr-badge" id="manHdrBadge">세팅 0/8 · 4단계 안내 ↗</span></button><button type="button" id="rrPageBtn" class="man-hdr-btn rr-hdr-btn" title="리세마라/서커스 준비 · 진행 순서 · 그림 안내 페이지 열기"><span>🔁 리세마라/서커스 안내문</span></button></span><div class="sub" id="meta" hidden></div><div class="stats" id="stats" hidden></div></div>
+  <div class="brand" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px"><h1 id="ttl">땡자군주가 만든 퍼플매크로 제작기 <span class="ver" id="verPatchBtn" role="button" tabindex="0" title="클릭하면 최근 패치 내역과 기능 사용법 팝업을 봅니다">최신 11/25 · v351 🆕</span><span class="srvchip" title="켄트 · 오렌 서버 전용이에요. 레거시 · 기란 · 하이네 서버는 상담 및 후원에서 문의 주세요">🛡 켄트·오렌 전용</span></h1><span class="cheer2">오렌2 직장인 혈맹 여러분 화이팅입니다!</span><nav class="gnb-nav" aria-label="메인 메뉴"><button type="button" class="gnb-btn active" data-v="make" title="하루 일정 만들기 · 동작 편집"><span class="gnb-ico">🛠️</span> 제작기</button><button type="button" class="gnb-btn" data-v="hud" title="받은 매크로 파일(최대 10개)을 넣으면 캐릭마다 지금 어디서 무엇을 하는지 보여 줘요"><span class="gnb-ico">🖥</span> HUD</button><span class="gnb-sep" aria-hidden="true"></span><button type="button" class="gnb-btn gnb-must" data-v="man" title="처음 쓰는 분 안내 · 게임 세팅 체크리스트 · 매뉴얼 (꼭 읽어 주세요)"><span class="gnb-ico">📘</span> 필독사항!!</button><button type="button" class="gnb-btn" data-v="rrm" title="리세마라/서커스 준비 · 진행 순서"><span class="gnb-ico">🔁</span> 리세·서커스</button><button type="button" class="gnb-btn" data-v="hy" title="제작기 기능을 목적별로 조합하는 법 · 그림으로 보는 원리 · 자주 하는 실수"><span class="gnb-ico">💡</span> 편집기 꿀팁!</button><button type="button" class="gnb-btn" data-v="reb" title="클래스 체인지 · 13대 클래스 출시일 · 역대 리부트"><span class="gnb-ico">⚔️</span> 클래스 체인지</button><span class="gnb-sep" aria-hidden="true"></span><button type="button" class="gnb-btn" data-v="sup" title="상담 · 기능 개발 요청 · 후원 안내 (카카오톡 오픈채팅)"><span class="gnb-ico">💬</span> 상담 및 후원</button><button type="button" class="gnb-btn gnb-patch" id="gnbPatchBtn" title="최근 패치 내역과 기능 사용법 팝업 보기">🆕 패치노트</button><button type="button" class="gnb-btn gnb-cmp" id="cmpBtn" title="크롬 화면 공유로 퍼플 게임 창을 실시간으로 보며 클릭·단축키 자리와 오작동을 대조해요 · 스샷/Ctrl+V/다른 JSON 파일도 지원">📺 실시간 대조</button></nav><span hidden><button type="button" id="manPageBtn" class="man-hdr-btn" title="게임 세팅 4단계 상단바 · 세팅 체크리스트 · 기본 세팅 매뉴얼(설명서) 페이지 열기"><span>📘 게임 세팅 · 매뉴얼</span><span class="man-hdr-badge" id="manHdrBadge">세팅 0/8 · 4단계 안내 ↗</span></button><button type="button" id="rrPageBtn" class="man-hdr-btn rr-hdr-btn" title="리세마라/서커스 준비 · 진행 순서 · 그림 안내 페이지 열기"><span>🔁 리세마라/서커스 안내문</span></button></span><div class="sub" id="meta" hidden></div><div class="stats" id="stats" hidden></div></div>
   <div class="right"><div class="cheer" hidden>💪 오렌2 직장인 혈맹 여러분 화이팅입니다!</div><button class="dl top" id="cfgDlTop" style="display:none">⌨️ 키보드세팅 다운로드 <small>(필수 · .cfg 바로 받기)</small></button><div class="ctrls">
   <button type="button" id="uxMouseBtn" class="ux-mousebtn" aria-pressed="false" title="키보드 세팅(.cfg) 없이 마우스로 먼저 해보기 — ESC · WASD · 0~9는 키보드 유지, 나머지 단축키(P·H·M·N·O·I·F 등)를 마우스 좌표 클릭으로 자동 변환합니다">🖱 마우스 모드 <em class="ux-mst">OFF</em></button>
   <button type="button" id="uxCmdBtn" class="ux-cmdbtn" title="할 일·세팅·FAQ·꿀팁·클체 통합 검색 (단축키 Ctrl+K)">🔍 검색</button>
@@ -2655,6 +2661,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
       </div>
       <label class="cfg-row" style="display:grid;gap:6px;padding:9px 11px" title="컴퓨터가 느려서 클릭이 씹히면 한 단계 올려 주세요"><b>🖥️ 내 PC 속도</b><select id="pcSel" style="width:100%;font-weight:800"><option value="n">보통 (기본)</option><option value="m">조금 느림 (클릭이 드물게 씹혀요)</option><option value="s">느림 (클릭이 가끔 씹혀요)</option><option value="v">아주 느림 (자주 씹혀요)</option><option value="c">직접 설정…</option></select></label>
       <div class="sub" id="pcNote" style="margin:2px 2px -2px">💡 클릭이 씹히면 한 단계 올려 주세요</div>
+      <label class="cfg-row" style="display:grid;gap:6px;padding:9px 11px" title="귀환·혈맹귀환·8번 순간이동·순이 텔포 같은 이동 뒤 다음 입력까지, 그리고 사냥 시작 AUTO 전까지 기다리는 시간이에요. 여러 계정을 동시에 돌려 로딩이 길면 올려 주세요"><b>🛡️ 이동 후 대기 (로딩 가드)</b><select id="lgSel" style="width:100%;font-weight:800"><option value="7">7초 (기본)</option><option value="10">10초 (다계정·느린 PC)</option><option value="15">15초 (아주 느린 PC)</option></select><span class="sub" id="lgRec"></span></label>
       <div class="cmp3" id="pcCustom" style="display:none">
         <label class="mini" title="화면 전환·로딩 뒤 대기에 더함 (저사양·다계정 멈춤 방지)"><b>⏳ 로딩 기다림</b><select id="bufSel"><option value="0">없음</option><option value="2" selected>+2초 (권장)</option><option value="3">+3초</option><option value="5">+5초</option></select></label>
         <label class="mini" title="기란 마을 도착·NPC 이동·기란감옥 입장 클릭에만 더함"><b>🏘️ 기란 렉 기다림</b><select id="giranSel"><option value="0">없음</option><option value="2">+2초</option><option value="3" selected>+3초 (기본)</option><option value="4">+4초</option><option value="5">+5초</option><option value="8">+8초</option></select></label>
@@ -2880,7 +2887,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
    <li>할 일 목록 위 <b>＋ 할 일 추가</b>를 누르면 펼쳐져요. 상단 <b>📍 넣을 위치</b>(특정 캐릭 안 · 맨 아래 등)와 <b>📌 창 안 닫고 연달아 추가</b>를 켜면 여러 항목을 한 번에 넣을 수 있어요</li>
    <li>각 항목의 <b>☆ 별표</b>를 눌러 즐겨찾기하면 <b>＋ 할 일 추가 바로 옆 바깥 줄에 항상 고정</b>돼서 메뉴를 열지 않고도 원클릭·드래그로 바로 추가해요</li>
    <li>리세·서커스 일정에서는 각 캐릭 묶음의 <b>＋ 행 추가</b>와 상단 <b>⚡ 부캐 전체 행 일괄 추가</b>로 더 빠르게 편집할 수 있어요</li>
-   <li>순서는 카드 왼쪽 <b>⠿</b> 손잡이로 끌어서 바꾸고, 시간은 카드에서 바로 고쳐요 · 하루가 24시간이 안 되면 시계 위 <b>남는 시간 본토로 채우기</b> 버튼이나 <b>끝에 기다려서 딱 24시간 채우기</b> 체크로 맞춰요</li></ul></details>
+   <li>순서는 카드 왼쪽 <b>⠿</b> 손잡이로 끌어서 바꾸고, 시간은 카드에서 바로 고쳐요 · 하루가 24시간이 안 되면 시계 위 <b>남는 시간 어디로 채울까요?</b> 버튼이나 <b>끝에 기다려서 딱 24시간 채우기</b> 체크로 맞춰요</li></ul></details>
   <details><summary>🔧 동작 하나하나 편집은?</summary><ul>
    <li>녹화된 클릭을 직접 고치는 <b>고급 기능</b>이에요. 평소에는 <b>쓸 일이 없어서</b> 맨 위 메뉴에서 빼고 <b>⚙ → 🔧 고급</b>으로 옮겼어요 (게임 패치로 화면이 바뀌었을 때만)</li>
    <li>잘못 고쳤으면 <b>↩ 되돌리기</b> 또는 <b>일정 만들기</b>로 다시 만들면 원래대로 돌아와요</li></ul></details>
@@ -3100,7 +3107,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
    <li class="n">매크로 시작 시 7번 반지를 끼고 시작하거나 1·2번 자리가 밀려 있으면 반지/이동이 꼬여요 (반드시 <b>6번 이반 착용 + 1번 웰던 · 2번 기란 고정</b> · 리세/서커스 자동 제외)</li></ul></div>
    <div class="m2-pic" style="padding:12px 14px;background:var(--surface2);border:1.5px solid var(--line);border-radius:12px;font-size:12.5px;line-height:1.6"><div style="font-weight:900;margin-bottom:6px;color:var(--accent)">🔖 기억창 실제 화면 · 바른 세팅</div><figure style="margin:0 0 10px"><img id="manBmWin" alt="기억창 바른 세팅 · ① 랜덤(번호 아님) ② 1번 웰던 마을 ③ 2번 기란 마을 ④ 3~5번 폭젠 ⑤ 저장 5/50 ⑥ 파란 텔레포트 버튼 ⑦ 편집" style="width:100%;border-radius:8px;border:1.5px solid var(--line);cursor:zoom-in"><figcaption class="sub" style="margin-top:3px">🔍 클릭해 크게 보기 · <b>맨 위 랜덤은 번호 아님</b> → 그 아래부터 <b>1번 웰던 · 2번 기란 · 3~5번 폭젠</b> · 오른쪽 아래 <b>5/50</b> 확인 · 고른 줄 오른쪽 <b>파란 텔레포트 버튼</b>을 매크로가 눌러요</figcaption></figure><div style="font-weight:900;margin-bottom:6px;color:var(--accent)">🔖 이반+9번 기억창 5칸 추천 배치 (한 화면 고정)</div><div style="display:grid;gap:5px"><div style="padding:5px 8px;border-radius:8px;background:color-mix(in srgb,var(--accent) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line))"><b>1번 (고정)</b> · <b>01. 웰던 마을</b> <small class="sub">(창고/상점 앞 · 하루 21회 재정비 직행)</small></div><div style="padding:5px 8px;border-radius:8px;background:color-mix(in srgb,var(--accent) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line))"><b>2번 (고정)</b> · <b>02. 기란 마을</b> <small class="sub">(메린 앞/광장 · 기란감옥·버프 직행)</small></div><div style="padding:5px 8px;border-radius:8px;background:var(--surface);border:1px solid var(--line)"><b>3번 (자유)</b> · <b>폭젠 사냥터 ①</b> <small class="sub">(예: 설벽 폭젠 1)</small></div><div style="padding:5px 8px;border-radius:8px;background:var(--surface);border:1px solid var(--line)"><b>4번 (자유)</b> · <b>폭젠 사냥터 ②</b> <small class="sub">(예: 화룡의 둥지 폭젠)</small></div><div style="padding:5px 8px;border-radius:8px;background:var(--surface);border:1px solid var(--line)"><b>5번 (자유)</b> · <b>폭젠 사냥터 ③ / 🦀 게 밭</b> <small class="sub">(3~5 순환 가능)</small></div></div><div class="sub" style="margin-top:6px">💡 1·2번을 맨 위에 고정하면 아래 3~5번 사냥터를 바꿔도 자리가 절대 밀리지 않아요!</div><div style="margin-top:6px;padding:6px 9px;border-radius:8px;background:rgba(220,38,38,.09);border:1px solid rgba(220,38,38,.35);color:#b91c1c;font-size:12px;font-weight:800">⚠️ 주의: 기억 저장이 5개를 넘어가면(6개 이상) 기억창이 하단부터 보여져 자리가 밀립니다! 반드시 총 5개 이하로만 저장하세요.</div></div></section>
 
-  <div class="rr-card" id="man-new" style="border:2px solid var(--accent);margin-bottom:14px"><h3>🆕 최근 바뀐 제작기 기능 <small>(최신 11/25 · v350 기준)</small></h3><ul>
+  <div class="rr-card" id="man-new" style="border:2px solid var(--accent);margin-bottom:14px"><h3>🆕 최근 바뀐 제작기 기능 <small>(최신 11/25 · v351 기준)</small></h3><ul>
    <li>🗺️🗂️ <b>캐릭 1~9번별 본토 1~6번 즐겨찾기 이름 완전 분리 &amp; 9캐릭 묶음/.zip·HUD 자동 연동</b> (v327): ① 왼쪽 <b>🗺️ 본토 1~6번 사냥터 이름</b> 패널과 본토 카드 <code>🏷️ 사냥터 별명</code>에 <b><code>[공통 | 1번 | 2번 | … | 9번]</code> 캐릭 프로필 탭</b>을 추가했습니다! 캐릭마다 지도 즐겨찾기 1~6번 목록이 달라도 1~9번별로 따로 저장(미입력 칸은 공통 이름 자동 사용 · <code>↩ 공통과 같게</code> 초기화 지원)하고, 탭 클릭 1번으로 <b>본토·기억창·하딘텔</b> 이름이 한꺼번에 전환됩니다. ② <b>📦 다계정 묶음 / <code>.zip</code> 1방 받기</b> 실행 시 1~9번 각 캐릭 파일에 <b>해당 캐릭 전용 본토 1~6번 이름</b>이 자동 반영되며, <b>🖥 HUD</b>에서도 캐릭마다 자기 즐겨찾기 사냥터 이름이 정확히 표시됩니다.</li>
    <li>🔖🏷️ <b>폭젠 3·4·5번 1시간 순환·이반 텔포 ESC 제거 &amp; 일반·리세 캐릭 이름 완전 분리</b> (v326): ① <b>🔖 기억 장소 사냥(폭젠 3~5번)</b> 카드에 <b><code>1H 정비</code> 체크박스를 복구</b>하고, <b><code>🔁 3~5 순서대로</code> / <code>🎲 3~5 랜덤</code></b> 선택 시 <code>1H 정비</code>가 기본 켜져 <b><code>3번(1h) → 웰던1번 정비 → 4번(1h) → 웰던1번 정비 → 5번(1h)</code></b>으로 실제 순환하도록 수정했습니다! ② <b>💍 이반+9번 순이 기억창 직행</b> 시 파란 텔포 버튼 클릭 후 이미 기억창이 닫힌 상태에 불필요하게 들어가던 <b><code>ESC</code>를 제거</b>하고 <code>3.5초</code> 도착 대기 후 바로 <b><code>AUTO</code></b>를 눌러 종료 팝업 간섭 위험을 원천 차단했습니다. ③ <b>🏷️ 일반·다계정(평일+오만의 탑 등 1~12번)</b>과 <b>🔁 리세·서커스(1~13번)</b> 캐릭 이름표의 양방향 덮어쓰기를 제거해 <b>1번부터 끝까지 완전히 따로 저장·표시</b>되도록 분리했습니다(받기 창 빠른 선택 칩 포함).</li>
    <li>📘🧝 <b>전체 매뉴얼 최신화 &amp; 그힐(SELF)·이반·기억창 실제 게임 스샷 전역 탑재</b> (v325): ① <b>🧝 그힐(5번 옆칸 SELF) 실제 게임 스크린샷</b>(초록 박스·화살표·슬롯 번호 안내 포함)과 <b>인게임 3단계 세팅법</b>을 <b>📘 필독사항!! 3번(아이템 슬롯) · ❓ FAQ 최상단 · 🔰 처음 사용자용 ④ 세팅 체크 &amp; 퀵슬롯 팝업 · 할 일 카드(포자림·셀프·waitAt) <code>🖼 그힐 스샷</code> 버튼 · 🔁 리세·서커스 옵션 및 안내문 ④ · ⌨️ 인게임 단축키 배치도(<code>66.2%, 93.7%</code> 초록 핀) · <code>Ctrl+K</code> 빠른 검색</b> 7곳 전체에 탑재해 어디서든 1클릭 확대 확인할 수 있습니다! ② <b>💍 세팅 8번(이반 6·7번 &amp; 기억 장소 <code>5/50</code> 이하)</b>에도 실제 게임 스샷을 추가하고, 게임 세팅 체크리스트를 <b>8종(필수 4 + 선택 4)</b>으로 확장했습니다. ③ <b>📘 필독사항!! 3분 가이드 · 줄임말 · FAQ · 📓 블랙박스 빠른 가이드 · <code>Ctrl+K</code> 검색</b> 전체를 <code>v323~v324</code> 최신 기능(오토-밸런서 · 모든 비율·9창 정렬 <code>.ps1</code> · 모니터 1방 9분할 · <code>Alt+Q</code> 보스 키 · 텔레그램 <code>주간/박물관/막피/가계부</code> 등) 기준으로 완벽 최신화했습니다.</li>
@@ -3202,7 +3209,10 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
   <details><summary>캐릭터 여러 개를 같이 돌려도 되나요?</summary><p>돼요. 같은 파일을 써도 되지만, 같은 마을로 동시에 몰리면 렉이 생길 수 있어요. 시작 시각을 캐릭마다 1~2분씩 다르게 켜 주세요.</p></details>
   
   </div></div>
-  <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/25 · v350)</span></summary><ul>
+  <details class="uplog"><summary>📝 업데이트 내역 <span class="sub">(최신 11/25 · v351)</span></summary><ul>
+   <li><b>11/25</b> 🛡️ v351 <b>로딩 가드 + AUTO 직전 화면 정리</b>: 0번 귀환·4번 혈맹귀환·8번 순간이동·순이 파란 텔포 바로 다음 입력을 <b>최소 7초 뒤</b>로 (도착 4.4초 만에 N·혈맹귀환 2초 만에 클릭·귀환 6.6초 만에 순이 등 하루 30여 곳) · 귀환 2번 연속은 그대로 · 사냥 시작 AUTO 직전에 <b>화면 정리(ESC 등)</b>를 넣어 열린 창(스킬 패널 등) 위에 AUTO가 눌리지 않게 · 오만 층 NPC 클릭 → Y <b>2.4초 → 5초</b> · 왼쪽 설정에 <b>🛡️ 이동 후 대기 7/10/15초</b> 선택 + 블랙박스 실측 로딩으로 추천(⚡ 추천 속도 적용에도 포함)</li>
+   <li><b>11/25</b> 🎞️ v351 <b>블랙박스 이동 구간 자동 스샷 · HUD 동시 이동 경보 · 예전 카드 안내</b>: HUD 파일 속 이동(귀환·텔포·입장) 4초 전~40초 뒤를 2초마다 자동 저장 → 블랙박스 설정 <b>🎞️ 이동 구간 기록</b>에서 캐릭별 최근 3번 넘겨 보기 · 앞으로 10분 안에 30초 안 3캐릭 이상 이동이 몰리면 <b>🚦 미리 알림</b>(HUD 장소별 인원 줄에도 표시) · v346 이전에 넣은 HUD 카드엔 <b>📂 다시 넣으면 정밀 감지</b> 안내</li>
+   <li><b>11/25</b> ⚡ v351 <b>"남는 시간 어디로 채울까요?"</b>: 시계 위 [⚡ 남는 시간 본토로 채우기] 버튼을 고를 수 있는 메뉴로 바꿈 · 🗺️ 본토(기본·예전과 같음) · 📅 스케줄 · 🏴 기란감옥 · 🔖 기억 장소 · 🗼 오만 · 🌀 하딘텔 · 🎮 셀프 플레이 · ⏳ 그냥 기다리기 중 선택 → 고른 종류의 마지막 칸을 10분 단위로 늘려 딱 24시간 (없으면 맨 끝에 새로 추가 · 잠긴 카드 보호 · ↩ 되돌리기 가능)</li>
    <li><b>11/25</b> 👥 v350 <b>묶음 받기 동시 이동 겹침 해소</b>: 월보 뒤 9캐릭이 같은 순서·같은 시각으로 오만·기억장소에 몰리던 문제 수정 · ① 월보 입장을 캐릭마다 <b>15초씩</b>, 정한 시각 스케줄을 <b>2분씩</b> 어긋나게 · ② 기억장소(폭젠)도 순서 섞기에 포함 · ③ <b>🚦 동시 이동 검사</b>: 캐릭마다 후보 4개를 만들어 앞 캐릭들과 30초 안 이동(귀환·텔포·입장)이 가장 덜 겹치는 배치를 고르고, 결과 창에 3캐릭 이상 겹치는 곳 수 표시 · 9캐릭 테스트(+2분 간격): 겹침 28곳 → 4곳 · 순서 섞기 버튼이 깨질 수 있던 코드 실수도 함께 수정</li>
    <li><b>11/25</b> 🗼 v350 <b>오만의탑 입장 후 대기 12초</b>: 입장(Y) 뒤 ESC까지 8초(렉 대비 포함 8.4초) → <b>12초 고정</b> · 입장 로딩이 길 때 ESC·N이 씹혀 NPC 목록 없이 드래그·클릭이 게임 화면에 눌리던 위험 감소</li>
    <li><b>11/25</b> 📅 v349 <b>스케줄 준비 간소화 (평일+오만·리세/서커스 공통)</b>: 스케줄 시작 전 원본 녹화 묶음에서 우편·퀘스트 보상·귀환+웰던 보급·수집 연타·상단 보상·제작·패스 보상(약 8분)을 빼고 <b>절전 해제 → 화면 정리 → 0번 귀환 → P → B → 시작 → 확인 → 절전</b>만 남김 · 보상류는 사냥 중 처리 항목에서 이미 받고, 부족 물품은 게임 스케줄이 자동 구매 · 귀환 2번 사용·웰던 도착 4.4초 만에 N 누르던 위험 구간도 함께 사라짐</li>
@@ -3461,7 +3471,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
       </div>
       <h4 class="tip-h4">✅ 7일을 끊김 없이 돌리는 3가지 약속</h4>
       <div class="tip-rows">
-        <div class="tip-r"><span class="tip-n">1</span><div><b>하루 = 정확히 24시간 00분</b><p>1분이라도 남거나 모자라면 7일 동안 매일 쌓여서 점점 밀려요. <b>끝에 기다려서 딱 24시간 채우기</b>나 <b>남는 시간 본토로 채우기</b>를 켜 두고, 손으로 고쳤으면 <b>🧲 24h 균형</b>을 한 번 누르세요. 시계 미리 보기에서 끝이 시작 시각과 딱 맞는지 확인하면 돼요.</p></div></div>
+        <div class="tip-r"><span class="tip-n">1</span><div><b>하루 = 정확히 24시간 00분</b><p>1분이라도 남거나 모자라면 7일 동안 매일 쌓여서 점점 밀려요. <b>끝에 기다려서 딱 24시간 채우기</b>나 <b>남는 시간 어디로 채울까요?</b>를 켜 두고, 손으로 고쳤으면 <b>🧲 24h 균형</b>을 한 번 누르세요. 시계 미리 보기에서 끝이 시작 시각과 딱 맞는지 확인하면 돼요.</p></div></div>
         <div class="tip-r"><span class="tip-n">2</span><div><b>05시 초기화를 비켜 가기</b><p>매일 05:00에 던전 시간·숙제가 리셋돼요. 제작기는 이 앞뒤(04:30~05:30)에 폭젠·던전을 넣지 않아요. 직접 옮길 때도 이 구간은 비워 두세요.</p></div></div>
         <div class="tip-r"><span class="tip-n">3</span><div><b>중간에 끊기면 🚑 지금 이어하기</b><p>정전·튕김으로 중간에 멈췄으면 처음부터 다시 만들 필요 없이, <b>지금 이어하기</b>로 지금 시각부터 이어지는 파일을 10초 만에 만들어 다시 켜요.</p></div></div>
       </div>
@@ -3496,7 +3506,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
           <div class="io-i"><b>되돌리기 / 다시하기</b><span>Ctrl+Z / Ctrl+Y</span></div>
         </div>
       </div>
-<div class="tip-shots"><div class="tip-shot tall first"><div class="tip-shot-t">① 처음 화면 — 일정 틀 고르고 만들기</div><div class="tip-shot-b"><img data-tipimg="tip_top" alt="① 처음 화면 — 일정 틀 고르고 만들기" loading="lazy"><ol class="tip-leg"><li><b>1</b> 어떤 일정? — 프리셋 5가지 중 고르기</li><li><b>2</b> 고른 프리셋은 진하게 표시돼요</li><li><b>3</b> 몇 시에 켜요? — 실제로 퍼플을 켤 시각</li><li><b>4</b> 포함 옵션 — 하루에 넣을 것들</li><li><b>5</b> 스위치 켜면 넣기 · 끄면 빼기 (월드보스·스케줄·출석 등)</li><li><b>6</b> 폭젠 3~5: 안 넣음/1h/2h/3h 중 고르기</li><li><b>7</b> 캐릭마다 순서 섞기 — 다계정이면 켜기</li><li><b>8</b> 만들기 — 누르면 오른쪽에 카드가 쌓여요</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">② 카드 한 줄 — 할 일 하나</div><div class="tip-shot-b"><img data-tipimg="tip_card" alt="② 카드 한 줄 — 할 일 하나" loading="lazy"><ol class="tip-leg"><li><b>1</b> ⠿ 잡고 끌어서 순서 바꾸기</li><li><b>2</b> ＋ 행추가 — 바로 아래에 새 카드 넣기</li><li><b>3</b> ▾ 펼치기 — 시간·사냥터·절전 자세한 설정</li><li><b>4</b> 켜짐 스위치 — 끄면 지우지 않고 잠깐 빼기</li><li><b>5</b> ⋯ 메뉴 — 옮기기·복제·쪼개기·잠금·삭제</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">③ ⋯ 메뉴 — 카드 하나 다루기</div><div class="tip-shot-b"><img data-tipimg="tip_menu" alt="③ ⋯ 메뉴 — 카드 하나 다루기" loading="lazy"><ol class="tip-leg"><li><b>1</b> 위로 — 한 칸 위로</li><li><b>2</b> 아래로 — 한 칸 아래로</li><li><b>3</b> 뒤에 끼워넣기 — 이 카드 다음에 새 카드</li><li><b>4</b> 복제 — 똑같은 카드 하나 더</li><li><b>5</b> 반으로 나누기 — 시간을 반씩 두 카드로</li><li><b>6</b> 시간·순서 잠금 — 섞어도 안 움직이게</li><li><b>7</b> 삭제 — 지우기 (되돌리기로 복구 가능)</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">④ ▾ 펼친 카드 — 시간·사냥터 고치기</div><div class="tip-shot-b"><img data-tipimg="tip_expand" alt="④ ▾ 펼친 카드 — 시간·사냥터 고치기" loading="lazy"><ol class="tip-leg"><li><b>1</b> －10분 — 10분 줄이기</li><li><b>2</b> ＋10분 — 10분 늘리기</li><li><b>3</b> ＋1시간 — 1시간 늘리기</li><li><b>4</b> ✂️ 반으로 — 두 카드로 쪼개기 (사이에 다른 일 넣기 좋아요)</li><li><b>5</b> 절전모드로 사냥 — 이 카드만 절전 켜고 끄기</li><li><b>6</b> 사냥터 순서 — 랜덤 섞기 / 순서대로 / N번만</li><li><b>7</b> ✓ 1~6번 — 누르면 그 사냥터 빼기, 다시 누르면 넣기</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">⑤ ＋ 할 일 추가 — 새 카드 넣기</div><div class="tip-shot-b"><img data-tipimg="tip_add" alt="⑤ ＋ 할 일 추가 — 새 카드 넣기" loading="lazy"><ol class="tip-leg"><li><b>1</b> ＋ 할 일 추가 — 눌러서 목록 펼치기</li><li><b>2</b> 넣을 위치 — 맨 아래 / 맨 위 / 몇 번 카드 바로 뒤</li><li><b>3</b> 항목 클릭 — 고른 위치에 바로 들어가요 (검색창도 있어요)</li><li><b>4</b> ☆ 누르면 ★ 즐겨찾기 — 바깥 줄에 항상 표시</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">⑥ 카드 목록 위·아래 도구</div><div class="tip-shot-b"><img data-tipimg="tip_tools" alt="⑥ 카드 목록 위·아래 도구" loading="lazy"><ol class="tip-leg"><li><b>1</b> 되돌리기 (Ctrl+Z)</li><li><b>2</b> 다시하기 (Ctrl+Y)</li><li><b>3</b> 사냥터 섞기 — 잠기지 않은 사냥 카드 다시 배치</li><li><b>4</b> 전체 비우기 — 카드 전부 지우기</li><li><b>5</b> 클릭 하나하나 고치기 — 고급 편집</li><li><b>6</b> ⭐ 즐겨찾기 칩 — 클릭하면 추가 · × 는 즐겨찾기에서만 빼기</li><li><b>7</b> 끝에 기다려서 딱 24시간 — 7일 반복에 꼭 필요</li><li><b>8</b> 남는 시간 본토로 채우기 — 빈 시간을 사냥으로</li></ol></div></div><div class="tip-shot tall"><div class="tip-shot-t">⑦ 오른쪽 — 사냥 중에 자동 끼워 넣기</div><div class="tip-easy">🧒 스위치를 켜면 사냥하는 동안 알아서 끼워 넣고, 끄면 빠져요. 카드를 따로 만들 필요가 없어요.</div><div class="tip-shot-b"><img data-tipimg="tip_opts" alt="⑦ 오른쪽 — 사냥 중에 자동 끼워 넣기" loading="lazy"><ol class="tip-leg"><li><b>1</b> 💤 사냥 중 자동 절전모드 — 득템 알림 받으려면 켜기</li><li><b>2</b> 💍 순간이동 조종 반지</li><li><b>3</b> 💖 경험치 무료 복구 (일 2회)</li><li><b>4</b> 💊 버프 상인 (3시간마다)</li><li><b>5</b> 📝 출석·일일보상·기부 — 사냥 중에 처리</li></ol></div></div><div class="tip-shot tall"><div class="tip-shot-t">⑧ 파일 받기 — 퍼플에 넣을 파일</div><div class="tip-shot-b"><img data-tipimg="tip_export" alt="⑧ 파일 받기 — 퍼플에 넣을 파일" loading="lazy"><ol class="tip-leg"><li><b>1</b> 매크로 파일 받기 — 캐릭 1개용 .json</li><li><b>2</b> 묶음 받기 — 여러 캐릭 파일 한 번에</li><li><b>3</b> 시작 간격 — 동시 시작 / +1·2·3·5분</li><li><b>4</b> 묶음 파일 받기 — 여기서 실제로 받아요</li><li><b>5</b> HUD에 등록 — 지금 뭘 하는지 실시간 보기</li><li><b>6</b> 매크로 점검 — 받기 전에 문제 확인</li><li><b>7</b> 1분 테스트 — 일부 동작만 짧게 시험</li></ol></div></div></div>
+<div class="tip-shots"><div class="tip-shot tall first"><div class="tip-shot-t">① 처음 화면 — 일정 틀 고르고 만들기</div><div class="tip-shot-b"><img data-tipimg="tip_top" alt="① 처음 화면 — 일정 틀 고르고 만들기" loading="lazy"><ol class="tip-leg"><li><b>1</b> 어떤 일정? — 프리셋 5가지 중 고르기</li><li><b>2</b> 고른 프리셋은 진하게 표시돼요</li><li><b>3</b> 몇 시에 켜요? — 실제로 퍼플을 켤 시각</li><li><b>4</b> 포함 옵션 — 하루에 넣을 것들</li><li><b>5</b> 스위치 켜면 넣기 · 끄면 빼기 (월드보스·스케줄·출석 등)</li><li><b>6</b> 폭젠 3~5: 안 넣음/1h/2h/3h 중 고르기</li><li><b>7</b> 캐릭마다 순서 섞기 — 다계정이면 켜기</li><li><b>8</b> 만들기 — 누르면 오른쪽에 카드가 쌓여요</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">② 카드 한 줄 — 할 일 하나</div><div class="tip-shot-b"><img data-tipimg="tip_card" alt="② 카드 한 줄 — 할 일 하나" loading="lazy"><ol class="tip-leg"><li><b>1</b> ⠿ 잡고 끌어서 순서 바꾸기</li><li><b>2</b> ＋ 행추가 — 바로 아래에 새 카드 넣기</li><li><b>3</b> ▾ 펼치기 — 시간·사냥터·절전 자세한 설정</li><li><b>4</b> 켜짐 스위치 — 끄면 지우지 않고 잠깐 빼기</li><li><b>5</b> ⋯ 메뉴 — 옮기기·복제·쪼개기·잠금·삭제</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">③ ⋯ 메뉴 — 카드 하나 다루기</div><div class="tip-shot-b"><img data-tipimg="tip_menu" alt="③ ⋯ 메뉴 — 카드 하나 다루기" loading="lazy"><ol class="tip-leg"><li><b>1</b> 위로 — 한 칸 위로</li><li><b>2</b> 아래로 — 한 칸 아래로</li><li><b>3</b> 뒤에 끼워넣기 — 이 카드 다음에 새 카드</li><li><b>4</b> 복제 — 똑같은 카드 하나 더</li><li><b>5</b> 반으로 나누기 — 시간을 반씩 두 카드로</li><li><b>6</b> 시간·순서 잠금 — 섞어도 안 움직이게</li><li><b>7</b> 삭제 — 지우기 (되돌리기로 복구 가능)</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">④ ▾ 펼친 카드 — 시간·사냥터 고치기</div><div class="tip-shot-b"><img data-tipimg="tip_expand" alt="④ ▾ 펼친 카드 — 시간·사냥터 고치기" loading="lazy"><ol class="tip-leg"><li><b>1</b> －10분 — 10분 줄이기</li><li><b>2</b> ＋10분 — 10분 늘리기</li><li><b>3</b> ＋1시간 — 1시간 늘리기</li><li><b>4</b> ✂️ 반으로 — 두 카드로 쪼개기 (사이에 다른 일 넣기 좋아요)</li><li><b>5</b> 절전모드로 사냥 — 이 카드만 절전 켜고 끄기</li><li><b>6</b> 사냥터 순서 — 랜덤 섞기 / 순서대로 / N번만</li><li><b>7</b> ✓ 1~6번 — 누르면 그 사냥터 빼기, 다시 누르면 넣기</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">⑤ ＋ 할 일 추가 — 새 카드 넣기</div><div class="tip-shot-b"><img data-tipimg="tip_add" alt="⑤ ＋ 할 일 추가 — 새 카드 넣기" loading="lazy"><ol class="tip-leg"><li><b>1</b> ＋ 할 일 추가 — 눌러서 목록 펼치기</li><li><b>2</b> 넣을 위치 — 맨 아래 / 맨 위 / 몇 번 카드 바로 뒤</li><li><b>3</b> 항목 클릭 — 고른 위치에 바로 들어가요 (검색창도 있어요)</li><li><b>4</b> ☆ 누르면 ★ 즐겨찾기 — 바깥 줄에 항상 표시</li></ol></div></div><div class="tip-shot"><div class="tip-shot-t">⑥ 카드 목록 위·아래 도구</div><div class="tip-shot-b"><img data-tipimg="tip_tools" alt="⑥ 카드 목록 위·아래 도구" loading="lazy"><ol class="tip-leg"><li><b>1</b> 되돌리기 (Ctrl+Z)</li><li><b>2</b> 다시하기 (Ctrl+Y)</li><li><b>3</b> 사냥터 섞기 — 잠기지 않은 사냥 카드 다시 배치</li><li><b>4</b> 전체 비우기 — 카드 전부 지우기</li><li><b>5</b> 클릭 하나하나 고치기 — 고급 편집</li><li><b>6</b> ⭐ 즐겨찾기 칩 — 클릭하면 추가 · × 는 즐겨찾기에서만 빼기</li><li><b>7</b> 끝에 기다려서 딱 24시간 — 7일 반복에 꼭 필요</li><li><b>8</b> 남는 시간 어디로 채울까요? — 빈 시간을 사냥으로</li></ol></div></div><div class="tip-shot tall"><div class="tip-shot-t">⑦ 오른쪽 — 사냥 중에 자동 끼워 넣기</div><div class="tip-easy">🧒 스위치를 켜면 사냥하는 동안 알아서 끼워 넣고, 끄면 빠져요. 카드를 따로 만들 필요가 없어요.</div><div class="tip-shot-b"><img data-tipimg="tip_opts" alt="⑦ 오른쪽 — 사냥 중에 자동 끼워 넣기" loading="lazy"><ol class="tip-leg"><li><b>1</b> 💤 사냥 중 자동 절전모드 — 득템 알림 받으려면 켜기</li><li><b>2</b> 💍 순간이동 조종 반지</li><li><b>3</b> 💖 경험치 무료 복구 (일 2회)</li><li><b>4</b> 💊 버프 상인 (3시간마다)</li><li><b>5</b> 📝 출석·일일보상·기부 — 사냥 중에 처리</li></ol></div></div><div class="tip-shot tall"><div class="tip-shot-t">⑧ 파일 받기 — 퍼플에 넣을 파일</div><div class="tip-shot-b"><img data-tipimg="tip_export" alt="⑧ 파일 받기 — 퍼플에 넣을 파일" loading="lazy"><ol class="tip-leg"><li><b>1</b> 매크로 파일 받기 — 캐릭 1개용 .json</li><li><b>2</b> 묶음 받기 — 여러 캐릭 파일 한 번에</li><li><b>3</b> 시작 간격 — 동시 시작 / +1·2·3·5분</li><li><b>4</b> 묶음 파일 받기 — 여기서 실제로 받아요</li><li><b>5</b> HUD에 등록 — 지금 뭘 하는지 실시간 보기</li><li><b>6</b> 매크로 점검 — 받기 전에 문제 확인</li><li><b>7</b> 1분 테스트 — 일부 동작만 짧게 시험</li></ol></div></div></div>
       <div class="tip-gos"><button type="button" class="tip-go" data-hygo="make|[data-st=&quot;h1&quot;]|click">📍 제작기에서 직접 해 보기</button></div>
     </div>
     <div class="rr-card" id="tip-words">
@@ -3568,7 +3578,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
         <li><b>약캐 + 기란감옥 재정비 끄기</b> → 물약이 떨어져 죽고, 복구할 때까지 사냥 시간이 날아가요.</li>
         <li><b>5시간짜리 긴 사냥 카드 + 버프 상인</b> → 뒤쪽 2시간은 버프 없이 사냥해요. 카드를 쪼개세요.</li>
         <li><b>9캐릭 동시 시작 (간격 0분)</b> → 입구·마을 렉으로 첫 클릭이 밀리기 쉬워요.</li>
-        <li><b>손으로 카드 시간 바꾸고 그대로 받기</b> → 24시간이 어긋나 다음 날 시작이 밀려요. 받기 전에 🧲 24h 균형이나 <b>남는 시간 본토로 채우기</b>를 쓰세요.</li>
+        <li><b>손으로 카드 시간 바꾸고 그대로 받기</b> → 24시간이 어긋나 다음 날 시작이 밀려요. 받기 전에 🧲 24h 균형이나 <b>남는 시간 어디로 채울까요?</b>를 쓰세요.</li>
         <li><b>04:30~05:30에 던전·폭젠 직접 넣기</b> → 05시 초기화 직후 입장이 막힐 수 있어요.</li>
       </ul>
     </div>
@@ -3633,7 +3643,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
       <div class="tip-rows">
         <div class="tip-r"><span class="tip-n">1</span><div><b>구조 이해하기</b><p><b>1번 = 본캐</b>(처음·마무리), <b>2~13번 = 리세용 부캐</b>(돌아가며). 부캐마다 출석+시련·파티 → 스케줄 → 장비 맡기기 → 다음 캐릭 순서로 돌고, 마지막에 1번이 마무리해요.</p></div></div>
         <div class="tip-r"><span class="tip-n">2</span><div><b>리세 시각 고정</b><p><b>24시간 맞춤 (매일 05:00 리세)</b>을 켜면 리세가 늘 같은 시각에 시작해요. 1번 본캐 일정(하딘텔·스케줄·본토)을 늘리거나 줄여도 고정 칸만 저절로 줄고 늘어서 리세가 밀리지 않아요.</p></div></div>
-        <div class="tip-r"><span class="tip-n">3</span><div><b>본캐 시간 채우기</b><p>켠 시각부터 리세 시작까지가 1번 본캐 시간이에요. 10시간이 넘으면 셀프 플레이나 본토 사냥으로 채우는 게 좋아요. 남는 시간은 <b>남는 시간 본토로 채우기</b>로 자동 채움.</p></div></div>
+        <div class="tip-r"><span class="tip-n">3</span><div><b>본캐 시간 채우기</b><p>켠 시각부터 리세 시작까지가 1번 본캐 시간이에요. 10시간이 넘으면 셀프 플레이나 본토 사냥으로 채우는 게 좋아요. 남는 시간은 <b>남는 시간 어디로 채울까요?</b>로 자동 채움.</p></div></div>
         <div class="tip-r"><span class="tip-n">4</span><div><b>부캐도 사냥시키기</b><p><b>하딘텔 사냥 (캐릭마다 · 1번 마무리도)</b>를 켜면 부캐가 시련·파티 뒤에 하딘의 텔레포트 즐겨찾기 칸에서 AUTO 사냥을 해요. 입장 비용이 있어서 한 번 들어가면 쭉 사냥해요.</p></div></div>
         <div class="tip-r"><span class="tip-n">5</span><div><b>장비 돌려 쓰기</b><p>좋은 장비 한 벌을 <b>장비 맡기기 → 다음 캐릭 → 장비 찾아 입기</b>로 부캐끼리 돌려 써요. 창고 칸·잠금 상태를 꼭 확인하세요.</p></div></div>
         <div class="tip-r"><span class="tip-n">6</span><div><b>서커스·기간제 이벤트</b><p>기간제 이벤트(서커스 광장 등)는 <b>기간제 이벤트</b> 칸에 기간을 넣어 두면 그 기간에만 들어가고, 끝나면 자동으로 빠져요.</p></div></div>
@@ -3990,6 +4000,7 @@ details.tip-game>summary{cursor:pointer;list-style:none}details.tip-game>summary
   <div class="bb-hook-row"><span>💎 절전 득템</span><select id="bbDropMin" style="flex:0 0 auto;width:auto" title="절전모드 사냥 중 하단 획득 칸에 지정한 등급 이상 아이템이 뜨면 블랙박스·텔레그램·디스코드로 스샷 알림을 보냅니다"><option value="rare" selected>🔵 희귀 이상 (기본 · 희귀/영웅/전설/신화)</option><option value="hero">🔴 영웅 이상 (영웅/전설/신화)</option><option value="uncommon">🟢 고급 이상 (고급/희귀/영웅/전설/신화)</option><option value="off">절전 득템 알림 안 보냄</option></select><small class="sub">절전 중 아이템 칸 <b>테두리 색상</b>만 판별(일반 아이콘 오탐 차단) · 새 칸 획득 시 즉시 스샷 알림</small></div>
   <div class="bb-hook-row"><span>📊 일일 리포트</span><select id="bbRepHour" style="flex:0 0 auto;width:auto" title="매일 정한 시각에 전 캐릭의 간밤 득템·사고·가동률 성적표를 텔레그램·디스코드로 자동 발송합니다"><option value="8" selected>매일 오전 08:00 (기본 · 출근길)</option><option value="7">매일 오전 07:00</option><option value="9">매일 오전 09:00</option><option value="23">매일 밤 23:00</option><option value="-1">자동 발송 안 함 (명령어만)</option></select><button type="button" id="bbRepNow" title="현재까지 누적된 전 캐릭 성적표를 텔레그램·디스코드로 지금 보냅니다">📤 지금 보내기</button><button type="button" id="bbRepReset" title="누적된 일일 성적표 통계를 0부터 다시 집계합니다">🔄 통계 초기화</button></div>
   <div class="bb-hook-row"><span>📅 7일 리포트</span><span class="sub" style="flex:1 1 auto">매주 수요일 05:00 점검 전 자동 · 캐릭별 사냥 일치율·사고 (평일+오만)</span><button type="button" id="bbWkPrev">👀 미리보기</button><button type="button" id="bbWkNow">📤 지금 보내기</button></div>
+  <div class="bb-hook-row"><span>🎞️ 이동 기록</span><span class="sub" style="flex:1 1 auto">귀환·텔포·입장 때마다 4초 전~40초 뒤를 2초 간격 자동 스샷 (원인 확인용)</span><button type="button" id="bbMvOpen">🎞️ 이동 구간 기록 (0)</button></div>
   <pre id="bbWkBox" hidden style="white-space:pre-wrap;font-size:12px;max-height:260px;overflow:auto;background:var(--panel2,rgba(0,0,0,.2));padding:8px;border-radius:8px;margin:6px 0"></pre>
   <div class="bb-hook-row"><button type="button" class="pri" id="bbHookSave">💾 알림 설정 저장</button><button type="button" id="bbHookTest">📤 테스트 전송</button><button type="button" id="bbOpenGuide">📘 매뉴얼 상세 연결법</button><button type="button" id="bbClear" style="margin-left:auto">🗑 기록 비우기</button></div>
 </div>
@@ -4722,6 +4733,7 @@ const isHeineRs=it=>!!(it&&(it.job==='eva'||(it.job==='field'&&['crab','eva'].in
 const rsShort=it=>(+it.hours||0)<((it&&(it.job==='gm'||isAlbSpec(it)))?2/3-1e-9:1-1e-9);   // v178: 1시간(과말·알비노는 40분) 미만 사냥은 재정비 없음
 const rsOn=it=>rsShort(it)?false:isAlbSpec(it)?it.rs!==false:it.job==='bmark'?((it.slot==='mix35'||it.slot==='rnd35')?it.rs!==false:it.rs===true):(it.job==='spec'||it.job==='wdg'||it.job==='field'||it.job==='qwarp')?it.rs===true:it.job==='tower1'?(it.rs===true||(it.rs==null&&(+it.hours||0)>5+1e-9)):it.rs!==false;   // v176: 오만은 5시간 넘을 때만 기본 켜짐 · v281: 알비노 분지는 20분 재정비 기본 켜짐 · v326: 폭젠 3~5 순환(mix35/rnd35)은 1시간마다 정비·순환 기본 켜짐
 const SCH_TOL=120*60000,SCH_OK=15*60000;
+const FIT_JOBS=[['bon','🗺️ 본토 사냥 (기본)'],['sch','📅 스케줄'],['dungeon','🏴 기란감옥'],['bmark','🔖 기억 장소 (폭젠)'],['tower1','🗼 오만의 탑'],['albino','🌀 하딘텔'],['rest','🎮 셀프 플레이'],['wait','⏳ 그냥 기다리기 (끝에 대기)']];
 const slotOff=()=>Math.min(11,Math.max(0,+NB.slotOff||0));   // v350: 묶음 받기 캐릭 순번(0~) — 월보 입장·정한 시각 스케줄을 캐릭마다 어긋나게 (동시 로딩 방지)   // 스케줄: 2시간까지 늦어도 됨 · 자동 배치는 15분 안쪽으로
 const RSJ=['dungeon','gm','tower1','dragon','dark','spec','wdg','bmark','field','eva','qwarp'];
 // v216: 11/17 1920×1080 스샷으로 하나씩 확인한 좌표
@@ -4940,8 +4952,8 @@ function expandAll(){
         a.ev[0].e=Object.assign({},a.ev[0].e,{type:String(vk),detail:String(dn)});a.ev[1].e=Object.assign({},a.ev[1].e,{type:String(vk),detail:String(dn+3221225472)});return a};
       const scroll=()=>{const I=keyAct(73,0x17,2000),d=floorActs(F);d[0].gap=1500;const E=cloneAct(baseAt(976));E.gap=800;   // I 키(아이템창) → 층 주문서 더블클릭 → 닫기 → AUTO
         return [I].concat(d,[E,auto(2600)])};
-      const enter=()=>{const l=(UP?T.slice(0,6):T.slice(0,11)).map(cloneAct);l[0].gap=1500;if(l[5]){l[5].gap=12000;l[5]._slow=1}/* v350: 오만 입장(Y) → ESC 대기 8초 → 12초 (입장 로딩 중 ESC·N 씹힘 방지) */put(resetBlock(2000).concat(l,UP?scroll():[auto()]))};   // 메뉴 → 던전 → 월드 던전 → 오만 카드 → 입장 → ESC → (1층: NPC → 포털 / 2~8층: 주문서) → AUTO
-      const reenter=()=>{if(UP){put(scroll());return}const l=T.slice(6,11).map(cloneAct);l[0].gap=2000;l.push(auto());put(l)};   // 재정비 후 마을에서 다시
+      const enter=()=>{const l=(UP?T.slice(0,6):T.slice(0,11)).map(cloneAct);l[0].gap=1500;if(l[5]){l[5].gap=12000;l[5]._slow=1}if(!UP&&l[10]){l[10].gap=5000;l[10]._slow=1}/* v351: 층 NPC 클릭 → Y 2.4초 → 5초 (NPC까지 걸어가 대화창이 뜬 뒤) *//* v350: 오만 입장(Y) → ESC 대기 8초 → 12초 (입장 로딩 중 ESC·N 씹힘 방지) */put(resetBlock(2000).concat(l,UP?scroll():[auto()]))};   // 메뉴 → 던전 → 월드 던전 → 오만 카드 → 입장 → ESC → (1층: NPC → 포털 / 2~8층: 주문서) → AUTO
+      const reenter=()=>{if(UP){put(scroll());return}const l=T.slice(6,11).map(cloneAct);l[0].gap=2000;if(l[4]){l[4].gap=5000;l[4]._slow=1}l.push(auto());put(l)};   // 재정비 후 마을에서 다시
       const restock=()=>{const l=towerRsActs().filter(a=>a.kind!=='end').map((a,k)=>Object.assign(cloneAct(a),{_rec:1,_shop:k>=1?1:0}));l[0].gap=1500;put(resetBlock().concat(l))};      // 귀환 → 상점 → 마법 → 창고 (오만 입구 NPC)
       if(!rsOn(it)||F>1){enter();if(F===1&&h>3+1e-9){const h1=Math.round(h/2*6)/6;pend+=h1*3600000;put(mailBlock(2000));if(NB.quest)put(questBlock());restock();reenter();pend+=(h-h1)*3600000}else pend+=h*3600000}                   // 1층 재정비 끔 · 2~8층: 재정비 없이 정한 시간 그대로 사냥
       else{const c=Math.max(1,Math.ceil(h));                             // 1시간 사냥 → 우편 → 오만 입구 재정비 → 다시 1층
@@ -5456,12 +5468,26 @@ function applyFixedCore(acts){
     if(a._tag&&a._tag!==prev&&a._tag[0]!=='✉')NB.marks.push({t:el,tag:a._tag});prev=a._tag||'';el+=span(a)})}   // v170/v174: 타임라인 표시용 (퀘스트·종합정비·우편 포함)
   acts=toCfgKeys(acts);
   acts=applyTpRingBmark(acts);
+  acts=loadGuard(acts);
   // 끼워 넣느라 늘어난 몇 초까지 마지막 기다림에서 맞춰 정확히 24시간으로
   const tot=acts.reduce((s,a)=>s+a.gap+span(a),0);NB.fitInfo.total=tot;
   if(NB.fit24){const e=acts[acts.length-1],d=86400000-tot;if(e.gap+d>=0){e.gap+=d;NB.fitInfo.pad+=d;NB.fitInfo.over=0}else{NB.fitInfo.over=-d-e.gap;e.gap=0;NB.fitInfo.pad=0}}
   acts=applySmartSleep(acts);
   return acts;
 }
+
+// v351: 🛡️ 로딩 가드 — 이동(0번 귀환·4번 혈맹귀환·8번 순간이동·순이 파란 텔포) 바로 다음 입력은 최소 NB.lgSec초(기본 7초) 뒤에
+//        (귀환 2번 연속처럼 이동 다음이 또 이동이면 그대로 둠) · 사냥 시작 AUTO 직전엔 화면 정리(ESC 등)를 넣어 열린 창 위에 AUTO가 눌리지 않게
+function lgMs(){return Math.min(20,Math.max(5,+NB.lgSec||7))*1000}
+function isLoadAct(a){if(!a)return false;const vk=actVk(a);if(vk===48||vk===52||vk===56)return true;
+  if(a.kind==='click'){const p=P0(a),x=+(p.mod?p.px:p.e.position.x),y=+(p.mod?p.py:p.e.position.y);return Math.abs(x-BMARK_TPX)<0.012&&y>0.3&&y<0.8}return false}
+function isAutoAct(a){if(!a)return false;if(actVk(a)===70)return true;if(a.kind!=='click')return false;const p=P0(a),x=+(p.mod?p.px:p.e.position.x),y=+(p.mod?p.py:p.e.position.y);return Math.abs(x-0.784)<0.02&&Math.abs(y-0.742)<0.025}
+function loadGuard(acts){if(!acts||!acts.length||NB.items.some(x=>!x.disabled&&x.job==='swap'))return acts;const LG=lgMs();let n=0,m=0;
+  for(let k=0;k<acts.length-1;k++){if(!isLoadAct(acts[k]))continue;const b=acts[k+1];if(!b||b.kind==='end'||isLoadAct(b))continue;if(b.gap<LG){b.gap=LG;b._slow=1;n++}}
+  const out=[];for(let k=0;k<acts.length;k++){const a=acts[k];
+    if(isAutoAct(a)&&a._gr&&a.gap>=6000&&a.gap<60000&&!a._lgDone){const rb=resetBlock(a.gap).map(x=>Object.assign(x,{it:a.it,_slow:1}));if(a._rests){rb[0]._rests=a._rests;rb[0]._g0=a._g0;delete a._rests}a.gap=1000;a._lgDone=1;out.push(...rb);m++}
+    out.push(a)}
+  NB.lgCount=n;NB.lgAutoCount=m;return out}
 function toCfgKeys(acts){
   // ⌨️ 키보드 세팅 우선: 키보드 세팅(.cfg)에 있는 자리를 누르는 클릭은 그 키로 바꿈 (같은 자리를 누르는 것이라 동작은 같음). 나머지는 마우스 클릭 그대로
   for(let k=0;k<acts.length;k++){const a=acts[k];if(!a||a.kind!=='click'||a.ev.some(x=>x.mod))continue;const x=+P0(a).e.position.x,y=+P0(a).e.position.y;
@@ -6617,7 +6643,7 @@ function renderMaker(){
   {const eb=document.getElementById('evBox');if(eb&&(!eb.innerHTML||!eb.contains(document.activeElement)))eb.innerHTML=evPanelHTML()}
   {const bb=document.getElementById('bonBox');if(bb){if(!bb.innerHTML||!bb.contains(document.activeElement))bb.innerHTML=bonPanelHTML();else syncBonLive(document.activeElement)}}
   {const bm=document.getElementById('bmarkBox');if(bm){if(!bm.innerHTML||!bm.contains(document.activeElement))bm.innerHTML=bmarkPanelHTML();else syncBmarkLive(document.activeElement)}}
-  const totTools=NB.items.length?`<div class="tot-tools"><label title="하루 일정 시작 시각 (바꾸면 시간표가 즉시 다시 계산돼요)">⏰ 시작 <input type="time" id="totStart" value="${hm(startMin())}"></label><label title="체크하면 남는 시간을 기다려서 매크로가 딱 24시간이 돼요"><input type="checkbox" id="totFit24"${NB.fit24?' checked':''}> 끝에 기다려서 딱 24시간 채우기</label><button id="totFitBon" title="앞선 일정을 계산해 마지막 본토 사냥 시간을 24시간에 딱 맞게 채웁니다">⚡ 남는 시간 본토로 채우기</button></div>`:'';
+  const totTools=NB.items.length?`<div class="tot-tools"><label title="하루 일정 시작 시각 (바꾸면 시간표가 즉시 다시 계산돼요)">⏰ 시작 <input type="time" id="totStart" value="${hm(startMin())}"></label><label title="체크하면 남는 시간을 기다려서 매크로가 딱 24시간이 돼요"><input type="checkbox" id="totFit24"${NB.fit24?' checked':''}> 끝에 기다려서 딱 24시간 채우기</label><details class="fitpick"><summary title="남는 시간을 무엇으로 채울지 골라요 · 마지막 같은 종류 칸을 늘리고, 없으면 맨 끝에 새로 넣어요">⚡ 남는 시간 어디로 채울까요? ▾</summary><div class="fitpick-menu">${FIT_JOBS.map(([k,l])=>`<button type="button" data-fitjob="${k}">${l}</button>`).join('')}</div></details></div>`:'';
   const pb=$('#pinBox');if(pb)pb.innerHTML=S.canLib?mailRow():'';
   const ORDER=['home','trial','explore','wboss','dungeon','gm','bon','albino','tower1','dragon','dark','spec','wdg','bmark','field','eva','qwarp','clanwk','restock','sch','tele','rest'];   // 출석 + 시련·파티 던전 → 탐험 → 던전류 → 그 밖
   const RRK=['waitAt','claim','store','swap','fetch'],isRR=NB.items.some(x=>!x.disabled&&x.job==='swap');   // v205: 리세/서커스 카드는 리세/서커스 일정일 때만
@@ -6684,6 +6710,7 @@ $('#mkview').addEventListener('click',ev=>{
   if(b.dataset.insjob){addJob(b.dataset.insjob,+b.dataset.insi);return}
   if(b.dataset.insclose){NB.insAfter=null;renderMaker();return}
   if(b.id==='totFitBon'){fitBonTo24();return}
+  if(b.dataset.fitjob){const d=b.closest('details');if(d)d.open=false;fitJobTo24(b.dataset.fitjob);return}
   if(b.classList.contains('destopen')){
     S.destFor=+b.dataset.i;
     $('#destgrid').innerHTML=TELE.map((t,i)=>t[3]?'':`<button data-d="${i}"><img alt="${esc(t[0])}" src="${ICONS['t'+i]||''}"><div><b style="font-size:12px">${esc(t[0])}</b></div></button>`).join('');
@@ -6868,6 +6895,11 @@ async function cfgDownload(){
 }
 $('#cfgDl').addEventListener('click',cfgDownload);{const r=document.getElementById('cfgDlRr');if(r)r.addEventListener('click',cfgDownload)}$('#cfgDlTop').addEventListener('click',cfgDownload);
 $('#slowSel').addEventListener('change',e=>{NB.slow=+e.target.value;updTotal()});
+$('#lgSel').addEventListener('change',e=>{NB.lgSec=+e.target.value;EXP_CACHE=null;updTotal();toast('🛡️ 이동 후 대기 '+NB.lgSec+'초 · 귀환·텔포 뒤 첫 입력과 사냥 시작 AUTO 전에 적용돼요')});
+function lgRecSec(){const a=(HM.loadCal&&HM.loadCal.avgMs)||0;if(!a)return 0;const need=a/1000*1.5+2;return need<=7?7:need<=10?10:15}   // v351: 실측 로딩 × 1.5 + 2초
+function lgRecSync(){const el=$('#lgRec'),sel=$('#lgSel');if(sel)sel.value=String(+NB.lgSec||7);if(!el)return;const a=(HM.loadCal&&HM.loadCal.avgMs)||0,r=lgRecSec();el.innerHTML=a?'📊 블랙박스 실측 로딩 평균 <b>'+(a/1000).toFixed(1)+'초</b> → 추천 <b>'+r+'초</b>'+(r!==(+NB.lgSec||7)?' <button type="button" id="lgApply" style="padding:2px 8px;font-size:12px">적용</button>':' ✅'):'💡 블랙박스에 퍼플 창을 연결하면 실제 로딩 시간을 재서 추천해 드려요'}
+document.addEventListener('click',e=>{if(e.target&&e.target.id==='lgApply'){NB.lgSec=lgRecSec();EXP_CACHE=null;updTotal();lgRecSync();toast('🛡️ 실측 기준 이동 후 대기 '+NB.lgSec+'초 적용')}});
+setTimeout(()=>{try{lgRecSync()}catch(e){}},800);
 // v152: 내 PC 속도 하나로 (보통·느림·아주 느림 → 로딩·기란 렉·클릭 기다림 한꺼번에)
 const PCP={n:{buf:2,giran:3,slow:1},m:{buf:3,giran:4,slow:1.5},s:{buf:5,giran:5,slow:2},v:{buf:5,giran:8,slow:3}};
 function pcSync(){const k=Object.keys(PCP).find(k=>PCP[k].buf===(+NB.buf||0)&&PCP[k].giran===(NB.giran==null?3:+NB.giran)&&PCP[k].slow===(+NB.slow||0))||'c';const sel=$('#pcSel');if(!sel)return;sel.value=k;$('#pcCustom').style.display=sel.value==='c'?'':'none'}
@@ -6886,6 +6918,26 @@ function ancFit24(){mkSnap();const keep=NB.fit24;let n=0;
   for(let q=0;q<300;q++){EXP_CACHE=null;NB.fit24=true;totalMin();const over=(NB.fitInfo||{}).over||0;if(over<=0)break;const e=ancCoreEnd();let bj=-1;for(let j=NB.items.length-1;j>e;j--){const x=NB.items[j];if(!x.disabled&&!x.locked&&['bon','sch','dungeon','albino','tower1','wdg','gm','field','bmark','rest'].includes(x.job)&&(+x.hours||0)>1/6+1e-6){bj=j;break}}if(bj<0)break;NB.items[bj].hours=Math.round((+NB.items[bj].hours-1/6)*6)/6;n++}
   NB.fit24=keep;EXP_CACHE=null;renderMaker();const over=(NB.fitInfo||{}).over||0;
   toast(over>0?'⚠ 1번 마무리를 '+dur(n*10)+' 줄여도 '+dur(Math.ceil(over/60000))+' 넘어요 · '+ancOverTip():'⚡ 1번 마무리를 '+dur(n*10)+' 줄여 24시간에 맞췄어요 · 리세는 그대로')}
+
+// v351: ⚡ 남는 시간 어디로 채울까요? — 고른 종류의 마지막 칸을 늘려 24시간에 맞춤 (없으면 맨 끝에 새로) · ⏳ 기다리기는 끝에 대기로 24시간
+function fitJobTo24(job){
+  if(job==='bon')return fitBonTo24();
+  if(NB.items.some(x=>x.anc)){ancFit24();return}
+  if(job==='wait'){mkSnap();NB.fit24=true;const c=$('#fit24');if(c)c.checked=true;renderMaker();toast('⏳ 남는 시간은 매크로 끝에서 기다려 딱 24시간으로 맞춰요');return}
+  if(!S.canLib){toast('원본 매크로가 있어야 계산할 수 있어요');return}
+  if(!JOBS[job]){toast('알 수 없는 종류예요');return}
+  mkSnap();const keep=JSON.stringify(NB.items);
+  let bi=-1;for(let k=NB.items.length-1;k>=0;k--){const x=NB.items[k];if(!x.disabled&&!x.locked&&x.job===job){bi=k;break}}
+  const added=bi<0;if(added){NB.items.push({job,hours:JOBS[job].def!=null?JOBS[job].def:1,dest:defDest()});bi=NB.items.length-1}
+  NB.fit24=false;EXP_CACHE=null;
+  const h0=Math.round((+NB.items[bi].hours||0)*60);NB.items[bi].hours=10/60;
+  if(totalMin()>1440){NB.items=JSON.parse(keep);NB.fit24=true;EXP_CACHE=null;renderMaker();toast('채울 만큼 남는 시간이 없어요');return}
+  let best=10;for(let m=23*60;m>=10;m-=10){NB.items[bi].hours=m/60;EXP_CACHE=null;if(totalMin()<=1440){best=m;break}}
+  const nm0=(FIT_JOBS.find(x=>x[0]===job)||[0,JOBS[job].short])[1].replace(/\s*\(.*\)$/,'');
+  if(!added&&best<=h0){NB.items=JSON.parse(keep);NB.fit24=true;EXP_CACHE=null;renderMaker();toast('⚠ '+nm0+'은(는) 남은 시간 안에서 더 늘릴 수 없어요 (재정비·이동 시간 포함) · 🗺️ 본토나 ⏳ 기다리기를 골라 주세요');return}
+  NB.items[bi].hours=best/60;NB.fit24=true;const c=$('#fit24');if(c)c.checked=true;EXP_CACHE=null;renderMaker();
+  const nm=(FIT_JOBS.find(x=>x[0]===job)||[0,JOBS[job].short])[1].replace(/\s*\(.*\)$/,'');
+  toast('⚡ '+nm+(added?'을(를) 맨 끝에 '+dur(best)+' 넣어':' 시간을 '+dur(h0)+' → '+dur(best)+'으로 늘려')+' 24시간에 맞췄어요 (↩ 되돌리기 가능)')}
 function fitBonTo24(){
   if(!S.canLib){toast('원본 매크로가 있어야 계산할 수 있어요');return}
   mkSnap();
@@ -7069,10 +7121,10 @@ const SETKEY='pmk-sets-v1';
 function readSets(){try{return JSON.parse(localStorage.getItem(SETKEY)||'{}')||{}}catch(e){return {}}}
 function writeSets(o){try{localStorage.setItem(SETKEY,JSON.stringify(o));return true}catch(e){return false}}
 const PRESETS={'⭐ 추천: 혈맹 기본 하루':{items:[{job:'home'},{job:'explore'},{job:'dungeon',hours:5},{job:'gm',hours:1},{job:'bon',hours:15,spot:'mix',seed:7}],quest:true,autoEx:true,fit24:true,repeat:'-1',titleAuto:true}};
-function curState(){return JSON.parse(JSON.stringify({slow:NB.slow,giran:NB.giran,start:NB.auto===false?NB.start:undefined,items:NB.items,mail:NB.mail,quest:NB.quest,autoEx:NB.autoEx,questIv:NB.questIv||undefined,exTr:NB.exTr||undefined,exMid:+NB.exMid||0,exD:NB.exD===false?false:undefined,exR:NB.exR===false?false:undefined,exV:NB.exV===false?false:undefined,exRl:NB.exRl||undefined,clan2:NB.clan2||undefined,clanEve:NB.clanEve===false?false:undefined,passLate:NB.passLate===false?false:undefined,saveScroll:NB.saveScroll,sleepAll:NB.sleepAll||undefined,tpRing:NB.tpRing||undefined,tpRingBm:NB.tpRingBm||undefined,mouseMode:NB.mouseMode||undefined,humanize:NB.humanize||undefined,slimJson:NB.slimJson||undefined,dailySeedRot:NB.dailySeedRot||undefined,aspectMode:NB.aspectMode!=='16:9'?NB.aspectMode:undefined,aspectW:NB.aspectMode==='custom'?NB.aspectW:undefined,aspectH:NB.aspectMode==='custom'?NB.aspectH:undefined,aspectAnchor:NB.aspectAnchor==='bottom'?'bottom':undefined,charSlot:+NB.charSlot||undefined,slotOff:+NB.slotOff||undefined,revive:NB.revive!==false,buffOn:NB.buffOn||undefined,statueBuff:NB.statueBuff===false?false:undefined,statueOnF:NB.statueOnF===false?false:undefined,statueUntil:NB.statueUntil||undefined,bonNames:effectiveBonNames(),bmarkNames:BMARK_NAMES,charNames:CHAR_NAMES,charProfs:CHAR_PROFS,buf:NB.buf,fit24:NB.fit24,title:NB.title,titleAuto:NB.titleAuto,repeat:NB.repeat,dgLeft:NB.dgLeft,dgMax:NB.dgMax,twLeft:NB.twLeft,twMax:NB.twMax,dailyHunt:!!NB.dailyHunt,dailyOff:NB.dailyOff||{},dailyT:NB.dailyT||'',clanT:NB.clanT||'',lateT:NB.lateT||''}))}
+function curState(){return JSON.parse(JSON.stringify({slow:NB.slow,giran:NB.giran,start:NB.auto===false?NB.start:undefined,items:NB.items,mail:NB.mail,quest:NB.quest,autoEx:NB.autoEx,questIv:NB.questIv||undefined,exTr:NB.exTr||undefined,exMid:+NB.exMid||0,exD:NB.exD===false?false:undefined,exR:NB.exR===false?false:undefined,exV:NB.exV===false?false:undefined,exRl:NB.exRl||undefined,clan2:NB.clan2||undefined,clanEve:NB.clanEve===false?false:undefined,passLate:NB.passLate===false?false:undefined,saveScroll:NB.saveScroll,sleepAll:NB.sleepAll||undefined,tpRing:NB.tpRing||undefined,tpRingBm:NB.tpRingBm||undefined,mouseMode:NB.mouseMode||undefined,humanize:NB.humanize||undefined,slimJson:NB.slimJson||undefined,dailySeedRot:NB.dailySeedRot||undefined,aspectMode:NB.aspectMode!=='16:9'?NB.aspectMode:undefined,aspectW:NB.aspectMode==='custom'?NB.aspectW:undefined,aspectH:NB.aspectMode==='custom'?NB.aspectH:undefined,aspectAnchor:NB.aspectAnchor==='bottom'?'bottom':undefined,charSlot:+NB.charSlot||undefined,slotOff:+NB.slotOff||undefined,lgSec:(+NB.lgSec&&+NB.lgSec!==7)?+NB.lgSec:undefined,revive:NB.revive!==false,buffOn:NB.buffOn||undefined,statueBuff:NB.statueBuff===false?false:undefined,statueOnF:NB.statueOnF===false?false:undefined,statueUntil:NB.statueUntil||undefined,bonNames:effectiveBonNames(),bmarkNames:BMARK_NAMES,charNames:CHAR_NAMES,charProfs:CHAR_PROFS,buf:NB.buf,fit24:NB.fit24,title:NB.title,titleAuto:NB.titleAuto,repeat:NB.repeat,dgLeft:NB.dgLeft,dgMax:NB.dgMax,twLeft:NB.twLeft,twMax:NB.twMax,dailyHunt:!!NB.dailyHunt,dailyOff:NB.dailyOff||{},dailyT:NB.dailyT||'',clanT:NB.clanT||'',lateT:NB.lateT||''}))}
 function applyState(s){mkSnap();
   NB.items=(s.items||[]).map(it=>Object.assign({hours:JOBS[it.job]&&JOBS[it.job].def!=null?JOBS[it.job].def:1,dest:defDest()},it)).filter(it=>JOBS[it.job]);
-  NB.dailyHunt=!!s.dailyHunt;NB.dailyOff=Object.assign({},s.dailyOff||{});NB.dailyT=s.dailyT||'';NB.clanT=s.clanT||'';NB.lateT=s.lateT||'';NB.slotOff=+s.slotOff||0;
+  NB.dailyHunt=!!s.dailyHunt;NB.dailyOff=Object.assign({},s.dailyOff||{});NB.dailyT=s.dailyT||'';NB.clanT=s.clanT||'';NB.lateT=s.lateT||'';NB.slotOff=+s.slotOff||0;NB.lgSec=+s.lgSec||7;
   ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','sleepAll','tpRing','tpRingBm','mouseMode','humanize','slimJson','dailySeedRot','aspectMode','aspectW','aspectH','aspectAnchor','charSlot','revive','buffOn','statueBuff','statueOnF','statueUntil','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(s[k]!==undefined)NB[k]=s[k]});
   if(s.charProfs&&typeof s.charProfs==='object'){CHAR_PROFS=Object.assign({},CHAR_PROFS,s.charProfs);saveCharProfs()}
   if(s.bonNames&&typeof s.bonNames==='object'){if((+s.charSlot||0)>=1&&(+s.charSlot||0)<=9){const p=getCharProf(+s.charSlot);if(p&&!Object.keys(p.bon).length){p.bon=Object.assign({},s.bonNames);saveCharProfs()}}else{BON_NAMES=Object.assign({},BON_NAMES,s.bonNames);saveBonNames()}}
@@ -7080,7 +7132,7 @@ function applyState(s){mkSnap();
   if(s.charNames&&typeof s.charNames==='object'){CHAR_NAMES=Object.assign({},CHAR_NAMES,s.charNames);saveCharNames()}
   if(s.mail){NB.mail=Object.assign({},NB.mail,s.mail);if(+NB.mail.x===.836&&+NB.mail.y===.896){NB.mail.x=.861;NB.mail.y=.905}}   // 예전 기본 위치 → 녹화한 새 위치
   if(s.start){NB.start=s.start;NB.auto=false;$('#mkStart').value=s.start;$('#mkAuto').textContent='일정 시각 · 이때 켜세요'}
-  $('#mkRep').value=NB.repeat;$('#slowSel').value=String(NB.slow);$('#giranSel').value=String(NB.giran==null?3:NB.giran);$('#bufSel').value=String(NB.buf||0);try{pcSync()}catch(e){}$('#fit24').checked=!!NB.fit24;$('#dgLeft').value=NB.dgLeft;$('#dgMax').value=NB.dgMax;$('#twLeft').value=NB.twLeft;$('#twMax').value=NB.twMax;$('#mkTitle').value=NB.title||'';
+  $('#mkRep').value=NB.repeat;$('#slowSel').value=String(NB.slow);try{lgRecSync()}catch(e){}$('#giranSel').value=String(NB.giran==null?3:NB.giran);$('#bufSel').value=String(NB.buf||0);try{pcSync()}catch(e){}$('#fit24').checked=!!NB.fit24;$('#dgLeft').value=NB.dgLeft;$('#dgMax').value=NB.dgMax;$('#twLeft').value=NB.twLeft;$('#twMax').value=NB.twMax;$('#mkTitle').value=NB.title||'';
   renderMaker()}
 // 🐉 월드보스 포함 하루: 시작 시각(05~08시)에 맞춰 기란감옥을 월드보스 앞뒤로 나누고, 본토로 24시간을 채움
 function totalMin(){return expandAll().reduce((s,a)=>s+a.gap+span(a),0)/60000}
@@ -8259,7 +8311,7 @@ const HUD_C=new Map();
 function hudCompute(st){const keep=Object.assign({},NB),keepK=Object.keys(NB),keepBN=BON_NAMES;let out=null;NB.charSlot=0;if(st.bonNames&&typeof st.bonNames==='object')BON_NAMES=Object.assign({},keepBN,st.bonNames);
   try{NB.items=(st.items||[]).map(it=>Object.assign({hours:JOBS[it.job]&&JOBS[it.job].def!=null?JOBS[it.job].def:1,dest:defDest()},it)).filter(it=>JOBS[it.job]);
     NB.dailyHunt=!!st.dailyHunt;NB.dailyOff=Object.assign({},st.dailyOff||{});NB.dailyT=st.dailyT||'';NB.clanT=st.clanT||'';NB.lateT=st.lateT||'';
-    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','sleepAll','tpRing','tpRingBm','mouseMode','revive','buffOn','statueBuff','statueOnF','statueUntil','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});NB.slotOff=+st.slotOff||0;
+    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','sleepAll','tpRing','tpRingBm','mouseMode','revive','buffOn','statueBuff','statueOnF','statueUntil','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});NB.slotOff=+st.slotOff||0;NB.lgSec=+st.lgSec||7;
     if(st.mail)NB.mail=Object.assign({},keep.mail,st.mail);if(st.start){NB.start=st.start;NB.auto=false}EXP_CACHE=null;
     const {st:T,total}=itemTimes(),S0=startMin(),RG=rrGroups(),segs=[];
     NB.items.forEach((it,i)=>{if(it.disabled||T[i]==null)return;let nx=total;for(let k=i+1;k<NB.items.length;k++)if(!NB.items[k].disabled&&T[k]!=null){nx=T[k];break}
@@ -8280,7 +8332,7 @@ function hudMakeWarp(st,fileEvs){
   const keep=Object.assign({},NB),keepK=Object.keys(NB),keepBN=BON_NAMES;let reb=null;NB.charSlot=0;if(st.bonNames&&typeof st.bonNames==='object')BON_NAMES=Object.assign({},keepBN,st.bonNames);
   try{NB.items=(st.items||[]).map(it=>Object.assign({hours:JOBS[it.job]&&JOBS[it.job].def!=null?JOBS[it.job].def:1,dest:defDest()},it)).filter(it=>JOBS[it.job]);
     NB.dailyHunt=!!st.dailyHunt;NB.dailyOff=Object.assign({},st.dailyOff||{});NB.dailyT=st.dailyT||'';NB.clanT=st.clanT||'';NB.lateT=st.lateT||'';
-    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','sleepAll','tpRing','tpRingBm','mouseMode','revive','buffOn','statueBuff','statueOnF','statueUntil','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});NB.slotOff=+st.slotOff||0;
+    ['slow','giran','quest','questIv','autoEx','exMid','exD','exR','exV','exTr','exRl','clan2','clanEve','passLate','saveScroll','sleepAll','tpRing','tpRingBm','mouseMode','revive','buffOn','statueBuff','statueOnF','statueUntil','buf','fit24','title','titleAuto','repeat','dgLeft','dgMax','twLeft','twMax'].forEach(k=>{if(st[k]!==undefined)NB[k]=st[k]});NB.slotOff=+st.slotOff||0;NB.lgSec=+st.lgSec||7;
     if(st.mail)NB.mail=Object.assign({},keep.mail,st.mail);if(st.start){NB.start=st.start;NB.auto=false}NB.humanize=false;EXP_CACHE=null;
     const o=buildNew();const r=o&&o.records&&Object.values(o.records)[0];reb=r&&r.events}catch(e){reb=null}
   Object.keys(NB).forEach(k=>{if(!keepK.includes(k))delete NB[k]});Object.assign(NB,keep);BON_NAMES=keepBN;EXP_CACHE=null;
@@ -8367,6 +8419,7 @@ function hmAlgoTick(t,res,ti,beepOn,lockSpot,R){const now=Date.now();if(!t._anaS
   if(res.isSafeZone)t.safeSeenAt=now;
   const h=hmExpOf(t);if(!h)return;const x=hmExpAt(h,0);
   if(x.c==='H'){for(const g of h.exp.s)if(x.e>=g[0]&&x.e<g[1]){x.g0=g[0];break}}
+  try{hmMvTick(t,h,x,now)}catch(e){}
   // 일치율: 사냥 구간에서 화면이 사냥(절전 사냥이면 절전) 중인가
   if(x.c==='H'&&!res.isDead){const r=hmWkRow(hmStatName(t));r.h+=2;if(x.z?t.inSleep:(!res.isTown&&(res.hasFieldHud||t.inSleep)))r.ok+=2;hmWkSave()}
   // 🗺️ 맵 이름 지문: 깨어 있는 필드 화면이면 최근 3장 보관
@@ -8403,6 +8456,37 @@ function hmBuildWeekReport(isAuto){const now=new Date(),ws=hmWeekStart(now),W=HM
   return [head,`🎯 전체 사냥 일치율 ${TH?Math.round(TO*100/TH):0}% · 총 사냥 ${Math.round(TH/3600)}시간 · ${names.length}캐릭`,'※ 일치율 = 파일상 사냥 시간 중 화면도 실제로 사냥(절전) 중이던 비율','',...rows].join('\n')}
 function hmCheckWeekReport(){if(!HM.bbHook&&!(HM.tgToken&&HM.tgChatId))return;const now=new Date();if(now.getDay()!==3||now.getHours()!==5)return;
   const k=hmDayKey(now);if(hmLsGet('pmk-hm-wkrep-v1','')===k)return;hmLsSet('pmk-hm-wkrep-v1',k);hmSendReportText(hmBuildWeekReport(true),false,'📅 7일 리포트')}
+
+// v351: 파일 속 이동 시각(0번 귀환·4번 혈맹귀환·8번 순간이동·Y 입장·순이 파란 텔포) — 20초 안 연속은 1번으로
+function hudMoveMarks(evs){const M=[];(evs||[]).forEach(e=>{let mv=false;if(e.type==='513'){const x=+e.position.x,y=+e.position.y;mv=Math.abs(x-BMARK_TPX)<0.012&&y>0.3&&y<0.8}else if(['48','52','56','89'].includes(e.type)&&+e.detail<2147483648)mv=true;
+  if(mv){const t=Math.round(+e.ms/1000);if(!M.length||t-M[M.length-1]>20)M.push(t)}});return M}
+// ── 🎞️ 이동 구간 자동 스샷: 이동 4초 전 ~ 40초 뒤를 2초마다 저장 (캐릭마다 최근 3번)
+function hmMvTick(t,h,x,now){const mv=h.exp&&h.exp.mv;if(!mv||!mv.length||!t.vid)return;const L=h.exp.L||86400,e=x.e;
+  let hit=null;for(const m of mv){let d=e-m;if(d<-L/2)d+=L;if(d>L/2)d-=L;if(d>=-4&&d<=40){hit=m;break}}
+  if(hit!=null){if(!t._mv||t._mv.m!==hit){if(t._mv)hmMvFlush(t);t._mv={m:hit,at:now,frames:[]}}
+    if(t._mv.frames.length<24&&now-(t._mvLast||0)>=1900){t._mvLast=now;let img=null;try{img=hmCompositePng(t,480,'image/jpeg',0.72,true)}catch(er){}if(img)t._mv.frames.push({t:now,img})}}
+  else if(t._mv)hmMvFlush(t)}
+function hmMvFlush(t){const r=t._mv;t._mv=null;if(!r||!r.frames.length)return;const nm=t.name||'퍼플 창';(HM.mvLog=HM.mvLog||[]).push({name:nm,at:r.at,frames:r.frames});
+  const mine=HM.mvLog.filter(x=>x.name===nm);if(mine.length>3)HM.mvLog.splice(HM.mvLog.indexOf(mine[0]),1);if(HM.mvLog.length>30)HM.mvLog.shift();try{hmMvBtnSync()}catch(e){}}
+function hmMvBtnSync(){const b=$('#bbMvOpen');if(b)b.textContent='🎞️ 이동 구간 기록 ('+(HM.mvLog||[]).length+')'}
+function hmMvOpen(){let d=$('#mvDlg');if(!d){d=document.createElement('div');d.id='mvDlg';d.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.72);overflow:auto;padding:24px';document.body.appendChild(d);
+    d.addEventListener('click',e=>{if(e.target.id==='mvDlg'||e.target.dataset.mvclose!==undefined){d.hidden=true;return}const im=e.target.closest('img[data-mvbig]');if(im){const v=$('#mvBig');if(v){v.src=im.src;v.parentElement.hidden=false}}})}
+  const tm=ms=>{const D=new Date(ms);return String(D.getHours()).padStart(2,'0')+':'+String(D.getMinutes()).padStart(2,'0')+':'+String(D.getSeconds()).padStart(2,'0')};
+  const L=(HM.mvLog||[]).slice().reverse();
+  d.innerHTML=`<div style="max-width:1100px;margin:0 auto;background:var(--surface,#fff);color:var(--fg,#222);border-radius:14px;padding:16px 18px"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b style="font-size:16px">🎞️ 이동 구간 기록 · 이동 4초 전 ~ 40초 뒤 (2초 간격)</b><button type="button" data-mvclose>✕ 닫기</button></div>
+  <p class="sub" style="margin:6px 0 12px">HUD 파일이 연결된 퍼플 창만 · 캐릭마다 최근 3번 · 새로고침하면 사라져요 · 사진을 누르면 크게 봐요</p>
+  <div hidden style="margin-bottom:12px"><img id="mvBig" style="width:100%;border-radius:10px"></div>
+  ${L.length?L.map(r=>`<div style="margin-bottom:14px"><div style="font-weight:800;margin-bottom:6px">${esc(r.name)} · ${tm(r.at)} · ${r.frames.length}장</div><div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:6px">${r.frames.map(f=>`<figure style="margin:0;flex:0 0 auto;text-align:center"><img data-mvbig src="${f.img}" style="width:180px;border-radius:6px;cursor:zoom-in;display:block"><figcaption class="sub" style="font-size:11px">${tm(f.t)}</figcaption></figure>`).join('')}</div></div>`).join(''):'<div class="sub" style="padding:24px;text-align:center">아직 기록이 없어요 · 파일 속 이동(귀환·텔포·입장) 시각이 되면 자동으로 찍혀요</div>'}</div>`;
+  d.hidden=false}
+// ── 🚦 HUD 동시 이동 경보: 앞으로 10분 안에 30초 안에 3캐릭 이상 이동이 몰리면 미리 알림
+let HUD_MVW=[];
+function hudMvWarnCalc(){const now=Date.now(),B={};
+  HUD.forEach(h=>{const mv=h.exp&&h.exp.mv;if(!mv||!mv.length||h.at==null)return;const L=h.exp.L||86400,e=((((now-h.at)/1000)%L)+L)%L;
+    mv.forEach(m=>{let d=m-e;if(d<0)d+=L;if(d>600)return;const b=Math.floor((now/1000+d)/30);(B[b]=B[b]||new Set()).add(h.name||'캐릭')})});
+  HUD_MVW=Object.entries(B).filter(([b,v])=>v.size>=3).map(([b,v])=>({t:+b*30000,who:[...v]})).sort((a,b)=>a.t-b.t);
+  HUD_MVW.forEach(w=>{const k='mvw'+w.t;if(HM[k])return;HM[k]=1;const D=new Date(w.t),mins=Math.max(0,Math.round((w.t-now)/60000));try{toast('🚦 '+mins+'분 뒤('+String(D.getHours()).padStart(2,'0')+':'+String(D.getMinutes()).padStart(2,'0')+') '+w.who.length+'캐릭 동시 이동 예정: '+w.who.join('·')+' — 로딩 겹침 주의')}catch(e){}})}
+function hudMvWarnHTML(){if(!HUD_MVW.length)return '';const now=Date.now();return HUD_MVW.slice(0,3).map(w=>{const D=new Date(w.t);return `<span class="hs hot" title="${esc(w.who.join(', '))}">🚦 ${String(D.getHours()).padStart(2,'0')}:${String(D.getMinutes()).padStart(2,'0')} ${w.who.length}캐릭 동시 이동 (${Math.max(0,Math.round((w.t-now)/60000))}분 뒤)</span>`}).join('')}
+setInterval(()=>{try{if(HUD.length)hudMvWarnCalc()}catch(e){}},30000);
 // v347: 파일 흐름 기반 새 감지 3종 (HUD 파일이 연결된 창만 · 2초 틱)
 //  ⛔ stall  : 화면은 절전인데 파일상 사냥(절전)이 끝난 지 3분+ → 매크로 멈춤 의심
 //  😴 nosleep: 파일상 절전 사냥 구간인데 사냥 화면 그대로 2분 30초+ (마을·사망·로딩 제외)
@@ -8440,7 +8524,7 @@ function hudAdd(files){const fs=[...files].filter(f=>/\.json$/i.test(f.name)||!/
     const now=new Date(),sm=(()=>{const p=String(R0.st.start||'').split(':');if(p.length===2)return (+p[0])*60+(+p[1]);const m=title.match(/(\d{1,2})시(\d{1,2})분 시작/);return m?(+m[1])*60+(+m[2]):null})();
     let at=null;if(sm!=null){const d=new Date(now);d.setHours(Math.floor(sm/60),sm%60,0,0);if(d>now)d.setDate(d.getDate()-1);at=d.getTime()}
     let warp=null,slp=null;try{const rec=o.records&&Object.values(o.records)[0];warp=hudMakeWarp(R0.st,rec&&rec.events);slp=hudSleepMarks(rec&&rec.events)}catch(e){}
-    let exp=null;try{const rec=o.records&&Object.values(o.records)[0];exp=hudExpBuild(rec&&rec.events);if(exp)exp.buf=hudBuffMarks(rec&&rec.events)}catch(e){}
+    let exp=null;try{const rec=o.records&&Object.values(o.records)[0];exp=hudExpBuild(rec&&rec.events);if(exp){exp.buf=hudBuffMarks(rec&&rec.events);exp.mv=hudMoveMarks(rec&&rec.events)}}catch(e){}
     const ra=/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/.exec(String(R0.st.runAt||''));   // 이어하기 파일에 적힌 '켜는 시각'이 있으면 그걸로
     if(ra){const d=new Date(now);d.setHours(+ra[1],+ra[2],+(ra[3]||0),0);let t=d.getTime();if(t>now.getTime())t-=86400000;at=t}
     else if(warp&&sm!=null&&warp.a[0]&&Math.abs(warp.a[0][1])>=300){const d=new Date(now);d.setHours(0,0,0,0);let t=d.getTime()+sm*60000+warp.a[0][1]*1000;while(t>now.getTime())t-=86400000;while(now.getTime()-t>=86400000)t+=86400000;at=t}   // 이어하기(중간부터 시작) 파일: 파일 맨 앞이 원래 일정의 어디인지로 켠 시각을 자동 계산
@@ -10213,7 +10297,7 @@ function hudRender(){const grid=$('#hudGrid'),sum=$('#hudSum');if(!grid)return;
     {const d5=((300-nowM)%1440+1440)%1440;ch.push(`<span class="${d5<=30?'w':''}">🌅 05시까지 ${dur(Math.max(1,d5))}</span>`)}
     if(!loop)ch.push(`<span>⏹ ${done?'끝남':clk(c.total)+' 끝 ('+aft(c.total-el)+')'}</span>`);
     const topRow=`<div class="hh-top">${nmEl}<div class="hn" title="${esc(done?'끝났어요':sg?sg.nm+(sg.who?' ('+sg.who+')':''):'대기')}">${done?'⏹ 끝났어요':sg?`${sg.ico} ${esc(sg.nm)}${sg.who?` <small>(${esc(sg.who)})</small>`:''}`:'⏳ 대기'}</div></div>`;
-    const head=topRow+ctlRow;
+    const head=topRow+ctlRow+(h.exp?'':'<div class="sub" style="margin:2px 0 4px;padding:4px 8px;border-radius:8px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-weight:700" title="v346 이전에 넣은 카드라 파일 속 동작 정보가 없어요">📂 예전에 넣은 카드예요 · 지우고 파일을 다시 넣으면 🧭 정밀 감지(예상 상태·멈춤·절전·도착·이동 기록)가 켜져요</div>');
     const nxtInfo=done?null:hmNextActionInfo(h);
     const snMin=hmSnoozeLeftMin(h.name);
     const radarHtml=nxtInfo?`<div class="hradar ${nxtInfo.level}" style="margin:4px 0 6px;padding:4px 8px;border-radius:7px;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:space-between;gap:6px;background:${nxtInfo.level==='danger'?'rgba(220,38,38,.14)':nxtInfo.level==='warn'?'rgba(245,158,11,.14)':'rgba(22,163,74,.10)'};color:${nxtInfo.level==='danger'?'#dc2626':nxtInfo.level==='warn'?'#b45309':'#15803d'}"><span>⏳ ${esc(nxtInfo.badge)}</span><button type="button" data-hsnooze="${ix}" style="padding:1px 6px;font-size:10.5px;border-radius:6px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer" title="이 캐릭만 30분 감시 알림 스누즈(토글)">${snMin?`🔕 ${snMin}분 스누즈중`:'🔕 30분 스누즈'}</button></div>`:'';
@@ -10234,7 +10318,7 @@ function hudRender(){const grid=$('#hudGrid'),sum=$('#hudSum');if(!grid)return;
   grid.innerHTML=cards.join('');
   docked.forEach(t=>{const sl=grid.querySelector(`[data-vidslot="${t.id}"]`);if(sl){sl.insertBefore(hmTileEl(t),sl.firstChild);if(t.vid&&t.vid.paused){try{t.vid.play().catch(()=>{})}catch(e){}}}});
   hmRender();hmEnsureTimers();hmDrawOverlays();
-  const hot=k=>/기란감옥|오만|과말/.test(k)?3:/본토/.test(k)?4:99;sum.innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<span class="hs${v>=hot(k)?' hot':''}">${esc(k)} ${v}</span>`).join('')||'<span class="sub">📂 파일을 넣으면 장소별 인원이 나와요</span>'}
+  const hot=k=>/기란감옥|오만|과말/.test(k)?3:/본토/.test(k)?4:99;sum.innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<span class="hs${v>=hot(k)?' hot':''}">${esc(k)} ${v}</span>`).join('')||'<span class="sub">📂 파일을 넣으면 장소별 인원이 나와요</span>';try{sum.innerHTML+=hudMvWarnHTML()}catch(e){}}
 {const dz=$('#hudview')||$('#hudDrop');if(dz){['dragover','dragenter'].forEach(t=>dz.addEventListener(t,e=>{e.preventDefault();e.stopPropagation();($('#hudDrop')||dz).classList.add('over')}));['dragleave','drop'].forEach(t=>dz.addEventListener(t,e=>{($('#hudDrop')||dz).classList.remove('over')}));dz.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();if(e.dataTransfer&&e.dataTransfer.files)hudAdd(e.dataTransfer.files)})}
  const fi=$('#hudFile');if(fi)fi.addEventListener('change',e=>{hudAdd(e.target.files);e.target.value=''});const ho=$('#hudOpen');if(ho&&fi)ho.addEventListener('click',()=>fi.click());
  const hc=$('#hudClear');if(hc)hc.addEventListener('click',()=>{HUD=[];HUD_C.clear();HUD_STEPS.clear();HM.tiles.forEach(t=>{t.hudId=null});hudSave();hudRender()});
@@ -10314,6 +10398,7 @@ function hudRender(){const grid=$('#hudGrid'),sum=$('#hudSum');if(!grid)return;
  const bbDm=$('#bbDropMin');if(bbDm)bbDm.addEventListener('change',()=>{const v=bbDm.value;HM.dropMin=['rare','hero','uncommon','off'].includes(v)?v:'rare';hmSaveCfg();hmRenderBb();toast(HM.dropMin==='off'?'🔕 절전 득템 알림을 껐어요':'💎 절전 득템 알림 → '+hmDropMinLabel()+' 획득 시 스샷 발송')});
  const bbRh=$('#bbRepHour');if(bbRh)bbRh.addEventListener('change',()=>{const v=+bbRh.value;HM.repHour=[-1,7,8,9,23].includes(v)?v:8;hmSaveCfg();hmRenderBb();toast(HM.repHour>=0?'📊 매일 '+String(HM.repHour).padStart(2,'0')+':00에 일일 성적표를 자동 발송합니다':'🔕 일일 성적표 자동 발송을 껐어요 (텔레그램 "리포트" 명령은 계속 사용 가능)')});
  const bbRn=$('#bbRepNow');if(bbRn)bbRn.addEventListener('click',()=>{hmSaveAlertCfg();hmSendDailyReport(true)});
+ const bbMo=$('#bbMvOpen');if(bbMo)bbMo.addEventListener('click',()=>hmMvOpen());
  const bbWn=$('#bbWkNow');if(bbWn)bbWn.addEventListener('click',()=>{hmSaveAlertCfg();hmWkSave(true);hmSendReportText(hmBuildWeekReport(false),true,'📅 7일 리포트')});
  const bbWp=$('#bbWkPrev');if(bbWp)bbWp.addEventListener('click',()=>{const b=$('#bbWkBox');if(!b)return;b.hidden=!b.hidden;if(!b.hidden)b.textContent=hmBuildWeekReport(false)});
  const bbRr=$('#bbRepReset');if(bbRr)bbRr.addEventListener('click',()=>{HM.stats=hmNewStats();hmSaveStats();toast('🔄 일일 성적표 통계를 0부터 다시 집계합니다')});
@@ -11298,7 +11383,7 @@ document.addEventListener('click',e=>{const t=e.target;
   if(t.closest&&t.closest('[data-brief]')){NB.briefOpen=!NB.briefOpen;try{localStorage.setItem('pmk-brief-v1',NB.briefOpen?'1':'0')}catch(_){}updTimeline()}
   const ep=t.closest&&t.closest('[data-evpin]');if(ep){const g=/📜|✉/.test(ep.dataset.evpin)?'mail':'hunt';const d=document.querySelector('.pin-grp[data-pg="'+g+'"]');if(d)d.open=true}
 },true);
-window.__mk={fillWaits,postGen,batchMake,compareWith,shuffleHunt,mkSnap,renderMaker,titleToState,importMacro,NB,buildNew,setTab,expandAll,addJob,itemTimes,startMin,wbDay,totalMin,hm,verTitle,safeFname,buildResumeFromNow,applyCoordPatch,applyHumanizer,optimizeMacroEvents,autoBalance24h,ASPECT_PRESETS,getAspectRatioInfo,applyAspectTransform,auditDangerClicks,hashMacroShort,EXPORT_HIST,recordExportHist,buildZipBlob,COORD_TARGETS,COORD_PATCH,saveCoordPatch,CHAR_PROFS,saveCharProfs,LM_CLASSES,charLbl,getCharProf,setCode,readCode,applyState,curState,saveOne,dlText,HM,HUD,hudC,hudRender,hmRender,hmUpdateBadges,hmSaveCfg,hmSaveProStores,hmSavePatrol,hmCheckPatrol,hmTileRect,hmAddVirtualGrid,hmMemWatchdog,hmMemChipText,hmOnUnexpectedEnd,hmTogglePip,hmLearnFp,hmMatchPortraitFp,hmSetSnooze,hmClearSnooze,hmSnoozeLeftMin,hmNextActionInfo,hmBuildQuickNowText,hmTurboSync,hmTgSendRaw,hmPngToBlob,hmFmtHms,hmHudZoneText,hmHudSummary,hmStatusText,hmCompositePng,hmIsAlert,hmNorm,hmKindIcon,toast,esc,dur,fmtAdena,calcDayBrief,SPEC_DGS,JOBS,SHORTN,TLC,updTotal,updTimeline,updClock};
+window.__mk={lgRecSec,lgRecSync,fillWaits,postGen,batchMake,compareWith,shuffleHunt,mkSnap,renderMaker,titleToState,importMacro,NB,buildNew,setTab,expandAll,addJob,itemTimes,startMin,wbDay,totalMin,hm,verTitle,safeFname,buildResumeFromNow,applyCoordPatch,applyHumanizer,optimizeMacroEvents,autoBalance24h,ASPECT_PRESETS,getAspectRatioInfo,applyAspectTransform,auditDangerClicks,hashMacroShort,EXPORT_HIST,recordExportHist,buildZipBlob,COORD_TARGETS,COORD_PATCH,saveCoordPatch,CHAR_PROFS,saveCharProfs,LM_CLASSES,charLbl,getCharProf,setCode,readCode,applyState,curState,saveOne,dlText,HM,HUD,hudC,hudRender,hmRender,hmUpdateBadges,hmSaveCfg,hmSaveProStores,hmSavePatrol,hmCheckPatrol,hmTileRect,hmAddVirtualGrid,hmMemWatchdog,hmMemChipText,hmOnUnexpectedEnd,hmTogglePip,hmLearnFp,hmMatchPortraitFp,hmSetSnooze,hmClearSnooze,hmSnoozeLeftMin,hmNextActionInfo,hmBuildQuickNowText,hmTurboSync,hmTgSendRaw,hmPngToBlob,hmFmtHms,hmHudZoneText,hmHudSummary,hmStatusText,hmCompositePng,hmIsAlert,hmNorm,hmKindIcon,toast,esc,dur,fmtAdena,calcDayBrief,SPEC_DGS,JOBS,SHORTN,TLC,updTotal,updTimeline,updClock};
 
 /* ---------- init ---------- *//* ---------- init ---------- */
 // 제목(파기던5시간+스케줄3시간+숙제시던파던+과말흑기사+본토1번15시간)의 순서와 대기 반복 주기로 찾은 구간. [원본 이벤트 번호, 이름]
@@ -11492,7 +11577,7 @@ addEventListener('load',function(){orig=null;apply()});
       <div>
         <div class="pn-kicker">🆕 최근 업데이트 안내 · 11/24 (v292 ~ v327)</div>
         <h3 id="patchNoteTtl">새로 바뀐 기능과 사용 방법을 한눈에 확인하세요</h3>
-        <div class="pn-sub">언제든 상단 <b>🆕 패치노트</b> 버튼이나 <b>최신 11/25 · v350 🆕</b> 배지를 누르면 이 창을 다시 볼 수 있어요.</div>
+        <div class="pn-sub">언제든 상단 <b>🆕 패치노트</b> 버튼이나 <b>최신 11/25 · v351 🆕</b> 배지를 누르면 이 창을 다시 볼 수 있어요.</div>
       </div>
       <button type="button" class="pn-x" id="pnCloseX" aria-label="닫기">✕</button>
     </div>
@@ -13021,7 +13106,7 @@ addEventListener('load',function(){orig=null;apply()});
 
     // PC 속도 측정
     if(id==='loadApplyRec'){
-      M.NB.slow=+b.dataset.slow||1;M.NB.buf=+b.dataset.buf||2;M.NB.giran=+b.dataset.giran||3;
+      M.NB.slow=+b.dataset.slow||1;M.NB.buf=+b.dataset.buf||2;M.NB.giran=+b.dataset.giran||3;try{const r=M.lgRecSec&&M.lgRecSec();if(r){M.NB.lgSec=r;M.lgRecSync()}}catch(e){}
       if($('#slowSel'))$('#slowSel').value=String(M.NB.slow);
       if($('#bufSel'))$('#bufSel').value=String(M.NB.buf);
       if($('#giranSel'))$('#giranSel').value=String(M.NB.giran);
